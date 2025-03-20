@@ -6,8 +6,8 @@
      export var y = {
 ->y : { m: typeof m; "": any; }
 ->{        m.x  // error    } : { m: typeof m; "": any; }
-+>y : { m: typeof m; : any; }
-+>{        m.x  // error    } : { m: typeof m; : any; }
++>y : { m: typeof m; (Missing): any; }
++>{        m.x  // error    } : { m: typeof m; (Missing): any; }
  
          m.x  // error
  >m : typeof m

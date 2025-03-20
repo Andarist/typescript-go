@@ -2,6 +2,6 @@
 
 === varArgWithNoParamName.ts ===
 function t1(...) {}
->t1 : (...: any[]) => void
+>t1 : (...(Missing): any[]) => void
 > : any[]
 

@@ -62,17 +62,17 @@ var [debugger, if] = [1, 2];
 >2 : 2
 
 enum void {}
-> : 
+> : (Missing)
 >void {} : undefined
 >{} : {}
 
 function f(default: number) {}
->f : (: number) => void
+>f : ((Missing): number) => void
 > : number
 
 class C { m(null: string) {} }
 >C : C
->m : (: any, string: any) => void
+>m : ((Missing): any, string: any) => void
 > : any
 >string : any
 

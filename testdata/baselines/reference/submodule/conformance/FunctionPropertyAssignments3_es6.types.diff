@@ -6,7 +6,7 @@
  var v = { *{ } }
 ->v : { ""(): Generator<never, void, unknown>; }
 ->{ *{ } } : { ""(): Generator<never, void, unknown>; }
-+>v : { : () => Generator<never, void, unknown>; }
-+>{ *{ } } : { : () => Generator<never, void, unknown>; }
++>v : { (Missing): () => Generator<never, void, unknown>; }
++>{ *{ } } : { (Missing): () => Generator<never, void, unknown>; }
  > : () => Generator<never, void, unknown>
  

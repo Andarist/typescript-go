@@ -1,0 +1,11 @@
+--- old.fatarrowfunctionsOptionalArgsErrors3.types
++++ new.fatarrowfunctionsOptionalArgsErrors3.types
+@@= skipped -1, +1 lines =@@
+ 
+ === fatarrowfunctionsOptionalArgsErrors3.ts ===
+ (...) => 105;
+->(...) => 105 : (...: any[]) => number
++>(...) => 105 : (...(Missing): any[]) => number
+ > : any[]
+ >105 : 105
+ 

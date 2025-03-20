@@ -2,7 +2,7 @@
 
 === fatarrowfunctionsOptionalArgsErrors3.ts ===
 (...) => 105;
->(...) => 105 : (...: any[]) => number
+>(...) => 105 : (...(Missing): any[]) => number
 > : any[]
 >105 : 105
 

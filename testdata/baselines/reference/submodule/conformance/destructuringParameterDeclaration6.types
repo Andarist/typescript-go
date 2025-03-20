@@ -30,7 +30,7 @@ function a4([while, for, public]){ }
 > : any
 
 function a5(...while) { }
->a5 : (...: any[]) => any
+>a5 : (...(Missing): any[]) => any
 > : any[]
 > : any
 

@@ -20,7 +20,16 @@
  >, : any
  > : any
  > : any
-@@= skipped -35, +35 lines =@@
+@@= skipped -21, +21 lines =@@
+ > : any
+ 
+ function a5(...while) { }
+->a5 : (...: any[]) => any
++>a5 : (...(Missing): any[]) => any
+ > : any[]
+ > : any
+ 
+@@= skipped -14, +14 lines =@@
  
  a({ while: 1 });
  >a({ while: 1 }) : void

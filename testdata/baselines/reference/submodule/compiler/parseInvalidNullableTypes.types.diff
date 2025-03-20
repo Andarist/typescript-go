@@ -6,14 +6,14 @@
  function f2(a: string?) {}
 ->f2 : (a: string | null) => void
 ->a : string | null
-+>f2 : (a: string, ?: any) => void
++>f2 : (a: string, (Missing)?: any) => void
 +>a : string
 +> : any
  
  function f3(a: number?) {}
 ->f3 : (a: number | null) => void
 ->a : number | null
-+>f3 : (a: number, ?: any) => void
++>f3 : (a: number, (Missing)?: any) => void
 +>a : number
 +> : any
  

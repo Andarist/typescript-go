@@ -17,13 +17,13 @@
  
  function f3(a: string!) {}
 ->f3 : (a: string) => void
-+>f3 : (a: string, : any) => void
++>f3 : (a: string, (Missing): any) => void
  >a : string
 +> : any
  
  function f4(a: number!) {}
 ->f4 : (a: number) => void
-+>f4 : (a: number, : any) => void
++>f4 : (a: number, (Missing): any) => void
  >a : number
 +> : any
  

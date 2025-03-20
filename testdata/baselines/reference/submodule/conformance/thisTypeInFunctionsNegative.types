@@ -718,7 +718,7 @@ function modifiers(async this: C): number { return this.n; }
 >n : number
 
 function restParam(...this: C): number { return this.n; }
->restParam : (: any[], this: C) => number
+>restParam : ((Missing): any[], this: C) => number
 > : any[]
 >this : C
 >this.n : any
@@ -726,7 +726,7 @@ function restParam(...this: C): number { return this.n; }
 >n : any
 
 function optional(this?: C): number { return this.n; }
->optional : (?: C) => number
+>optional : ((Missing)?: C) => number
 >this : any
 > : C
 >this.n : any
@@ -743,7 +743,7 @@ function decorated(@deco() this: C): number { return this.n; }
 >n : number
 
 function initializer(this: C = new C()): number { return this.n; }
->initializer : (: any, C: any) => any
+>initializer : ((Missing): any, C: any) => any
 >this : C
 > : any
 >C : any

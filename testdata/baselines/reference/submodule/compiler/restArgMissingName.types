@@ -2,6 +2,6 @@
 
 === restArgMissingName.ts ===
 function sum (...) {} 
->sum : (...: any[]) => void
+>sum : (...(Missing): any[]) => void
 > : any[]
 
