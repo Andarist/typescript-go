@@ -2566,3 +2566,200 @@ func IsRequireCall(node *Node, requireStringLiteralLikeArgument bool) bool {
 	}
 	return !requireStringLiteralLikeArgument || IsStringLiteralLike(call.Arguments.Nodes[0])
 }
+
+func isPropertyNameLiteral(node *Node) bool {
+	switch node.Kind {
+	case KindIdentifier, KindStringLiteral, KindNoSubstitutionTemplateLiteral, KindNumericLiteral:
+		return true
+	default:
+		return false
+	}
+}
+
+
+func getTextOfJsxNamespacedName(node *JsxNamespacedName) string {
+	// !!! Implement escaping
+	return node.Namespace.Text() + ":" + node.Name().Text()
+}
+
+func getTextOfIdentifierOrLiteral(node *Node) string {
+	switch node.Kind {
+	case KindIdentifier, KindPrivateIdentifier:
+		return node.Text() // !!! Implement escaping
+	case KindJsxNamespacedName:
+		return getTextOfJsxNamespacedName(node.AsJsxNamespacedName())
+	case KindStringLiteral, KindNoSubstitutionTemplateLiteral, KindNumericLiteral:
+		return node.Text()
+	default:
+		panic("getTextOfIdentifierOrLiteral should not be called on a node of kind " + node.Kind.String())
+	}
+}
+
+func getNameOrArgument(expr *Expression) *Expression {
+	switch expr.Kind {
+	case KindPropertyAccessExpression:
+		return expr.AsPropertyAccessExpression().Name()
+	case KindElementAccessExpression:
+		return expr.AsElementAccessExpression().ArgumentExpression
+	default:
+		return nil
+	}
+}
+
+/**
+ * Is the 'declared' name the same as the one in the initializer?
+ * return true for identical entity names, as well as ones where the initializer is prefixed with
+ * 'window', 'self' or 'global'. For example:
+ *
+ * var my = my || {}
+ * var min = window.min || {}
+ * my.app = self.my.app || class { }
+ */
+func isSameEntityName(name *Expression, initializer *Expression) bool {
+    if isPropertyNameLiteral(name) && isPropertyNameLiteral(initializer) {
+        return getTextOfIdentifierOrLiteral(name) == getTextOfIdentifierOrLiteral(initializer);
+    }
+	if !isLiteralLikeAccess(initializer) {
+		return false
+	}
+	if (name.Kind == KindIdentifier || name.Kind == KindPrivateIdentifier)  {
+		expression := initializer.Expression()
+		if expression.Kind == KindThisKeyword || IsIdentifier(expression) && (expression.Text() == "window" || expression.Text() == "self" || expression.Text() == "global") {
+			return isSameEntityName(name, getNameOrArgument(initializer))
+		}
+	}
+	if isLiteralLikeAccess(name) {
+		return GetElementOrPropertyAccessName(name) == GetElementOrPropertyAccessName(initializer) && isSameEntityName(name.Expression(), initializer.Expression())
+	}
+    return false;
+}
+
+/**
+ * Recognized expando initializers are:
+ * 1. (function() {})() -- IIFEs
+ * 2. function() { } -- Function expressions
+ * 3. class { } -- Class expressions
+ * 4. {} -- Empty object literals
+ * 5. { ... } -- Non-empty object literals, when used to initialize a prototype, like `C.prototype = { m() { } }`
+ *
+ * This function returns the provided initializer, or nil if it is not valid.
+ */
+func getExpandoInitializer(initializer *Node, isPrototypeAssignment bool) *Expression {
+	if IsCallExpression(initializer) {
+		expression := SkipParentheses(initializer.AsCallExpression().Expression)
+		return core.IfElse(expression.Kind == KindFunctionExpression || expression.Kind == KindArrowFunction, initializer, nil)
+	}
+	if initializer.Kind == KindFunctionExpression || initializer.Kind == KindClassExpression || initializer.Kind == KindArrowFunction {
+		return initializer
+	}
+	if IsObjectLiteralExpression(initializer) && (isPrototypeAssignment || len(initializer.AsObjectLiteralExpression().Properties.Nodes) == 0) {
+		return initializer
+	}
+    return nil
+}
+
+/**
+ * A defaulted expando initializer matches the pattern
+ * `Lhs = Lhs || ExpandoInitializer`
+ * or `var Lhs = Lhs || ExpandoInitializer`
+ *
+ * The second Lhs is required to be the same as the first except that it may be prefixed with
+ * 'window.', 'global.' or 'self.' The second Lhs is otherwise ignored by the binder and checker.
+ */
+func getDefaultedExpandoInitializer(name *Expression, initializer *Expression, isPrototypeAssignment bool) *Node {
+	if !IsBinaryExpression(initializer) {
+		return nil
+	}
+	binary := initializer.AsBinaryExpression()
+	if binary.OperatorToken.Kind != KindBarBarToken && binary.OperatorToken.Kind != KindQuestionQuestionToken {
+		return nil
+	}
+	expression := getExpandoInitializer(binary.Right, isPrototypeAssignment)
+	if expression == nil || !isSameEntityName(name, binary.Left) {
+		return nil
+	}
+	return expression
+}
+
+/**
+ * Get the assignment 'initializer' -- the righthand side-- when the initializer is container-like (See getExpandoInitializer).
+ * We treat the right hand side of assignments with container-like initializers as declarations.
+ */
+func GetAssignedExpandoInitializer(node *Node) *Node {
+	if node == nil {
+		return nil
+	}
+	if node.Parent != nil && IsBinaryExpression(node.Parent) && node.Parent.AsBinaryExpression().OperatorToken.Kind == KindEqualsToken {
+		binary := node.Parent.AsBinaryExpression()
+		isPrototypeAssignment := isPrototypeAccess(binary.Left)
+		initializer := getExpandoInitializer(binary.Right, isPrototypeAssignment)
+		if initializer == nil {
+			initializer = getDefaultedExpandoInitializer(binary.Left, binary.Right, isPrototypeAssignment);
+		}
+		return initializer
+	}
+	return nil
+}
+
+/**
+ * x.y OR x[0]
+ */
+func isLiteralLikeAccess(node *Node) bool {
+    return IsPropertyAccessExpression(node) || isLiteralLikeElementAccess(node);
+}
+
+/**
+ * x[0] OR x['a'] OR x[Symbol.y]
+ */
+func isLiteralLikeElementAccess(node *Node) bool {
+    return IsElementAccessExpression(node) && IsStringOrNumericLiteralLike(node.AsElementAccessExpression().ArgumentExpression);
+}
+
+func isBindableStaticNameExpression(node *Node, excludeThisKeyword bool) bool {
+    return IsEntityNameExpression(node) || isBindableStaticAccessExpression(node, excludeThisKeyword);
+}
+
+/**
+ * Any series of property and element accesses.
+ */
+func isBindableStaticAccessExpression(node *Node, excludeThisKeyword bool) bool {
+	if IsPropertyAccessExpression(node) {
+		propertyAccessExpression := node.AsPropertyAccessExpression()
+		return !excludeThisKeyword && propertyAccessExpression.Expression.Kind == KindThisKeyword || propertyAccessExpression.Name().Kind == KindIdentifier && isBindableStaticNameExpression(propertyAccessExpression.Expression, true)
+	}
+	return isBindableStaticElementAccessExpression(node, excludeThisKeyword)
+}
+
+/**
+ * Any series of property and element accesses, ending in a literal element access
+ */
+func isBindableStaticElementAccessExpression(node *Node, excludeThisKeyword bool) bool {
+	if !isLiteralLikeElementAccess(node) {
+		return false
+	}
+	expression := node.AsElementAccessExpression().Expression
+	return (!excludeThisKeyword && expression.Kind == KindThisKeyword) || IsEntityNameExpression(expression) || isBindableStaticAccessExpression(expression, true);
+}
+
+func isPrototypeAccess(node *Node) bool {
+    return isBindableStaticAccessExpression(node, false) && GetElementOrPropertyAccessName(node) == "prototype";
+}
+
+func getInitializerOfBinaryExpression(expr *BinaryExpression) *Expression {
+	for IsBinaryExpression(expr.Right) {
+		expr = expr.Right.AsBinaryExpression()
+	}
+	return expr.Right
+}
+
+func GetAssignmentDeclarationKind(expr *Expression) int {
+	if !IsBinaryExpression(expr) {
+		return 0 // None
+	}
+	binary := expr.AsBinaryExpression()
+	if isBindableStaticNameExpression(binary.Left.Expression(), true) && GetElementOrPropertyAccessName(binary.Left) == "prototype" && IsObjectLiteralExpression(getInitializerOfBinaryExpression(binary)) {
+		// F.prototype = { ... }
+		return 6 // Prototype
+	}
+	return 5 // Property
+}

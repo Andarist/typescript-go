@@ -5050,6 +5050,7 @@ func (node *ConditionalExpression) Clone(f *NodeFactory) *Node {
 
 type PropertyAccessExpression struct {
 	ExpressionBase
+	DeclarationBase
 	FlowNodeBase
 	Expression       *Expression // Expression
 	QuestionDotToken *TokenNode  // TokenNode
@@ -5095,6 +5096,7 @@ func IsPropertyAccessExpression(node *Node) bool {
 
 type ElementAccessExpression struct {
 	ExpressionBase
+	DeclarationBase
 	FlowNodeBase
 	Expression         *Expression // Expression
 	QuestionDotToken   *TokenNode  // TokenNode

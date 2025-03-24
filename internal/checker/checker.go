@@ -13367,6 +13367,20 @@ func (c *Checker) getParentOfSymbol(symbol *ast.Symbol) *ast.Symbol {
 	return nil
 }
 
+func (c *Checker) getFunctionExpressionParentSymbolOrSymbol(symbol *ast.Symbol) *ast.Symbol {
+	declaration := symbol.ValueDeclaration
+	if declaration == nil {
+		return symbol
+	}
+	if declaration.Kind == ast.KindArrowFunction || declaration.Kind == ast.KindFunctionExpression {
+		s := c.getSymbolOfNode(declaration)
+		if s != nil {
+			return s
+		}
+	}
+	return symbol
+}
+
 func (c *Checker) recordMergedSymbol(target *ast.Symbol, source *ast.Symbol) {
 	c.mergedSymbols[source] = target
 }
@@ -15000,6 +15014,9 @@ func (c *Checker) getWriteTypeOfInstantiatedSymbol(symbol *ast.Symbol) *Type {
 func (c *Checker) getTypeOfVariableOrParameterOrProperty(symbol *ast.Symbol) *Type {
 	links := c.valueSymbolLinks.Get(symbol)
 	if links.resolvedType == nil {
+		// if symbol.Name == "num" {
+		// 	runtime.Breakpoint()
+		// }
 		t := c.getTypeOfVariableOrParameterOrPropertyWorker(symbol)
 		if t == nil {
 			panic("Unexpected nil type")
@@ -15068,6 +15085,11 @@ func (c *Checker) getTypeOfVariableOrParameterOrPropertyWorker(symbol *ast.Symbo
 		result = c.checkObjectLiteralMethod(declaration, CheckModeNormal)
 	case ast.KindExportAssignment:
 		result = c.widenTypeForVariableLikeDeclaration(c.checkExpressionCached(declaration.AsExportAssignment().Expression), declaration, false /*reportErrors*/)
+	case ast.KindPropertyAccessExpression:
+		if declaration.Parent.Kind != ast.KindBinaryExpression {
+			panic("Unhandled case in getTypeOfVariableOrParameterOrPropertyWorker")
+		}
+		fallthrough
 	case ast.KindBinaryExpression:
 		result = c.getWidenedTypeForAssignmentDeclaration(symbol)
 	case ast.KindJsxAttribute:
@@ -16481,13 +16503,37 @@ func (c *Checker) getTypeOfPrototypeProperty(prototype *ast.Symbol) *Type {
 }
 
 func (c *Checker) getWidenedTypeForAssignmentDeclaration(symbol *ast.Symbol) *Type {
+	// function/class/{} initializers are themselves containers, so they won't merge in the same way as other initializers
+	container := ast.GetAssignedExpandoInitializer(symbol.ValueDeclaration)
+	if container != nil {
+		// !!! add missing jsdoc type tag handling
+		return c.getWidenedLiteralType(c.checkExpressionCached(container))
+	}
+	var t *Type
+	var annotatedType *Type
 	var types []*Type
 	for _, declaration := range symbol.Declarations {
-		if ast.IsBinaryExpression(declaration) {
-			types = core.AppendIfUnique(types, c.checkExpressionForMutableLocation(declaration.AsBinaryExpression().Right, CheckModeNormal))
+		var expression *ast.Node
+		switch declaration.Kind {
+		case ast.KindBinaryExpression:
+			expression = declaration
+		case ast.KindElementAccessExpression:
+		case ast.KindPropertyAccessExpression:
+			expression = core.IfElse(ast.IsBinaryExpression(declaration.Parent), declaration.Parent, declaration)
+		}
+		if expression == nil {
+			continue
+		}
+		annotatedType = c.getAnnotatedTypeForAssignmentDeclaration(expression, symbol, declaration)
+		if annotatedType == nil && ast.IsBinaryExpression(expression) {
+			types = core.AppendIfUnique(types, c.checkExpressionCached(expression.AsBinaryExpression().Right))
 		}
 	}
-	return c.getWidenedType(c.getUnionType(types))
+	t = annotatedType
+	if t == nil {
+		t = c.getUnionType(types)
+	}
+	return c.getWidenedType(t)
 }
 
 func (c *Checker) widenTypeForVariableLikeDeclaration(t *Type, declaration *ast.Node, reportErrors bool) *Type {
@@ -18281,6 +18327,26 @@ func (c *Checker) getAnnotatedAccessorTypeNode(accessor *ast.Node) *ast.Node {
 		}
 	}
 	return nil
+}
+
+func (c *Checker) getAnnotatedTypeForAssignmentDeclaration(expression *ast.Node, symbol *ast.Symbol, declaration *ast.Node) *Type {
+	if symbol.Parent != nil && symbol.Parent.ValueDeclaration != nil {
+		possiblyAnnotatedSymbol := c.getFunctionExpressionParentSymbolOrSymbol(symbol.Parent)
+		if possiblyAnnotatedSymbol != nil && possiblyAnnotatedSymbol.ValueDeclaration != nil {
+			typeNode := possiblyAnnotatedSymbol.ValueDeclaration.Type()
+			if typeNode != nil {
+				annotationSymbol := c.getPropertyOfType(c.getTypeFromTypeNode(typeNode), symbol.Name)
+				if annotationSymbol != nil {
+					return c.getNonMissingTypeOfSymbol(annotationSymbol)
+				}
+			}
+		}
+	}
+	return nil
+}
+
+func (c *Checker) getInitializerTypeFromAssignmentDeclaration(symbol *ast.Symbol, expression *ast.BinaryExpression) {
+
 }
 
 func getEffectiveSetAccessorTypeAnnotationNode(node *ast.Node) *ast.Node {

@@ -610,7 +610,7 @@ func (b *Binder) bind(node *ast.Node) bool {
 		if b.currentFlow != nil && isNarrowableReference(node) {
 			setFlowNode(node, b.currentFlow)
 		}
-	case ast.KindBinaryExpression:
+	case ast.KindBinaryExpression: // andarist
 		if ast.IsFunctionPropertyAssignment(node) {
 			b.bindFunctionPropertyAssignment(node)
 		}
@@ -980,10 +980,15 @@ func (b *Binder) bindFunctionPropertyAssignment(node *ast.Node) {
 		case ast.IsFunctionDeclaration(symbol.ValueDeclaration):
 			funcSymbol = symbol
 		case ast.IsVariableDeclaration(symbol.ValueDeclaration) && symbol.ValueDeclaration.Parent.Flags&ast.NodeFlagsConst != 0:
-			initializer := symbol.ValueDeclaration.Initializer()
-			if initializer != nil && ast.IsFunctionExpressionOrArrowFunction(initializer) {
-				funcSymbol = initializer.Symbol()
+			if symbol.ValueDeclaration.Type() != nil {
+				funcSymbol = symbol
+			} else {
+				initializer := symbol.ValueDeclaration.Initializer()
+				if initializer != nil && ast.IsFunctionExpressionOrArrowFunction(initializer) {
+					funcSymbol = initializer.Symbol()
+				}
 			}
+
 		}
 		if funcSymbol != nil {
 			// Fix up parent pointers since we're going to use these nodes before we bind into them
@@ -993,7 +998,7 @@ func (b *Binder) bindFunctionPropertyAssignment(node *ast.Node) {
 				b.bindAnonymousDeclaration(node, ast.SymbolFlagsProperty|ast.SymbolFlagsAssignment, ast.InternalSymbolNameComputed)
 				addLateBoundAssignmentDeclarationToSymbol(node, funcSymbol)
 			} else {
-				b.declareSymbol(ast.GetExports(funcSymbol), funcSymbol, node, ast.SymbolFlagsProperty|ast.SymbolFlagsAssignment, ast.SymbolFlagsPropertyExcludes)
+				b.declareSymbol(ast.GetExports(funcSymbol), funcSymbol, expr.Left, ast.SymbolFlagsProperty|ast.SymbolFlagsAssignment, ast.SymbolFlagsPropertyExcludes)
 			}
 		}
 	}
