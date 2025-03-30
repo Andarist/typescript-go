@@ -10583,6 +10583,11 @@ func (c *Checker) checkIdentifierCalculateNodeCheckFlags(node *ast.Node, symbol 
 		}
 		return
 	}
+	localOrExportSymbol := c.getExportSymbolOfValueSymbolIfExported(symbol)
+	targetSymbol := c.resolveAliasWithDeprecationCheck(localOrExportSymbol, node)
+	if c.isDeprecatedSymbol(targetSymbol) && c.isUncalledFunctionReference(node, targetSymbol) && targetSymbol.Declarations != nil {
+		c.addDeprecatedSuggestion(node, targetSymbol.Declarations, node.Text())
+	}
 }
 
 func (c *Checker) isSameScopedBindingElement(node *ast.Node, declaration *ast.Node) bool {
