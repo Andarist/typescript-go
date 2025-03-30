@@ -10392,6 +10392,7 @@ func (c *Checker) checkIdentifier(node *ast.Node, checkMode CheckMode) *Type {
 	if symbol == c.unknownSymbol {
 		return c.errorType
 	}
+	c.checkIdentifierCalculateNodeCheckFlags(node, symbol)
 	if symbol == c.argumentsSymbol {
 		if c.isInPropertyInitializerOrClassStaticBlock(node) {
 			c.error(node, diagnostics.X_arguments_cannot_be_referenced_in_property_initializers)
@@ -10542,6 +10543,43 @@ func (c *Checker) checkIdentifier(node *ast.Node, checkMode CheckMode) *Type {
 		return c.getBaseTypeOfLiteralType(flowType)
 	}
 	return flowType
+}
+
+/**
+ * This part of `checkIdentifier` is kept seperate from the rest, so `NodeCheckFlags` (and related diagnostics) can be lazily calculated
+ * without calculating the flow type of the identifier.
+ */
+func (c *Checker) checkIdentifierCalculateNodeCheckFlags(node *ast.Node, symbol *ast.Symbol) {
+	if isThisInTypeQuery(node) {
+		return
+	}
+	// As noted in ECMAScript 6 language spec, arrow functions never have an arguments objects.
+	// Although in down-level emit of arrow function, we emit it using function expression which means that
+	// arguments objects will be bound to the inner object; emitting arrow function natively in ES6, arguments objects
+	// will be bound to non-arrow function that contain this arrow function. This results in inconsistent behavior.
+	// To avoid that we will give an error to users if they use arguments objects in arrow function so that they
+	// can explicitly bound arguments objects
+	if symbol == c.argumentsSymbol {
+		container := getContainingFunction(node)
+		if container == nil {
+			return
+		}
+		if c.languageVersion < core.ScriptTargetES2015 {
+			if container.Kind == ast.KindArrowFunction {
+				c.error(node, diagnostics.The_arguments_object_cannot_be_referenced_in_an_arrow_function_in_ES5_Consider_using_a_standard_function_expression)
+			} else if ast.HasSyntacticModifier(container, ast.ModifierFlagsAsync) {
+				c.error(node, diagnostics.The_arguments_object_cannot_be_referenced_in_an_async_function_or_method_in_ES5_Consider_using_a_standard_function_or_method)
+			}
+		}
+		for {
+			c.nodeLinks.Get(container).flags |= NodeCheckFlagsCaptureArguments
+			container = getContainingFunction(container)
+			if container == nil || container.Kind != ast.KindArrowFunction {
+				break
+			}
+		}
+		return
+	}
 }
 
 func (c *Checker) isSameScopedBindingElement(node *ast.Node, declaration *ast.Node) bool {
