@@ -10395,7 +10395,6 @@ func (c *Checker) checkIdentifier(node *ast.Node, checkMode CheckMode) *Type {
 	c.checkIdentifierCalculateNodeCheckFlags(node, symbol)
 	if symbol == c.argumentsSymbol {
 		if c.isInPropertyInitializerOrClassStaticBlock(node) {
-			c.error(node, diagnostics.X_arguments_cannot_be_referenced_in_property_initializers)
 			return c.errorType
 		}
 		return c.getTypeOfSymbol(symbol)
@@ -10560,6 +10559,10 @@ func (c *Checker) checkIdentifierCalculateNodeCheckFlags(node *ast.Node, symbol 
 	// To avoid that we will give an error to users if they use arguments objects in arrow function so that they
 	// can explicitly bound arguments objects
 	if symbol == c.argumentsSymbol {
+		if c.isInPropertyInitializerOrClassStaticBlock(node) {
+			c.error(node, diagnostics.X_arguments_cannot_be_referenced_in_property_initializers)
+			return
+		}
 		container := getContainingFunction(node)
 		if container == nil {
 			return
