@@ -2582,10 +2582,16 @@ func shouldIncludeSymbol(
 
 	// Filter out variables from their own initializers
 	// `const a = /* no 'a' here */`
-	if closestSymbolDeclaration != nil &&
-		ast.IsVariableDeclaration(closestSymbolDeclaration) &&
-		symbol.ValueDeclaration == closestSymbolDeclaration {
-		return false
+	if closestSymbolDeclaration != nil && ast.IsVariableDeclaration(closestSymbolDeclaration) {
+		if symbol.ValueDeclaration == closestSymbolDeclaration {
+			return false
+		}
+		// const { a } = /* no 'a' here */;
+		if ast.IsBindingPattern(closestSymbolDeclaration.Name()) && core.Some(closestSymbolDeclaration.Name().AsBindingPattern().Elements.Nodes, func(element *ast.Node) bool {
+			return element == symbol.ValueDeclaration
+		}) {
+			return false
+		}
 	}
 
 	// Filter out current and latter parameters from defaults
