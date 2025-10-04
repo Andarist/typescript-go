@@ -50,8 +50,8 @@ export default _default;
 declare const _default: {
     test: {
         fn: <T extends {
-            x: T["x"] extends infer T_1 ? { [K in keyof T_1]: T["x"][K]; } : never;
-        }>(sliceIndex: T) => T["x"] extends infer T_1 ? { [K in keyof T_1]: Parameters<T["x"][K]>; } : never;
+            x: T["x"] extends infer T_1 ? { [K in keyof T_1]: T_1[K]; } : never;
+        }>(sliceIndex: T) => T["x"] extends infer T_2 ? { [K in keyof T_2]: Parameters<T_1[K]>; } : never;
     };
 };
 export default _default;
@@ -60,10 +60,7 @@ export default _default;
 //// [DtsFileErrors]
 
 
-reexport.d.ts(5,88): error TS2344: Type 'T["x"][K]' does not satisfy the constraint '(...args: any) => any'.
-  Type 'T["x"][keyof T_1]' is not assignable to type '(...args: any) => any'.
-    Type 'T["x"][string] | T["x"][number] | T["x"][symbol]' is not assignable to type '(...args: any) => any'.
-      Type 'T["x"][string]' is not assignable to type '(...args: any) => any'.
+reexport.d.ts(5,88): error TS2304: Cannot find name 'T_1'.
 
 
 ==== types.d.ts (0 errors) ====
@@ -86,13 +83,10 @@ reexport.d.ts(5,88): error TS2344: Type 'T["x"][K]' does not satisfy the constra
     declare const _default: {
         test: {
             fn: <T extends {
-                x: T["x"] extends infer T_1 ? { [K in keyof T_1]: T["x"][K]; } : never;
-            }>(sliceIndex: T) => T["x"] extends infer T_1 ? { [K in keyof T_1]: Parameters<T["x"][K]>; } : never;
-                                                                                           ~~~~~~~~~
-!!! error TS2344: Type 'T["x"][K]' does not satisfy the constraint '(...args: any) => any'.
-!!! error TS2344:   Type 'T["x"][keyof T_1]' is not assignable to type '(...args: any) => any'.
-!!! error TS2344:     Type 'T["x"][string] | T["x"][number] | T["x"][symbol]' is not assignable to type '(...args: any) => any'.
-!!! error TS2344:       Type 'T["x"][string]' is not assignable to type '(...args: any) => any'.
+                x: T["x"] extends infer T_1 ? { [K in keyof T_1]: T_1[K]; } : never;
+            }>(sliceIndex: T) => T["x"] extends infer T_2 ? { [K in keyof T_2]: Parameters<T_1[K]>; } : never;
+                                                                                           ~~~
+!!! error TS2304: Cannot find name 'T_1'.
         };
     };
     export default _default;
