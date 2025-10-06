@@ -1,0 +1,64 @@
+--- old.mappedTypeRelationships.types
++++ new.mappedTypeRelationships.types
+@@= skipped -510, +510 lines =@@
+ }
+
+ function f70<T>(x: { [P in keyof T]: T[P] }, y: { [P in keyof T]: T[P] }) {
+->f70 : <T>(x: { [P in keyof T]: T[P]; }, y: { [P in keyof T]: T[P]; }) => void
++>f70 : <T>(x: { [P in keyof T]: T[P]; }, y: { [P_1 in keyof T]: T[P_1]; }) => void
+ >x : { [P in keyof T]: T[P]; }
+ >y : { [P in keyof T]: T[P]; }
+
+@@= skipped -16, +16 lines =@@
+ }
+
+ function f71<T, U extends T>(x: { [P in keyof T]: T[P] }, y: { [P in keyof T]: U[P] }) {
+->f71 : <T, U extends T>(x: { [P in keyof T]: T[P]; }, y: { [P in keyof T]: U[P]; }) => void
++>f71 : <T, U extends T>(x: { [P in keyof T]: T[P]; }, y: { [P_1 in keyof T]: U[P_1]; }) => void
+ >x : { [P in keyof T]: T[P]; }
+ >y : { [P in keyof T]: U[P]; }
+
+@@= skipped -16, +16 lines =@@
+ }
+
+ function f72<T, U extends T>(x: { [P in keyof T]: T[P] }, y: { [P in keyof U]: U[P] }) {
+->f72 : <T, U extends T>(x: { [P in keyof T]: T[P]; }, y: { [P in keyof U]: U[P]; }) => void
++>f72 : <T, U extends T>(x: { [P in keyof T]: T[P]; }, y: { [P_1 in keyof U]: U[P_1]; }) => void
+ >x : { [P in keyof T]: T[P]; }
+ >y : { [P in keyof U]: U[P]; }
+
+@@= skipped -16, +16 lines =@@
+ }
+
+ function f73<T, K extends keyof T>(x: { [P in K]: T[P] }, y: { [P in keyof T]: T[P] }) {
+->f73 : <T, K extends keyof T>(x: { [P in K]: T[P]; }, y: { [P in keyof T]: T[P]; }) => void
++>f73 : <T, K extends keyof T>(x: { [P in K]: T[P]; }, y: { [P_1 in keyof T]: T[P_1]; }) => void
+ >x : { [P in K]: T[P]; }
+ >y : { [P in keyof T]: T[P]; }
+
+@@= skipped -16, +16 lines =@@
+ }
+
+ function f74<T, U extends T, K extends keyof T>(x: { [P in K]: T[P] }, y: { [P in keyof U]: U[P] }) {
+->f74 : <T, U extends T, K extends keyof T>(x: { [P in K]: T[P]; }, y: { [P in keyof U]: U[P]; }) => void
++>f74 : <T, U extends T, K extends keyof T>(x: { [P in K]: T[P]; }, y: { [P_1 in keyof U]: U[P_1]; }) => void
+ >x : { [P in K]: T[P]; }
+ >y : { [P in keyof U]: U[P]; }
+
+@@= skipped -16, +16 lines =@@
+ }
+
+ function f75<T, U extends T, K extends keyof T>(x: { [P in K]: T[P] }, y: { [P in keyof T]: U[P] }) {
+->f75 : <T, U extends T, K extends keyof T>(x: { [P in K]: T[P]; }, y: { [P in keyof T]: U[P]; }) => void
++>f75 : <T, U extends T, K extends keyof T>(x: { [P in K]: T[P]; }, y: { [P_1 in keyof T]: U[P_1]; }) => void
+ >x : { [P in K]: T[P]; }
+ >y : { [P in keyof T]: U[P]; }
+
+@@= skipped -16, +16 lines =@@
+ }
+
+ function f76<T, U extends T, K extends keyof T>(x: { [P in K]: T[P] }, y: { [P in K]: U[P] }) {
+->f76 : <T, U extends T, K extends keyof T>(x: { [P in K]: T[P]; }, y: { [P in K]: U[P]; }) => void
++>f76 : <T, U extends T, K extends keyof T>(x: { [P in K]: T[P]; }, y: { [P_1 in K]: U[P_1]; }) => void
+ >x : { [P in K]: T[P]; }
+ >y : { [P in K]: U[P]; }

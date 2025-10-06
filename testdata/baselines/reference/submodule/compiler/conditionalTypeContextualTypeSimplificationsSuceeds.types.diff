@@ -1,11 +1,20 @@
 --- old.conditionalTypeContextualTypeSimplificationsSuceeds.types
 +++ new.conditionalTypeContextualTypeSimplificationsSuceeds.types
-@@= skipped -11, +11 lines =@@
- >bad : <P extends Props>(attrs: string extends keyof P ? { [K in keyof P]: P[K]; } : { [K in keyof P]: P[K]; }) => void
+@@= skipped -8, +8 lines =@@
+ }
+
+ function bad<P extends Props>(
+->bad : <P extends Props>(attrs: string extends keyof P ? { [K in keyof P]: P[K]; } : { [K in keyof P]: P[K]; }) => void
++>bad : <P extends Props>(attrs: string extends keyof P ? { [K in keyof P]: P[K]; } : { [K_1 in keyof P]: P[K_1]; }) => void
 
      attrs: string extends keyof P ? { [K in keyof P]: P[K] } : { [K in keyof P]: P[K] }) { }
-->attrs : string extends keyof P ? { [K in keyof P]: P[K]; } : { [K_1 in keyof P]: P[K_1]; }
-+>attrs : string extends keyof P ? { [K in keyof P]: P[K]; } : { [K in keyof P]: P[K]; }
+ >attrs : string extends keyof P ? { [K in keyof P]: P[K]; } : { [K_1 in keyof P]: P[K_1]; }
+@@= skipped -19, +19 lines =@@
 
- function good1<P extends Props>(
- >good1 : <P extends Props>(attrs: string extends keyof P ? P : { [K in keyof P]: P[K]; }) => void
+ bad({ when: value => false });
+ >bad({ when: value => false }) : void
+->bad : <P extends Props>(attrs: string extends keyof P ? { [K in keyof P]: P[K]; } : { [K in keyof P]: P[K]; }) => void
++>bad : <P extends Props>(attrs: string extends keyof P ? { [K in keyof P]: P[K]; } : { [K_1 in keyof P]: P[K_1]; }) => void
+ >{ when: value => false } : { when: (value: string) => false; }
+ >when : (value: string) => false
+ >value => false : (value: string) => false

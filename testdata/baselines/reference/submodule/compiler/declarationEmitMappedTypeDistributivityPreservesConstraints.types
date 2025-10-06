@@ -26,9 +26,9 @@ export default { fn };
 
 === reexport.ts ===
 import test from "./types";
->test : { fn: <T extends { x: T["x"] extends infer T_1 ? { [K in keyof T_1]: T_1[K]; } : never; }>(sliceIndex: T) => T["x"] extends infer T_2 ? { [K in keyof T_2]: Parameters<T_1[K]>; } : never; }
+>test : { fn: <T extends { x: T["x"] extends infer T_1 ? { [K in keyof T_1]: T_1[K]; } : never; }>(sliceIndex: T) => T["x"] extends infer T_2 ? { [K_1 in keyof T_2]: Parameters<T_2[K_1]>; } : never; }
 
 export default { test };
->{ test } : { test: { fn: <T extends { x: T["x"] extends infer T_1 ? { [K in keyof T_1]: T_1[K]; } : never; }>(sliceIndex: T) => T["x"] extends infer T_2 ? { [K in keyof T_2]: Parameters<T_1[K]>; } : never; }; }
->test : { fn: <T extends { x: T["x"] extends infer T_1 ? { [K in keyof T_1]: T_1[K]; } : never; }>(sliceIndex: T) => T["x"] extends infer T_2 ? { [K in keyof T_2]: Parameters<T_1[K]>; } : never; }
+>{ test } : { test: { fn: <T extends { x: T["x"] extends infer T_1 ? { [K in keyof T_1]: T_1[K]; } : never; }>(sliceIndex: T) => T["x"] extends infer T_2 ? { [K_1 in keyof T_2]: Parameters<T_2[K_1]>; } : never; }; }
+>test : { fn: <T extends { x: T["x"] extends infer T_1 ? { [K in keyof T_1]: T_1[K]; } : never; }>(sliceIndex: T) => T["x"] extends infer T_2 ? { [K_1 in keyof T_2]: Parameters<T_2[K_1]>; } : never; }
 

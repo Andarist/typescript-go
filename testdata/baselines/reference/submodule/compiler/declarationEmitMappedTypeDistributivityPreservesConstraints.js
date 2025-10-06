@@ -51,7 +51,7 @@ declare const _default: {
     test: {
         fn: <T extends {
             x: T["x"] extends infer T_1 ? { [K in keyof T_1]: T_1[K]; } : never;
-        }>(sliceIndex: T) => T["x"] extends infer T_2 ? { [K in keyof T_2]: Parameters<T_1[K]>; } : never;
+        }>(sliceIndex: T) => T["x"] extends infer T_2 ? { [K_1 in keyof T_2]: Parameters<T_2[K_1]>; } : never;
     };
 };
 export default _default;
@@ -60,7 +60,10 @@ export default _default;
 //// [DtsFileErrors]
 
 
-reexport.d.ts(5,88): error TS2304: Cannot find name 'T_1'.
+reexport.d.ts(5,90): error TS2344: Type 'T_2[K_1]' does not satisfy the constraint '(...args: any) => any'.
+  Type 'T_2[keyof T_2]' is not assignable to type '(...args: any) => any'.
+    Type 'T_2[string] | T_2[number] | T_2[symbol]' is not assignable to type '(...args: any) => any'.
+      Type 'T_2[string]' is not assignable to type '(...args: any) => any'.
 
 
 ==== types.d.ts (0 errors) ====
@@ -84,9 +87,12 @@ reexport.d.ts(5,88): error TS2304: Cannot find name 'T_1'.
         test: {
             fn: <T extends {
                 x: T["x"] extends infer T_1 ? { [K in keyof T_1]: T_1[K]; } : never;
-            }>(sliceIndex: T) => T["x"] extends infer T_2 ? { [K in keyof T_2]: Parameters<T_1[K]>; } : never;
-                                                                                           ~~~
-!!! error TS2304: Cannot find name 'T_1'.
+            }>(sliceIndex: T) => T["x"] extends infer T_2 ? { [K_1 in keyof T_2]: Parameters<T_2[K_1]>; } : never;
+                                                                                             ~~~~~~~~
+!!! error TS2344: Type 'T_2[K_1]' does not satisfy the constraint '(...args: any) => any'.
+!!! error TS2344:   Type 'T_2[keyof T_2]' is not assignable to type '(...args: any) => any'.
+!!! error TS2344:     Type 'T_2[string] | T_2[number] | T_2[symbol]' is not assignable to type '(...args: any) => any'.
+!!! error TS2344:       Type 'T_2[string]' is not assignable to type '(...args: any) => any'.
         };
     };
     export default _default;

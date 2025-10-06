@@ -2,7 +2,7 @@
 
 === computedTypesKeyofNoIndexSignatureType.ts ===
 type Compute<A> = { [K in keyof A]: Compute<A[K]>; } & {};
->Compute : { [K in keyof A]: A[K] extends infer T extends unknown ? { [K in keyof T]: T_1[K] extends infer T extends unknown ? { [K in keyof T]: T_1[K] extends infer T extends unknown ? { [K in keyof T]: T_1[K] extends infer T extends unknown ? { [K in keyof T]: T_1[K] extends infer T extends unknown ? { [K in keyof T]: T_1[K] extends infer T extends unknown ? { [K in keyof T]: T_1[K] extends infer T extends unknown ? { [K in keyof T]: T_1[K] extends infer T extends unknown ? { [K in keyof T]: T_1[K] extends infer T extends unknown ? { [K in keyof T]: T_1[K] extends infer T extends unknown ? { [K in keyof T]: any; } : never; } : never; } : never; } : never; } : never; } : never; } : never; } : never; } : never; } : never; }
+>Compute : { [K in keyof A]: A[K_1] extends infer T extends unknown ? { [K in keyof T]: T_1[K_1] extends infer T extends unknown ? { [K in keyof T]: T_1[K_1] extends infer T extends unknown ? { [K in keyof T]: T_1[K_1] extends infer T extends unknown ? { [K in keyof T]: T_1[K_1] extends infer T extends unknown ? { [K in keyof T]: T_1[K_1] extends infer T extends unknown ? { [K in keyof T]: T_1[K_1] extends infer T extends unknown ? { [K in keyof T]: T_1[K_1] extends infer T extends unknown ? { [K in keyof T]: T_1[K_1] extends infer T extends unknown ? { [K in keyof T]: T_1[K_1] extends infer T extends unknown ? { [K in keyof T]: any; } : never; } : never; } : never; } : never; } : never; } : never; } : never; } : never; } : never; } : never; }
 
 type EqualsTest<T> = <A>() => A extends T ? 1 : 0;
 >EqualsTest : EqualsTest<T>
