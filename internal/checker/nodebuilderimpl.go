@@ -1310,6 +1310,17 @@ func (b *nodeBuilderImpl) typeParameterToName(typeParameter *Type) *ast.Identifi
 			b.ctx.typeParameterNames = make(map[TypeId]*ast.Identifier)
 			b.ctx.typeParameterNamesByText = make(map[string]struct{})
 			b.ctx.typeParameterNamesByTextNextNameCount = make(map[string]int)
+
+			// b.ctx.hasCreatedTypeParametersNamesLookups = true
+			// oldTypeParameterNames := b.ctx.typeParameterNames
+			// b.ctx.typeParameterNames = make(map[TypeId]*ast.Identifier)
+			// maps.Copy(b.ctx.typeParameterNames, oldTypeParameterNames)
+			// oldTypeParameterNamesByText := b.ctx.typeParameterNamesByText
+			// b.ctx.typeParameterNamesByText = make(map[string]struct{})
+			// maps.Copy(b.ctx.typeParameterNamesByText, oldTypeParameterNamesByText)
+			// oldTypeParameterNamesByTextNextNameCount := b.ctx.typeParameterNamesByTextNextNameCount
+			// b.ctx.typeParameterNamesByTextNextNameCount = make(map[string]int)
+			// maps.Copy(b.ctx.typeParameterNamesByTextNextNameCount, oldTypeParameterNamesByTextNextNameCount)
 		}
 
 		rawText := result.AsIdentifier().Text
@@ -1444,7 +1455,7 @@ func (b *nodeBuilderImpl) createMappedTypeNodeFromType(t *Type) *ast.TypeNode {
 		originalConstraint := b.ch.instantiateType(rawConstraintTypeFromDeclaration, mapped.mapper)
 
 		var originalConstraintNode *ast.Node
-		if originalConstraint.flags&TypeFlagsUnknown != 0 {
+		if originalConstraint.flags&TypeFlagsUnknown == 0 {
 			originalConstraintNode = b.typeToTypeNode(originalConstraint)
 		}
 
