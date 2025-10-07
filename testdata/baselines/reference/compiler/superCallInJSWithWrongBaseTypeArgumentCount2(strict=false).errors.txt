@@ -1,7 +1,5 @@
 error TS5055: Cannot write file 'b.js' because it would overwrite input file.
   Adding a tsconfig.json file will help organize projects that contain both TypeScript and JavaScript files. Learn more at https://aka.ms/tsconfig.
-b.js(6,9): error TS2346: Call target does not contain any signatures.
-b.js(20,9): error TS2346: Call target does not contain any signatures.
 
 
 !!! error TS5055: Cannot write file 'b.js' because it would overwrite input file.
@@ -9,15 +7,13 @@ b.js(20,9): error TS2346: Call target does not contain any signatures.
 ==== a.ts (0 errors) ====
     export class A<T> {}
     
-==== b.js (2 errors) ====
+==== b.js (0 errors) ====
     import { A } from './a.js';
     
     /** @extends {A} */
     export class B1 extends A {
         constructor() {
             super();
-            ~~~~~
-!!! error TS2346: Call target does not contain any signatures.
         }
     }
     
@@ -32,7 +28,5 @@ b.js(20,9): error TS2346: Call target does not contain any signatures.
     export class B3 extends A {
         constructor() {
             super();
-            ~~~~~
-!!! error TS2346: Call target does not contain any signatures.
         }
     }

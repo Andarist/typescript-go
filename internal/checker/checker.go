@@ -8571,7 +8571,8 @@ func (c *Checker) resolveCall(node *ast.Node, signatures []*Signature, candidate
 	}
 
 	if len(s.candidates) == 0 {
-		if reportErrors {
+		isJsImplicitAny := !c.noImplicitAny && ast.IsInJSFile(node)
+		if !isJsImplicitAny && reportErrors {
 			c.diagnostics.Add(NewDiagnosticForNode(getErrorNodeForCallNode(node), diagnostics.Call_target_does_not_contain_any_signatures));
 		}
 		return c.resolveErrorCall(node)
