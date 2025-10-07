@@ -1,7 +1,9 @@
 error TS5055: Cannot write file 'b.js' because it would overwrite input file.
   Adding a tsconfig.json file will help organize projects that contain both TypeScript and JavaScript files. Learn more at https://aka.ms/tsconfig.
 b.js(4,25): error TS8026: Expected A<T> type arguments; provide these with an '@extends' tag.
+b.js(6,9): error TS2346: Call target does not contain any signatures.
 b.js(18,25): error TS8026: Expected A<T> type arguments; provide these with an '@extends' tag.
+b.js(20,9): error TS2346: Call target does not contain any signatures.
 
 
 !!! error TS5055: Cannot write file 'b.js' because it would overwrite input file.
@@ -9,7 +11,7 @@ b.js(18,25): error TS8026: Expected A<T> type arguments; provide these with an '
 ==== a.ts (0 errors) ====
     export class A<T> {}
     
-==== b.js (2 errors) ====
+==== b.js (4 errors) ====
     import { A } from './a.js';
     
     /** @extends {A} */
@@ -18,6 +20,8 @@ b.js(18,25): error TS8026: Expected A<T> type arguments; provide these with an '
 !!! error TS8026: Expected A<T> type arguments; provide these with an '@extends' tag.
         constructor() {
             super();
+            ~~~~~
+!!! error TS2346: Call target does not contain any signatures.
         }
     }
     
@@ -34,5 +38,7 @@ b.js(18,25): error TS8026: Expected A<T> type arguments; provide these with an '
 !!! error TS8026: Expected A<T> type arguments; provide these with an '@extends' tag.
         constructor() {
             super();
+            ~~~~~
+!!! error TS2346: Call target does not contain any signatures.
         }
     }
