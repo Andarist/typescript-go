@@ -8571,9 +8571,10 @@ func (c *Checker) resolveCall(node *ast.Node, signatures []*Signature, candidate
 	}
 
 	if len(s.candidates) == 0 {
-		// In Strada we would error here, but no known repro doesn't have at least
-		// one other error in this codepath. Just return instead. See #54442
-		return c.unknownSignature
+		if reportErrors {
+			c.diagnostics.Add(NewDiagnosticForNode(getErrorNodeForCallNode(node), diagnostics.Call_target_does_not_contain_any_signatures));
+		}
+		return c.resolveErrorCall(node)
 	}
 
 	s.args = c.getEffectiveCallArguments(node)
