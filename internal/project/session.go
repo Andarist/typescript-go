@@ -573,7 +573,7 @@ func (s *Session) GetLanguageServiceWithAutoImports(ctx context.Context, baseSna
 	// Extra ref for the background adoption task.
 	newSnapshot.Ref()
 	s.backgroundQueue.Enqueue(s.backgroundCtx, func(ctx context.Context) {
-		s.adoptSnapshotChange(baseSnapshot, newSnapshot, change)
+		s.adoptSnapshotChange(baseSnapshot, newSnapshot)
 	})
 
 	release := s.createSnapshotRelease(newSnapshot)
@@ -582,24 +582,18 @@ func (s *Session) GetLanguageServiceWithAutoImports(ctx context.Context, baseSna
 
 // adoptSnapshotChange promotes a cloned snapshot as the session's current
 // snapshot so future requests benefit from the work already done. If the
-// session has moved on, re-clones the current snapshot with the same change.
-func (s *Session) adoptSnapshotChange(baseSnapshot, newSnapshot *Snapshot, change SnapshotChange) {
+// session has moved on, the snapshot is discarded; the next request needing
+// auto-imports will redo the work on the latest snapshot.
+func (s *Session) adoptSnapshotChange(baseSnapshot, newSnapshot *Snapshot) {
 	s.snapshotMu.Lock()
 	oldSnapshot := s.snapshot
 	if oldSnapshot == baseSnapshot {
 		s.snapshot = newSnapshot
 		s.snapshotMu.Unlock()
-	} else {
-		adopted := oldSnapshot.Clone(context.Background(), change, oldSnapshot.fs.overlays, s)
-		s.snapshot = adopted
-		s.snapshotMu.Unlock()
-
-		newSnapshot.Deref(s)
-		newSnapshot = adopted
-	}
-
-	if oldSnapshot != newSnapshot {
 		oldSnapshot.Deref(s)
+	} else {
+		s.snapshotMu.Unlock()
+		newSnapshot.Deref(s)
 	}
 }
 
