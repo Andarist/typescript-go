@@ -501,16 +501,6 @@ func (s *Session) GetLanguageServiceAndSnapshot(ctx context.Context, uri lsproto
 	return languageService, snapshot, s.createSnapshotRelease(snapshot), nil
 }
 
-func (s *Session) GetLanguageServiceAndProjectsForFile(ctx context.Context, uri lsproto.DocumentUri) (*Project, *ls.LanguageService, []ls.Project, error) {
-	snapshot, project, defaultLs, err := s.getSnapshotAndDefaultProject(ctx, uri)
-	if err != nil {
-		return nil, nil, nil, err
-	}
-	// !!! TODO: sheetal:  Get other projects that contain the file with symlink
-	allProjects := snapshot.GetProjectsContainingFile(uri)
-	return project, defaultLs, allProjects, nil
-}
-
 func (s *Session) GetProjectsForFile(ctx context.Context, uri lsproto.DocumentUri) ([]ls.Project, error) {
 	snapshot := s.getSnapshot(
 		ctx,
