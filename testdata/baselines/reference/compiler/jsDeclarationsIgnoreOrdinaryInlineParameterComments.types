@@ -1,0 +1,12 @@
+//// [tests/cases/compiler/jsDeclarationsIgnoreOrdinaryInlineParameterComments.ts] ////
+
+=== index.js ===
+/**
+ * @param {string} a
+ * @param {string} b
+ */
+export function f(a, /* ordinary */ b) {}
+>f : (a: string, b: string) => void
+>a : string
+>b : string
+

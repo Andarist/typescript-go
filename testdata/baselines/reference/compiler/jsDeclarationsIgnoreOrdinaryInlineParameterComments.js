@@ -1,0 +1,24 @@
+//// [tests/cases/compiler/jsDeclarationsIgnoreOrdinaryInlineParameterComments.ts] ////
+
+//// [index.js]
+/**
+ * @param {string} a
+ * @param {string} b
+ */
+export function f(a, /* ordinary */ b) {}
+
+
+//// [index.js]
+/**
+ * @param {string} a
+ * @param {string} b
+ */
+export function f(a, /* ordinary */ b) { }
+
+
+//// [index.d.ts]
+/**
+ * @param {string} a
+ * @param {string} b
+ */
+export declare function f(a: string, /* ordinary */ b: string): void;
