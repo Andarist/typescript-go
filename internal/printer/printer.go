@@ -5514,19 +5514,8 @@ func (p *Printer) emitTrailingCommentsOfPosition(pos int, prefixSpace bool, forc
 		return
 	}
 
-	var comments []ast.CommentRange
 	for comment := range scanner.GetTrailingCommentRanges(p.emitContext.Factory.AsNodeFactory(), p.currentSourceFile.Text(), pos) {
-		comments = append(comments, comment)
-	}
-	if len(comments) == 0 {
-		return
-	}
-
-	for _, comment := range comments {
 		if prefixSpace {
-			if !p.shouldWriteComment(comment) {
-				continue
-			}
 			if !p.writer.IsAtStartOfLine() {
 				p.writeSpace()
 			}

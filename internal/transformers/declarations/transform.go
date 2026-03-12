@@ -1754,6 +1754,17 @@ func (tx *DeclarationTransformer) ensureParameter(p *ast.ParameterDeclaration) *
 		tx.ensureNoInitializer(p.AsNode()),
 	)
 	tx.state.getSymbolAccessibilityDiagnostic = oldDiag
+
+	// JS parser nodes can include leading trivia in parameter spans. For declaration
+	// emit, align comment emission with the identifier token so inline comments don't
+	// leak into the generated .d.ts parameter list.
+	if ast.IsInJSFile(p.AsNode()) {
+		start := scanner.SkipTrivia(ast.GetSourceFileOfNode(p.AsNode()).Text(), p.Pos())
+		if start != p.Pos() {
+			tx.EmitContext().SetCommentRange(result, core.NewTextRange(start, p.End()))
+		}
+	}
+
 	return result
 }
 

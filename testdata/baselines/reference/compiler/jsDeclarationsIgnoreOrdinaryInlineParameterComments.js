@@ -21,4 +21,4 @@ export function f(a, /* ordinary */ b) { }
  * @param {string} a
  * @param {string} b
  */
-export declare function f(a: string, /* ordinary */ b: string): void;
+export declare function f(a: string, b: string): void;

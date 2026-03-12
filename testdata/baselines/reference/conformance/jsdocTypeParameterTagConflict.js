@@ -79,7 +79,7 @@ function f7(a) {}
  * @param {4} b
  * @return {string}
  */
-declare function f1(/** @type {5}*/ a: 5, b: 4): string;
+declare function f1(a: 5, b: 4): string;
 /**
  * @type {(a: 1, b: 2) => number}
  * @param {3} a
