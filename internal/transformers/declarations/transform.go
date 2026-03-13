@@ -260,7 +260,7 @@ func (tx *DeclarationTransformer) collectFileReferences(sourceFile *ast.SourceFi
 
 func (tx *DeclarationTransformer) transformSourceFile(node *ast.SourceFile) *ast.Node {
 	var combinedStatements *ast.StatementList
-	if ast.IsInJSFile(node.AsNode()) {
+	if ast.IsInJSFile(node.AsNode()) && canUseCheckerBuiltJSDeclarations(node.AsNode()) {
 		if built := tx.resolver.GetDeclarationStatementsForSourceFile(tx.EmitContext(), node, declarationEmitNodeBuilderFlags, declarationEmitInternalNodeBuilderFlags, tx.tracker); built != nil {
 			statements := tx.Factory().NewNodeList(built)
 			combinedStatements = tx.transformAndReplaceLatePaintedStatements(statements)
@@ -301,6 +301,65 @@ func (tx *DeclarationTransformer) transformSourceFile(node *ast.SourceFile) *ast
 	result.AsSourceFile().IsDeclarationFile = true
 	result.AsSourceFile().ReferencedFiles = tx.getReferencedFiles(outputFilePath)
 	return result.AsNode()
+}
+
+func canUseCheckerBuiltJSDeclarations(node *ast.Node) bool {
+	if node == nil {
+		return false
+	}
+
+	switch node.Kind {
+	case ast.KindSourceFile:
+		for _, statement := range node.AsSourceFile().Statements.Nodes {
+			if !canUseCheckerBuiltJSDeclarations(statement) {
+				return false
+			}
+		}
+		return true
+	case ast.KindFunctionDeclaration:
+		return !containsUnsupportedJSDeclarationEmitSyntax(node)
+	default:
+		return false
+	}
+}
+
+func containsUnsupportedJSDeclarationEmitSyntax(node *ast.Node) bool {
+	if node == nil {
+		return false
+	}
+
+	for _, jsdoc := range node.JSDoc(nil) {
+		if jsdoc == nil || jsdoc.AsJSDoc().Tags == nil {
+			continue
+		}
+		for _, tag := range jsdoc.AsJSDoc().Tags.Nodes {
+			if tag.Kind == ast.KindJSDocImportTag {
+				return true
+			}
+		}
+	}
+
+	switch node.Kind {
+	case ast.KindJSDocImportTag,
+		ast.KindImportDeclaration,
+		ast.KindJSImportDeclaration,
+		ast.KindImportEqualsDeclaration,
+		ast.KindExportDeclaration,
+		ast.KindExportAssignment,
+		ast.KindJSExportAssignment,
+		ast.KindCommonJSExport:
+		return true
+	}
+
+	found := false
+	node.ForEachChild(func(child *ast.Node) bool {
+		if child != nil && containsUnsupportedJSDeclarationEmitSyntax(child) {
+			found = true
+			return true
+		}
+		return false
+	})
+	return found
 }
 
 func createEmptyExports(factory *ast.NodeFactory) *ast.Node {

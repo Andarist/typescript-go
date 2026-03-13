@@ -50,4 +50,4 @@ export interface TestSymb {
 /**
  * @returns {import("./types").TestSymb}
  */
-export function test(): import("./types").TestSymb;
+export declare function test(): import("./types").TestSymb;

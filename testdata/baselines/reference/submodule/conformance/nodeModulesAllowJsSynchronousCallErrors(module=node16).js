@@ -63,6 +63,6 @@ async function f() {
 
 
 //// [index.d.ts]
-export function h(): Promise<void>;
+export declare function h(): Promise<void>;
 //// [index.d.ts]
-export function f(): Promise<void>;
+export declare function f(): Promise<void>;

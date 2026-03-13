@@ -1,9 +1,10 @@
 --- old.jsFileMethodOverloads4.js
 +++ new.jsFileMethodOverloads4.js
-@@= skipped -27, +27 lines =@@
+@@= skipped -26, +26 lines =@@
+
 
  //// [a.d.ts]
- export function Foo(): void;
+-export function Foo(): void;
 -export class Foo {
 -    /**
 -     * @overload
@@ -19,3 +20,4 @@
 -     */
 -    bar(a: number, b: string): void;
 -}
++export declare function Foo(): void;

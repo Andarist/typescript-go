@@ -62,4 +62,4 @@ export function Point(x: number, y: number): any;
 /**
  * @param {Point} p
  */
-export function magnitude(p: Point): number;
+export declare function magnitude(p: Point): number;

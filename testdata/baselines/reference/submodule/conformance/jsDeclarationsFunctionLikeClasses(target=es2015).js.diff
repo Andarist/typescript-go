@@ -19,5 +19,6 @@
  /**
   * @param {Point} p
   */
- export function magnitude(p: Point): number;
+-export function magnitude(p: Point): number;
 -import { Point } from "./source";
++export declare function magnitude(p: Point): number;

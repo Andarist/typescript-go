@@ -27,4 +27,4 @@ Foo.prototype.bar = function (a, b) { }
 
 
 //// [a.d.ts]
-export function Foo(): void;
+export declare function Foo(): void;

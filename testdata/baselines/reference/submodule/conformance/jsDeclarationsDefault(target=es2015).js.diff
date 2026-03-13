@@ -40,7 +40,8 @@
 -declare function func(): void;
 -type func = string | number;
 -export default func;
-+export default function default(): void;
++export default function func(): void;
++export type default = string | number;
 +/**
 + * @typedef {string | number} default
 + */
