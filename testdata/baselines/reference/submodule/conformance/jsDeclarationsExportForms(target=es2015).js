@@ -264,7 +264,7 @@ require("./bar2");
 export declare class Foo {
 }
 //// [func.d.ts]
-export declare function func(): void;
+export function func(): void;
 //// [bar.d.ts]
 export * from "./cls";
 //// [bar2.d.ts]
@@ -298,16 +298,7 @@ export declare var ns: typeof ns;
 declare const ns: typeof ns;
 export declare var names: typeof ns;
 //// [includeAll.d.ts]
-import "./cjs4";
-import "./cjs3";
-import "./cjs2";
-import "./cjs";
-import "./bol";
-import "./ban";
-import "./bat";
-import "./baz";
-import "./bar";
-import "./bar2";
+export {};
 
 
 //// [DtsFileErrors]
@@ -328,7 +319,7 @@ out/cjs4.d.ts(1,15): error TS2502: 'ns' is referenced directly or indirectly in 
     }
     
 ==== out/func.d.ts (0 errors) ====
-    export declare function func(): void;
+    export function func(): void;
     
 ==== out/bar.d.ts (0 errors) ====
     export * from "./cls";
@@ -389,14 +380,5 @@ out/cjs4.d.ts(1,15): error TS2502: 'ns' is referenced directly or indirectly in 
     export declare var names: typeof ns;
     
 ==== out/includeAll.d.ts (0 errors) ====
-    import "./cjs4";
-    import "./cjs3";
-    import "./cjs2";
-    import "./cjs";
-    import "./bol";
-    import "./ban";
-    import "./bat";
-    import "./baz";
-    import "./bar";
-    import "./bar2";
+    export {};
     

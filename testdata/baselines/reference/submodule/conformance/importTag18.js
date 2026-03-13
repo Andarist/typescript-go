@@ -27,8 +27,32 @@ export interface Foo {
  *    Foo
  * } from "./a"
  */
-import type { Foo } from "./a";
 /**
  * @param {Foo} a
  */
-export declare function foo(a: Foo): void;
+export function foo(a: Foo): void;
+
+
+//// [DtsFileErrors]
+
+
+b.d.ts(9,24): error TS2304: Cannot find name 'Foo'.
+
+
+==== a.d.ts (0 errors) ====
+    export interface Foo {
+    }
+    
+==== b.d.ts (1 errors) ====
+    /**
+     * @import {
+     *    Foo
+     * } from "./a"
+     */
+    /**
+     * @param {Foo} a
+     */
+    export function foo(a: Foo): void;
+                           ~~~
+!!! error TS2304: Cannot find name 'Foo'.
+    

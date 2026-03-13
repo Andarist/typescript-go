@@ -31,4 +31,4 @@ export type WithSymbol = {
  * @returns {import('./a').WithSymbol}
  * @param {import('./a').WithSymbol} value
  */
-export declare function b(value: import('./a').WithSymbol): import('./a').WithSymbol;
+export function b(value: import("./a").WithSymbol): import("./a").WithSymbol;

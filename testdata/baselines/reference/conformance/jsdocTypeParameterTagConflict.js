@@ -80,12 +80,6 @@ function f7(a) {}
  * @return {string}
  */
 declare function f1(a: 5, b: 4): string;
-/**
- * @type {(a: 1, b: 2) => number}
- * @param {3} a
- * @param {4} b
- * @return {string}
- */
 declare function f2(a: 1, b: 2): number;
 /**
  * @param {3} a
@@ -101,14 +95,6 @@ declare function f3(a: 3, b: 4): string;
  * @param {4} b
  */
 declare function f4(a: 3, b: 4): string;
-/**
- * @type {(a: 1, b: 2) => number}
- * @template T
- * @template U
- * @param {T} a
- * @param {U} b
- * @return {string}
- */
 declare function f5(a: 1, b: 2): number;
 /**
  * @template T

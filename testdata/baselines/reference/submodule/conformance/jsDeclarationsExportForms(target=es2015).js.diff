@@ -8,11 +8,8 @@
 +export declare class Foo {
  }
  //// [func.d.ts]
--export function func(): void;
-+export declare function func(): void;
- //// [bar.d.ts]
- export * from "./cls";
- //// [bar2.d.ts]
+ export function func(): void;
+@@= skipped -10, +10 lines =@@
  export * from "./func";
  export * from "./cls";
  //// [baz.d.ts]
@@ -54,17 +51,7 @@
 +declare const ns: typeof ns;
 +export declare var names: typeof ns;
  //// [includeAll.d.ts]
--export {};
-+import "./cjs4";
-+import "./cjs3";
-+import "./cjs2";
-+import "./cjs";
-+import "./bol";
-+import "./ban";
-+import "./bat";
-+import "./baz";
-+import "./bar";
-+import "./bar2";
+ export {};
 +
 +
 +//// [DtsFileErrors]
@@ -85,7 +72,7 @@
 +    }
 +    
 +==== out/func.d.ts (0 errors) ====
-+    export declare function func(): void;
++    export function func(): void;
 +    
 +==== out/bar.d.ts (0 errors) ====
 +    export * from "./cls";
@@ -146,14 +133,5 @@
 +    export declare var names: typeof ns;
 +    
 +==== out/includeAll.d.ts (0 errors) ====
-+    import "./cjs4";
-+    import "./cjs3";
-+    import "./cjs2";
-+    import "./cjs";
-+    import "./bol";
-+    import "./ban";
-+    import "./bat";
-+    import "./baz";
-+    import "./bar";
-+    import "./bar2";
++    export {};
 +    

@@ -23,18 +23,18 @@ export interface I {
 }
 //// [b.d.ts]
 /** @import Foo, { I } from "./a" */
-import type Foo, { I } from "./a";
 /**
  * @param {Foo} a
  * @param {I} b
  */
-export declare function foo(a: Foo, b: I): void;
+export function foo(a: Foo, b: I): void;
 
 
 //// [DtsFileErrors]
 
 
-b.d.ts(2,8): error TS1363: A type-only import can specify a default import or named bindings, but not both.
+b.d.ts(6,24): error TS2304: Cannot find name 'Foo'.
+b.d.ts(6,32): error TS2304: Cannot find name 'I'.
 
 
 ==== a.d.ts (0 errors) ====
@@ -43,14 +43,15 @@ b.d.ts(2,8): error TS1363: A type-only import can specify a default import or na
     export interface I {
     }
     
-==== b.d.ts (1 errors) ====
+==== b.d.ts (2 errors) ====
     /** @import Foo, { I } from "./a" */
-    import type Foo, { I } from "./a";
-           ~~~~~~~~~~~~~~~
-!!! error TS1363: A type-only import can specify a default import or named bindings, but not both.
     /**
      * @param {Foo} a
      * @param {I} b
      */
-    export declare function foo(a: Foo, b: I): void;
+    export function foo(a: Foo, b: I): void;
+                           ~~~
+!!! error TS2304: Cannot find name 'Foo'.
+                                   ~
+!!! error TS2304: Cannot find name 'I'.
     

@@ -127,8 +127,7 @@ export type default = string | number;
  * @typedef {string | number} default
  */
 //// [index6.d.ts]
-export default function func(): void;
-export type default = string | number;
+export default function default(): void;
 /**
  * @typedef {string | number} default
  */

@@ -904,6 +904,26 @@ func (r *EmitResolver) GetElementAccessExpressionName(expression *ast.ElementAcc
 // and requires giving it access to a lot of context it's otherwise not required to have, which also further complicates the API
 // and likely reduces performance. There's probably some refactoring that could be done here to simplify this.
 
+func (r *EmitResolver) GetDeclarationStatementsForSourceFile(emitContext *printer.EmitContext, node *ast.SourceFile, flags nodebuilder.Flags, internalFlags nodebuilder.InternalFlags, tracker nodebuilder.SymbolTracker) []*ast.Node {
+	r.checkerMu.Lock()
+	defer r.checkerMu.Unlock()
+
+	requestNodeBuilder := NewNodeBuilder(r.checker, emitContext)
+	symbol := r.checker.getSymbolOfDeclaration(node.AsNode())
+	if symbol == nil {
+		if node.Locals == nil {
+			return []*ast.Node{}
+		}
+		return requestNodeBuilder.SymbolTableToDeclarationStatements(&node.Locals, node.AsNode(), flags, internalFlags, tracker)
+	}
+
+	r.checker.ResolveExternalModuleSymbol(symbol)
+	if symbol.Exports == nil {
+		return []*ast.Node{}
+	}
+	return requestNodeBuilder.SymbolTableToDeclarationStatements(&symbol.Exports, node.AsNode(), flags, internalFlags, tracker)
+}
+
 func (r *EmitResolver) CreateReturnTypeOfSignatureDeclaration(emitContext *printer.EmitContext, signatureDeclaration *ast.Node, enclosingDeclaration *ast.Node, flags nodebuilder.Flags, internalFlags nodebuilder.InternalFlags, tracker nodebuilder.SymbolTracker) *ast.Node {
 	original := emitContext.ParseNode(signatureDeclaration)
 	if original == nil {

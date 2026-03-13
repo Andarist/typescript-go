@@ -1642,7 +1642,83 @@ func (b *NodeBuilderImpl) cloneBindingName(node *ast.Node) *ast.Node {
 }
 
 func (b *NodeBuilderImpl) symbolTableToDeclarationStatements(symbolTable *ast.SymbolTable) []*ast.Node {
-	panic("unimplemented") // !!!
+	if symbolTable == nil {
+		return nil
+	}
+
+	names := slices.Sorted(maps.Keys(*symbolTable))
+	results := make([]*ast.Node, 0, len(names))
+	for _, name := range names {
+		symbol := (*symbolTable)[name]
+		if symbol == nil {
+			continue
+		}
+
+		statements := b.serializeTopLevelDeclarationStatements(symbol)
+		if statements == nil {
+			return nil
+		}
+		results = append(results, statements...)
+	}
+
+	return results
+}
+
+func (b *NodeBuilderImpl) serializeTopLevelDeclarationStatements(symbol *ast.Symbol) []*ast.Node {
+	if symbol.Name == ast.InternalSymbolNameExportEquals {
+		return nil
+	}
+
+	if symbol.Flags&(ast.SymbolFlagsFunction|ast.SymbolFlagsMethod) == 0 {
+		return nil
+	}
+
+	signatures := b.ch.getSignaturesOfType(b.ch.getTypeOfSymbol(symbol), SignatureKindCall)
+	if len(signatures) == 0 {
+		return nil
+	}
+
+	modifierFlags := ast.ModifierFlagsNone
+	if sourceFile := b.ctx.enclosingDeclaration.AsSourceFile(); sourceFile != nil {
+		if ast.IsExternalOrCommonJSModule(sourceFile) {
+			modifierFlags |= ast.ModifierFlagsExport
+			if symbol.Name == ast.InternalSymbolNameDefault {
+				modifierFlags |= ast.ModifierFlagsDefault
+			}
+		} else {
+			modifierFlags |= ast.ModifierFlagsAmbient
+		}
+	}
+	modifierList := b.f.NewModifierList(ast.CreateModifiersFromModifierFlags(modifierFlags, b.f.NewModifier))
+
+	results := make([]*ast.Node, 0, len(signatures))
+	for _, signature := range signatures {
+		decl := b.signatureToSignatureDeclarationHelper(signature, ast.KindFunctionDeclaration, &SignatureToSignatureDeclarationOptions{
+			name: b.f.NewIdentifier(symbol.Name),
+		})
+		decl = ast.ReplaceModifiers(b.f, decl, modifierList)
+		if location := getSignatureTextRangeLocation(signature); location != nil {
+			decl = b.setTextRange(decl, location)
+		}
+		results = append(results, decl)
+	}
+
+	return results
+}
+
+func getSignatureTextRangeLocation(signature *Signature) *ast.Node {
+	if signature == nil || signature.declaration == nil {
+		return nil
+	}
+	if signature.declaration.Parent != nil {
+		if ast.IsBinaryExpression(signature.declaration.Parent) && ast.GetAssignmentDeclarationKind(signature.declaration.Parent) == ast.JSDeclarationKindProperty {
+			return signature.declaration.Parent
+		}
+		if ast.IsVariableDeclaration(signature.declaration.Parent) && signature.declaration.Parent.Parent != nil {
+			return signature.declaration.Parent.Parent
+		}
+	}
+	return signature.declaration
 }
 
 func (b *NodeBuilderImpl) serializeTypeForExpression(expr *ast.Node) *ast.Node {

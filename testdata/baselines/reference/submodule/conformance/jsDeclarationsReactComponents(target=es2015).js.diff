@@ -48,7 +48,8 @@
 +export default TabbedShowLayout;
  //// [jsDeclarationsReactComponents4.d.ts]
 -export default TabbedShowLayout;
- declare function TabbedShowLayout(prop: {
+-declare function TabbedShowLayout(prop: {
++declare function TabbedShowLayout(/** @type {{className: string}}*/ prop: {
      className: string;
  }): JSX.Element;
  declare namespace TabbedShowLayout {

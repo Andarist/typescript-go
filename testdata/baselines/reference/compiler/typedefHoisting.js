@@ -30,5 +30,5 @@ declare class C {
     /** @typedef {Bar[]} Bars */
     /** @type {Bars} */
     foo: Bars;
-    bar(x: Bar): string;
+    bar(/** @type {Bar} */ x: Bar): string;
 }

@@ -242,14 +242,10 @@ module.exports = {};
   "size": 1652
 }
 //// [/home/src/workspaces/lib/sub-project-2/index.d.ts] *new* 
-declare const variable: {
-    key: string;
-};
 /**
  * @return {keyof typeof variable}
  */
-export declare function getVar(): keyof typeof variable;
-export {};
+export function getVar(): "key";
 
 //// [/home/src/workspaces/lib/sub-project-2/index.js] *new* 
 import { MyNominal } from '../sub-project/index';
@@ -264,7 +260,7 @@ export function getVar() {
 }
 
 //// [/home/src/workspaces/lib/sub-project-2/tsconfig.tsbuildinfo] *new* 
-{"version":"FakeTSVersion","root":[4],"fileNames":["lib.es2025.full.d.ts","../common/nominal.d.ts","../sub-project/index.d.ts","../../solution/sub-project-2/index.js"],"fileInfos":[{"version":"8859c12c614ce56ba9a18e58384a198f-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }\ninterface ReadonlyArray<T> {}\ninterface SymbolConstructor {\n    (desc?: string | number): symbol;\n    for(name: string): symbol;\n    readonly toStringTag: symbol;\n}\ndeclare var Symbol: SymbolConstructor;\ninterface Symbol {\n    readonly [Symbol.toStringTag]: string;\n}\ndeclare const console: { log(msg: any): void; };","affectsGlobalScope":true,"impliedNodeFormat":1},"78da1fe1eee174b6f46c66b629c86122-export type Nominal<T, Name> = T & {};\n/**\n * @template T, Name\n * @typedef {T & {[Symbol.species]: Name}} Nominal\n */\ndeclare const _default: {};\nexport = _default;\n","225285a996cc5c4120877a377890d79e-import { Nominal } from '../common/nominal';\nexport type MyNominal = Nominal<string, 'MyNominal'>;\n/**\n * @typedef {Nominal<string, 'MyNominal'>} MyNominal\n */ \n",{"version":"db2a90e082fd17d65127bda69975a727-import { MyNominal } from '../sub-project/index';\n\nconst variable = {\n    key: /** @type {MyNominal} */('value'),\n};\n\n/**\n * @return {keyof typeof variable}\n */\nexport function getVar() {\n    return 'key';\n}","signature":"ce1d51d134fcf64db95dffbbad017483-declare const variable: {\n    key: string;\n};\n/**\n * @return {keyof typeof variable}\n */\nexport declare function getVar(): keyof typeof variable;\nexport {};\n","impliedNodeFormat":1}],"fileIdsList":[[2],[3]],"options":{"allowJs":true,"checkJs":true,"composite":true,"declaration":true,"outDir":"..","rootDir":"../../solution","skipLibCheck":true},"referencedMap":[[3,1],[4,2]],"semanticDiagnosticsPerFile":[[4,[{"pos":9,"end":18,"code":18042,"category":1,"messageKey":"_0_is_a_type_and_cannot_be_imported_in_JavaScript_files_Use_1_in_a_JSDoc_type_annotation_18042","messageArgs":["MyNominal","import(\"../sub-project/index\").MyNominal"]}]]],"latestChangedDtsFile":"./index.d.ts"}
+{"version":"FakeTSVersion","root":[4],"fileNames":["lib.es2025.full.d.ts","../common/nominal.d.ts","../sub-project/index.d.ts","../../solution/sub-project-2/index.js"],"fileInfos":[{"version":"8859c12c614ce56ba9a18e58384a198f-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }\ninterface ReadonlyArray<T> {}\ninterface SymbolConstructor {\n    (desc?: string | number): symbol;\n    for(name: string): symbol;\n    readonly toStringTag: symbol;\n}\ndeclare var Symbol: SymbolConstructor;\ninterface Symbol {\n    readonly [Symbol.toStringTag]: string;\n}\ndeclare const console: { log(msg: any): void; };","affectsGlobalScope":true,"impliedNodeFormat":1},"78da1fe1eee174b6f46c66b629c86122-export type Nominal<T, Name> = T & {};\n/**\n * @template T, Name\n * @typedef {T & {[Symbol.species]: Name}} Nominal\n */\ndeclare const _default: {};\nexport = _default;\n","225285a996cc5c4120877a377890d79e-import { Nominal } from '../common/nominal';\nexport type MyNominal = Nominal<string, 'MyNominal'>;\n/**\n * @typedef {Nominal<string, 'MyNominal'>} MyNominal\n */ \n",{"version":"db2a90e082fd17d65127bda69975a727-import { MyNominal } from '../sub-project/index';\n\nconst variable = {\n    key: /** @type {MyNominal} */('value'),\n};\n\n/**\n * @return {keyof typeof variable}\n */\nexport function getVar() {\n    return 'key';\n}","signature":"e3cd5cf951fc97beb8bb11506976fa51-/**\n * @return {keyof typeof variable}\n */\nexport function getVar(): \"key\";\n","impliedNodeFormat":1}],"fileIdsList":[[2],[3]],"options":{"allowJs":true,"checkJs":true,"composite":true,"declaration":true,"outDir":"..","rootDir":"../../solution","skipLibCheck":true},"referencedMap":[[3,1],[4,2]],"semanticDiagnosticsPerFile":[[4,[{"pos":9,"end":18,"code":18042,"category":1,"messageKey":"_0_is_a_type_and_cannot_be_imported_in_JavaScript_files_Use_1_in_a_JSDoc_type_annotation_18042","messageArgs":["MyNominal","import(\"../sub-project/index\").MyNominal"]}]]],"latestChangedDtsFile":"./index.d.ts"}
 //// [/home/src/workspaces/lib/sub-project-2/tsconfig.tsbuildinfo.readable.baseline.txt] *new* 
 {
   "version": "FakeTSVersion",
@@ -310,11 +306,11 @@ export function getVar() {
     {
       "fileName": "../../solution/sub-project-2/index.js",
       "version": "db2a90e082fd17d65127bda69975a727-import { MyNominal } from '../sub-project/index';\n\nconst variable = {\n    key: /** @type {MyNominal} */('value'),\n};\n\n/**\n * @return {keyof typeof variable}\n */\nexport function getVar() {\n    return 'key';\n}",
-      "signature": "ce1d51d134fcf64db95dffbbad017483-declare const variable: {\n    key: string;\n};\n/**\n * @return {keyof typeof variable}\n */\nexport declare function getVar(): keyof typeof variable;\nexport {};\n",
+      "signature": "e3cd5cf951fc97beb8bb11506976fa51-/**\n * @return {keyof typeof variable}\n */\nexport function getVar(): \"key\";\n",
       "impliedNodeFormat": "CommonJS",
       "original": {
         "version": "db2a90e082fd17d65127bda69975a727-import { MyNominal } from '../sub-project/index';\n\nconst variable = {\n    key: /** @type {MyNominal} */('value'),\n};\n\n/**\n * @return {keyof typeof variable}\n */\nexport function getVar() {\n    return 'key';\n}",
-        "signature": "ce1d51d134fcf64db95dffbbad017483-declare const variable: {\n    key: string;\n};\n/**\n * @return {keyof typeof variable}\n */\nexport declare function getVar(): keyof typeof variable;\nexport {};\n",
+        "signature": "e3cd5cf951fc97beb8bb11506976fa51-/**\n * @return {keyof typeof variable}\n */\nexport function getVar(): \"key\";\n",
         "impliedNodeFormat": 1
       }
     }
@@ -363,7 +359,7 @@ export function getVar() {
     ]
   ],
   "latestChangedDtsFile": "./index.d.ts",
-  "size": 2360
+  "size": 2277
 }
 //// [/home/src/workspaces/lib/sub-project/index.d.ts] *new* 
 import { Nominal } from '../common/nominal';

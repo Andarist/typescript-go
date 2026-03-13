@@ -93,7 +93,7 @@ uncheckedInternally("zero", "one");
 
 
 //// [overloadTag1.d.ts]
-export declare function overloaded(a: number, b: number): number;
-export declare function overloaded(a: string, b: boolean): string;
-export declare function uncheckedInternally(a: number, b: number): number;
-export declare function uncheckedInternally(a: string, b: boolean): string;
+export function overloaded(a: number, b: number): number;
+export function overloaded(a: string, b: boolean): string;
+export function uncheckedInternally(a: number, b: number): number;
+export function uncheckedInternally(a: string, b: boolean): string;
