@@ -23,7 +23,7 @@ mod7.js(8,4): error TS1110: Type expected.
                          
 !!! error TS2300: Duplicate identifier '(Missing)'.
 !!! related TS6203 mod3.js:4:22: '(Missing)' was also declared here.
-!!! related TS6203 mod4.js:4:22: '(Missing)' was also declared here.
+!!! related TS6204 mod4.js:4:22: and here.
                          ~
 !!! error TS1005: '}' expected.
      * Type1

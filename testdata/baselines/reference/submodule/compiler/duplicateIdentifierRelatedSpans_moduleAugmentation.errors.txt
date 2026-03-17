@@ -8,7 +8,7 @@
                  ~
 !!! error TS2451: Cannot redeclare block-scoped variable 'x'.
 !!! related TS6203 /dir/b.ts:4:18: 'x' was also declared here.
-!!! related TS6203 /dir/b.ts:8:18: 'x' was also declared here.
+!!! related TS6204 /dir/b.ts:8:18: and here.
     
 ==== /dir/b.ts (2 errors) ====
     export {};

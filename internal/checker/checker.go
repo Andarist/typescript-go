@@ -86,6 +86,20 @@ type InferenceContextInfo struct {
 	context *InferenceContext
 }
 
+type duplicateInfoForSymbol struct {
+	symbolName          string
+	symbol              *ast.Symbol
+	isBlockScoped       bool
+	firstFileLocations  []*ast.Node
+	secondFileLocations []*ast.Node
+}
+
+type duplicateInfoForFiles struct {
+	firstFile          *ast.SourceFile
+	secondFile         *ast.SourceFile
+	conflictingSymbols map[string]*duplicateInfoForSymbol
+}
+
 // WideningKind
 
 type WideningKind int32
@@ -879,6 +893,7 @@ type Checker struct {
 	withinUnreachableCode                       bool
 	reportedUnreachableNodes                    collections.Set[*ast.Node]
 	nonExistentProperties                       collections.Set[NonExistentPropertyKey]
+	amalgamatedDuplicates                       map[string]*duplicateInfoForFiles
 
 	mu sync.Mutex
 }
@@ -1276,6 +1291,7 @@ func (c *Checker) initializeIterationResolvers() {
 }
 
 func (c *Checker) initializeChecker() {
+	c.amalgamatedDuplicates = make(map[string]*duplicateInfoForFiles)
 	// Initialize global symbol table
 	augmentations := make([][]*ast.Node, 0, len(c.files))
 	for _, file := range c.files {
@@ -1344,6 +1360,39 @@ func (c *Checker) initializeChecker() {
 			}
 		}
 	}
+	for _, fileDuplicates := range slices.SortedFunc(maps.Values(c.amalgamatedDuplicates), func(a, b *duplicateInfoForFiles) int {
+		return strings.Compare(string(a.firstFile.Path())+"|"+string(a.secondFile.Path()), string(b.firstFile.Path())+"|"+string(b.secondFile.Path()))
+	}) {
+		conflictInfos := slices.Collect(maps.Values(fileDuplicates.conflictingSymbols))
+		slices.SortFunc(conflictInfos, func(a, b *duplicateInfoForSymbol) int {
+			if result := c.compareSymbols(a.symbol, b.symbol); result != 0 {
+				return result
+			}
+			return strings.Compare(a.symbolName, b.symbolName)
+		})
+		if len(fileDuplicates.conflictingSymbols) < 8 {
+			for _, conflict := range conflictInfos {
+				message := core.IfElse(conflict.isBlockScoped, diagnostics.Cannot_redeclare_block_scoped_variable_0, diagnostics.Duplicate_identifier_0)
+				for _, node := range conflict.firstFileLocations {
+					c.addDuplicateDeclarationError(node, message, conflict.symbolName, conflict.secondFileLocations)
+				}
+				for _, node := range conflict.secondFileLocations {
+					c.addDuplicateDeclarationError(node, message, conflict.symbolName, conflict.firstFileLocations)
+				}
+			}
+		} else {
+			list := strings.Join(core.Map(conflictInfos, func(conflict *duplicateInfoForSymbol) string { return conflict.symbolName }), ", ")
+			c.diagnostics.Add(
+				createDiagnosticForNode(fileDuplicates.firstFile.AsNode(), diagnostics.Definitions_of_the_following_identifiers_conflict_with_those_in_another_file_Colon_0, list).
+					AddRelatedInfo(createDiagnosticForNode(fileDuplicates.secondFile.AsNode(), diagnostics.Conflicts_are_in_this_file)),
+			)
+			c.diagnostics.Add(
+				createDiagnosticForNode(fileDuplicates.secondFile.AsNode(), diagnostics.Definitions_of_the_following_identifiers_conflict_with_those_in_another_file_Colon_0, list).
+					AddRelatedInfo(createDiagnosticForNode(fileDuplicates.firstFile.AsNode(), diagnostics.Conflicts_are_in_this_file)),
+			)
+		}
+	}
+	c.amalgamatedDuplicates = nil
 }
 
 func (c *Checker) mergeModuleAugmentation(moduleName *ast.Node) {
@@ -13686,6 +13735,39 @@ func (c *Checker) reportMergeSymbolError(target *ast.Symbol, source *ast.Symbol)
 	isSourcePlainJS := ast.IsPlainJSFile(sourceSymbolFile, c.compilerOptions.CheckJs)
 	isTargetPlainJS := ast.IsPlainJSFile(targetSymbolFile, c.compilerOptions.CheckJs)
 	symbolName := c.symbolToString(source)
+	if sourceSymbolFile != nil && targetSymbolFile != nil && c.amalgamatedDuplicates != nil && !isEitherEnum && sourceSymbolFile != targetSymbolFile {
+		firstFile := sourceSymbolFile
+		secondFile := targetSymbolFile
+		if strings.Compare(string(firstFile.Path()), string(secondFile.Path())) > 0 {
+			firstFile, secondFile = secondFile, firstFile
+		}
+		key := string(firstFile.Path()) + "|" + string(secondFile.Path())
+		filesDuplicates := c.amalgamatedDuplicates[key]
+		if filesDuplicates == nil {
+			filesDuplicates = &duplicateInfoForFiles{
+				firstFile:          firstFile,
+				secondFile:         secondFile,
+				conflictingSymbols: make(map[string]*duplicateInfoForSymbol),
+			}
+			c.amalgamatedDuplicates[key] = filesDuplicates
+		}
+		conflictingSymbolInfo := filesDuplicates.conflictingSymbols[symbolName]
+		if conflictingSymbolInfo == nil {
+			conflictingSymbolInfo = &duplicateInfoForSymbol{symbolName: symbolName, symbol: source, isBlockScoped: isEitherBlockScoped}
+			filesDuplicates.conflictingSymbols[symbolName] = conflictingSymbolInfo
+		}
+		if !isSourcePlainJS {
+			for _, addition := range source.Declarations {
+				conflictingSymbolInfo.firstFileLocations = core.AppendIfUnique(conflictingSymbolInfo.firstFileLocations, addition)
+			}
+		}
+		if !isTargetPlainJS {
+			for _, addition := range target.Declarations {
+				conflictingSymbolInfo.secondFileLocations = core.AppendIfUnique(conflictingSymbolInfo.secondFileLocations, addition)
+			}
+		}
+		return
+	}
 	if !isSourcePlainJS {
 		c.addDuplicateDeclarationErrorsForSymbols(source, message, symbolName, target)
 	}

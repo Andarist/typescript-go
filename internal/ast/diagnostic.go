@@ -178,7 +178,7 @@ func (c *DiagnosticsCollection) Lookup(diagnostic *Diagnostic) *Diagnostic {
 	} else {
 		diagnostics = c.getGlobalDiagnosticsLocked()
 	}
-	if i, ok := slices.BinarySearchFunc(diagnostics, diagnostic, CompareDiagnostics); ok {
+	if i, ok := slices.BinarySearchFunc(diagnostics, diagnostic, CompareDiagnosticsNoRelatedInfo); ok {
 		return diagnostics[i]
 	}
 	return nil
@@ -306,7 +306,7 @@ func compareRelatedInfo(r1, r2 []*Diagnostic) int {
 	return 0
 }
 
-func CompareDiagnostics(d1, d2 *Diagnostic) int {
+func CompareDiagnosticsNoRelatedInfo(d1, d2 *Diagnostic) int {
 	if d1 == d2 {
 		return 0
 	}
@@ -335,6 +335,14 @@ func CompareDiagnostics(d1, d2 *Diagnostic) int {
 		return c
 	}
 	c = compareMessageChainContent(d1.MessageChain(), d2.MessageChain())
+	if c != 0 {
+		return c
+	}
+	return 0
+}
+
+func CompareDiagnostics(d1, d2 *Diagnostic) int {
+	c := CompareDiagnosticsNoRelatedInfo(d1, d2)
 	if c != 0 {
 		return c
 	}
