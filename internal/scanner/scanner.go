@@ -875,7 +875,11 @@ func (s *Scanner) Scan() ast.Kind {
 				s.tokenValue = string(s.scanUnicodeEscape(true)) + s.scanIdentifierParts()
 				s.token = GetIdentifierToken(s.tokenValue)
 			} else {
-				s.scanInvalidCharacter()
+				// Match the old compiler's special-case behavior here:
+				// an invalid `\u...` identifier start reports TS1127 with zero width.
+				s.error(diagnostics.Invalid_character)
+				s.pos++
+				s.token = ast.KindUnknown
 			}
 		case '#':
 			if s.charAt(1) == '!' {
