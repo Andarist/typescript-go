@@ -6,13 +6,13 @@
  * @param {number} numberOxen
  */
 function Wagon(numberOxen) {
->Wagon : { (numberOxen: number): void; circle: (wagons?: Wagon[] | undefined) => number; }
+>Wagon : { (numberOxen: number): void; new (numberOxen: number): Wagon; circle: (wagons?: Wagon[] | undefined) => number; }
 >numberOxen : number
 
     this.numberOxen = numberOxen
 >this.numberOxen = numberOxen : number
 >this.numberOxen : any
->this : any
+>this : this
 >numberOxen : any
 >numberOxen : number
 }
@@ -20,7 +20,7 @@ function Wagon(numberOxen) {
 Wagon.circle = function (wagons) {
 >Wagon.circle = function (wagons) {    return wagons ? wagons.length : 3.14;} : (wagons?: Wagon[] | undefined) => number
 >Wagon.circle : (wagons?: Wagon[] | undefined) => number
->Wagon : { (numberOxen: number): void; circle: (wagons?: Wagon[] | undefined) => number; }
+>Wagon : { (numberOxen: number): void; new (numberOxen: number): Wagon; circle: (wagons?: Wagon[] | undefined) => number; }
 >circle : (wagons?: Wagon[] | undefined) => number
 >function (wagons) {    return wagons ? wagons.length : 3.14;} : (wagons?: Wagon[] | undefined) => number
 >wagons : Wagon[] | undefined
@@ -38,7 +38,7 @@ Wagon.prototype.load = function (supplies) {
 >Wagon.prototype.load = function (supplies) {} : (supplies?: any[] | undefined) => void
 >Wagon.prototype.load : any
 >Wagon.prototype : any
->Wagon : { (numberOxen: number): void; circle: (wagons?: Wagon[] | undefined) => number; }
+>Wagon : { (numberOxen: number): void; new (numberOxen: number): Wagon; circle: (wagons?: Wagon[] | undefined) => number; }
 >prototype : any
 >load : any
 >function (supplies) {} : (supplies?: any[] | undefined) => void
@@ -49,7 +49,7 @@ Wagon.prototype.weight = supplies => supplies ? supplies.length : -1
 >Wagon.prototype.weight = supplies => supplies ? supplies.length : -1 : (supplies?: any[] | undefined) => number
 >Wagon.prototype.weight : any
 >Wagon.prototype : any
->Wagon : { (numberOxen: number): void; circle: (wagons?: Wagon[] | undefined) => number; }
+>Wagon : { (numberOxen: number): void; new (numberOxen: number): Wagon; circle: (wagons?: Wagon[] | undefined) => number; }
 >prototype : any
 >weight : any
 >supplies => supplies ? supplies.length : -1 : (supplies?: any[] | undefined) => number
@@ -66,7 +66,7 @@ Wagon.prototype.speed = function () {
 >Wagon.prototype.speed = function () {    return this.numberOxen / this.weight()} : () => number
 >Wagon.prototype.speed : any
 >Wagon.prototype : any
->Wagon : { (numberOxen: number): void; circle: (wagons?: Wagon[] | undefined) => number; }
+>Wagon : { (numberOxen: number): void; new (numberOxen: number): Wagon; circle: (wagons?: Wagon[] | undefined) => number; }
 >prototype : any
 >speed : any
 >function () {    return this.numberOxen / this.weight()} : () => number
@@ -84,12 +84,12 @@ Wagon.prototype.speed = function () {
 // ok
 class Sql extends Wagon {
 >Sql : Sql
->Wagon : { (numberOxen: number): void; circle: (wagons?: Wagon[] | undefined) => number; }
+>Wagon : Wagon
 
     constructor() {
         super(); // error: not enough arguments
 >super() : void
->super : any
+>super : { (numberOxen: number): void; new (numberOxen: number): Wagon; circle: (wagons?: Wagon[] | undefined) => number; }
 
         this.foonly = 12
 >this.foonly = 12 : 12
@@ -122,14 +122,14 @@ class Sql extends Wagon {
             super.speed() // run faster
 >super.speed() : any
 >super.speed : any
->super : any
+>super : Wagon
 >speed : any
 
             if (super.weight() < 0) {
 >super.weight() < 0 : boolean
 >super.weight() : any
 >super.weight : any
->super : any
+>super : Wagon
 >weight : any
 >0 : 0
 
@@ -188,7 +188,7 @@ class Firedrake extends Dragon {
 // ok
 class Conestoga extends Wagon {
 >Conestoga : Conestoga
->Wagon : { (numberOxen: number): void; circle: (wagons?: Wagon[] | undefined) => number; }
+>Wagon : Wagon
 
     constructor(public drunkOO: true) {
 >drunkOO : true
@@ -197,18 +197,18 @@ class Conestoga extends Wagon {
         // error: wrong type
         super('nope');
 >super('nope') : void
->super : any
+>super : { (numberOxen: number): void; new (numberOxen: number): Wagon; circle: (wagons?: Wagon[] | undefined) => number; }
 >'nope' : "nope"
     }
     // should error since others is not optional
     static circle(others: (typeof Wagon)[]) {
->circle : (others: { (numberOxen: number): void; circle: (wagons?: Wagon[] | undefined) => number; }[]) => number
->others : { (numberOxen: number): void; circle: (wagons?: Wagon[] | undefined) => number; }[]
->Wagon : { (numberOxen: number): void; circle: (wagons?: Wagon[] | undefined) => number; }
+>circle : (others: { (numberOxen: number): void; new (numberOxen: number): Wagon; circle: (wagons?: Wagon[] | undefined) => number; }[]) => number
+>others : { (numberOxen: number): void; new (numberOxen: number): Wagon; circle: (wagons?: Wagon[] | undefined) => number; }[]
+>Wagon : { (numberOxen: number): void; new (numberOxen: number): Wagon; circle: (wagons?: Wagon[] | undefined) => number; }
 
         return others.length
 >others.length : number
->others : { (numberOxen: number): void; circle: (wagons?: Wagon[] | undefined) => number; }[]
+>others : { (numberOxen: number): void; new (numberOxen: number): Wagon; circle: (wagons?: Wagon[] | undefined) => number; }[]
 >length : number
     }
 }

@@ -5,12 +5,12 @@
  >AtTop : Symbol(AtTop, Decl(uglify.js, 0, 0))
  >val : Symbol(val, Decl(uglify.js, 4, 15))
 ->this.val : Symbol(AtTop.val, Decl(uglify.js, 4, 21))
-->this : Symbol(AtTop, Decl(uglify.js, 0, 0))
+ >this : Symbol(AtTop, Decl(uglify.js, 0, 0))
 ->val : Symbol(AtTop.val, Decl(uglify.js, 4, 21))
  >val : Symbol(val, Decl(uglify.js, 4, 15))
 
  /** @type {*} */
-@@= skipped -14, +11 lines =@@
+@@= skipped -14, +12 lines =@@
  >AtTop : Symbol(AtTop, Decl(uglify.js, 0, 0))
 
      v.val

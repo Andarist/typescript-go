@@ -1,13 +1,14 @@
 --- old.classCanExtendConstructorFunction.errors.txt
 +++ new.classCanExtendConstructorFunction.errors.txt
 @@= skipped -0, +0 lines =@@
--first.js(23,9): error TS2554: Expected 1 arguments, but got 0.
++first.js(6,10): error TS2339: Property 'numberOxen' does not exist on type 'Wagon'.
++first.js(8,13): error TS2749: 'Wagon' refers to a value, but is being used as a type here. Did you mean 'typeof Wagon'?
+ first.js(23,9): error TS2554: Expected 1 arguments, but got 0.
 -first.js(31,5): error TS2416: Property 'load' in type 'Sql' is not assignable to the same property in base type 'Wagon'.
 -  Type '(files: string[], format: "csv" | "json" | "xmlolololol") => void' is not assignable to type '(supplies?: any[] | undefined) => void'.
 -    Target signature provides too few arguments. Expected 2 or more, but got 1.
-+first.js(6,5): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
-+first.js(8,13): error TS2749: 'Wagon' refers to a value, but is being used as a type here. Did you mean 'typeof Wagon'?
-+first.js(21,19): error TS2507: Type '{ (numberOxen: number): void; circle: (wagons?: Wagon[] | undefined) => number; }' is not a constructor function type.
++first.js(36,19): error TS2339: Property 'speed' does not exist on type 'Wagon'.
++first.js(37,23): error TS2339: Property 'weight' does not exist on type 'Wagon'.
 +first.js(44,4): error TS2339: Property 'numberOxen' does not exist on type 'Sql'.
  first.js(47,24): error TS2507: Type '(numberEaten: number) => void' is not a constructor function type.
 -generic.js(19,19): error TS2554: Expected 1 arguments, but got 0.
@@ -22,28 +23,31 @@
  second.ts(5,5): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
  second.ts(8,25): error TS2507: Type '(numberEaten: number) => void' is not a constructor function type.
 -second.ts(14,7): error TS2417: Class static side 'typeof Conestoga' incorrectly extends base class static side 'typeof Wagon'.
--  Types of property 'circle' are incompatible.
++second.ts(14,7): error TS2417: Class static side 'typeof Conestoga' incorrectly extends base class static side '{ circle: (wagons?: Wagon[] | undefined) => number; }'.
+   Types of property 'circle' are incompatible.
 -    Type '(others: (typeof Wagon)[]) => number' is not assignable to type '(wagons?: Wagon[] | undefined) => number'.
--      Types of parameters 'others' and 'wagons' are incompatible.
++    Type '(others: { (numberOxen: number): void; new (numberOxen: number): Wagon; circle: (wagons?: Wagon[] | undefined) => number; }[]) => number' is not assignable to type '(wagons?: Wagon[] | undefined) => number'.
+       Types of parameters 'others' and 'wagons' are incompatible.
 -        Type 'Wagon[] | undefined' is not assignable to type '(typeof Wagon)[]'.
 -          Type 'undefined' is not assignable to type '(typeof Wagon)[]'.
--second.ts(17,15): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
++        Type 'Wagon[] | undefined' is not assignable to type '{ (numberOxen: number): void; new (numberOxen: number): Wagon; circle: (wagons?: Wagon[] | undefined) => number; }[]'.
++          Type 'undefined' is not assignable to type '{ (numberOxen: number): void; new (numberOxen: number): Wagon; circle: (wagons?: Wagon[] | undefined) => number; }[]'.
+ second.ts(17,15): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
 -
 -
 -==== first.js (3 errors) ====
-+second.ts(14,25): error TS2507: Type '{ (numberOxen: number): void; circle: (wagons?: Wagon[] | undefined) => number; }' is not a constructor function type.
 +second.ts(26,3): error TS2339: Property 'numberOxen' does not exist on type 'Conestoga'.
 +
 +
-+==== first.js (5 errors) ====
++==== first.js (7 errors) ====
      /**
       * @constructor
       * @param {number} numberOxen
       */
      function Wagon(numberOxen) {
          this.numberOxen = numberOxen
-+        ~~~~
-+!!! error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
++             ~~~~~~~~~~
++!!! error TS2339: Property 'numberOxen' does not exist on type 'Wagon'.
      }
      /** @param {Wagon[]=} wagons */
 +                ~~~~~
@@ -51,21 +55,7 @@
      Wagon.circle = function (wagons) {
          return wagons ? wagons.length : 3.14;
      }
-@@= skipped -37, +41 lines =@@
-     }
-     // ok
-     class Sql extends Wagon {
-+                      ~~~~~
-+!!! error TS2507: Type '{ (numberOxen: number): void; circle: (wagons?: Wagon[] | undefined) => number; }' is not a constructor function type.
-         constructor() {
-             super(); // error: not enough arguments
--            ~~~~~
--!!! error TS2554: Expected 1 arguments, but got 0.
--!!! related TS6210 first.js:5:16: An argument for 'numberOxen' was not provided.
-             this.foonly = 12
-         }
-         /**
-@@= skipped -13, +12 lines =@@
+@@= skipped -50, +62 lines =@@
           * This is not assignable, so should have a type error
           */
          load(files, format) {
@@ -76,7 +66,17 @@
              if (format === "xmlolololol") {
                  throw new Error("please do not use XML. It was a joke.");
              }
-@@= skipped -17, +13 lines =@@
+             else {
+                 super.speed() // run faster
++                      ~~~~~
++!!! error TS2339: Property 'speed' does not exist on type 'Wagon'.
+                 if (super.weight() < 0) {
++                          ~~~~~~
++!!! error TS2339: Property 'weight' does not exist on type 'Wagon'.
+                     // ????????????????????????
+                 }
+             }
+@@= skipped -17, +17 lines =@@
      }
      var db = new Sql();
      db.numberOxen = db.foonly
@@ -85,28 +85,33 @@
      
      // error, can't extend a TS constructor function
      class Drakkhen extends Dragon {
-@@= skipped -27, +29 lines =@@
+@@= skipped -8, +10 lines =@@
+     
      }
+     
+-==== second.ts (4 errors) ====
++==== second.ts (5 errors) ====
+     /**
+      * @constructor
+      */
+@@= skipped -20, +20 lines =@@
      // ok
      class Conestoga extends Wagon {
--          ~~~~~~~~~
+           ~~~~~~~~~
 -!!! error TS2417: Class static side 'typeof Conestoga' incorrectly extends base class static side 'typeof Wagon'.
--!!! error TS2417:   Types of property 'circle' are incompatible.
++!!! error TS2417: Class static side 'typeof Conestoga' incorrectly extends base class static side '{ circle: (wagons?: Wagon[] | undefined) => number; }'.
+ !!! error TS2417:   Types of property 'circle' are incompatible.
 -!!! error TS2417:     Type '(others: (typeof Wagon)[]) => number' is not assignable to type '(wagons?: Wagon[] | undefined) => number'.
--!!! error TS2417:       Types of parameters 'others' and 'wagons' are incompatible.
++!!! error TS2417:     Type '(others: { (numberOxen: number): void; new (numberOxen: number): Wagon; circle: (wagons?: Wagon[] | undefined) => number; }[]) => number' is not assignable to type '(wagons?: Wagon[] | undefined) => number'.
+ !!! error TS2417:       Types of parameters 'others' and 'wagons' are incompatible.
 -!!! error TS2417:         Type 'Wagon[] | undefined' is not assignable to type '(typeof Wagon)[]'.
 -!!! error TS2417:           Type 'undefined' is not assignable to type '(typeof Wagon)[]'.
-+                            ~~~~~
-+!!! error TS2507: Type '{ (numberOxen: number): void; circle: (wagons?: Wagon[] | undefined) => number; }' is not a constructor function type.
++!!! error TS2417:         Type 'Wagon[] | undefined' is not assignable to type '{ (numberOxen: number): void; new (numberOxen: number): Wagon; circle: (wagons?: Wagon[] | undefined) => number; }[]'.
++!!! error TS2417:           Type 'undefined' is not assignable to type '{ (numberOxen: number): void; new (numberOxen: number): Wagon; circle: (wagons?: Wagon[] | undefined) => number; }[]'.
          constructor(public drunkOO: true) {
              // error: wrong type
              super('nope');
--                  ~~~~~~
--!!! error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
-         }
-         // should error since others is not optional
-         static circle(others: (typeof Wagon)[]) {
-@@= skipped -21, +14 lines =@@
+@@= skipped -20, +20 lines =@@
      var c = new Conestoga(true);
      c.drunkOO
      c.numberOxen

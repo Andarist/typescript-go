@@ -103,16 +103,11 @@
   */
  function D(n) {
 ->D : typeof D
-+>D : (n: number) => void
++>D : { (n: number): void; new (n: number): D; }
  >n : number
 
    this.length = n;
- >this.length = n : number
- >this.length : any
-->this : this
-+>this : any
- >length : any
- >n : number
+@@= skipped -12, +12 lines =@@
  }
 
  var y2 = id2(D);
@@ -123,7 +118,7 @@
 +>y2 : function
 +>id2(D) : function
 +>id2 : (c: any) => function
-+>D : (n: number) => void
++>D : { (n: number): void; new (n: number): D; }
 
  var z2 = new y2(33);
 ->z2 : { length: number; }
@@ -144,7 +139,7 @@
 
 
  /** 
-@@= skipped -34, +34 lines =@@
+@@= skipped -22, +22 lines =@@
   * @return {D}
   */
  var construct = function(dref) { return new dref(33); }
@@ -166,7 +161,7 @@
 ->construct : (dref: new (arg1: number) => D) => D
 ->D : typeof D
 +>construct : (dref: any) => D
-+>D : (n: number) => void
++>D : { (n: number): void; new (n: number): D; }
 
  z3.length;
 ->z3.length : number

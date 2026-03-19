@@ -38,6 +38,10 @@ function C() {
 >C : Symbol(C, Decl(thisPropertyAssignmentCircular.js, 10, 1))
 
     this.x = 0;
+>this : Symbol(C, Decl(thisPropertyAssignmentCircular.js, 10, 1))
+
     this.x = function() { this.x.toString(); }
+>this : Symbol(C, Decl(thisPropertyAssignmentCircular.js, 10, 1))
+>this : Symbol(C, Decl(thisPropertyAssignmentCircular.js, 10, 1))
 }
 

@@ -10,6 +10,7 @@ function Wagon(numberOxen) {
 >numberOxen : Symbol(numberOxen, Decl(first.js, 4, 15))
 
     this.numberOxen = numberOxen
+>this : Symbol(Wagon, Decl(first.js, 0, 0))
 >numberOxen : Symbol(numberOxen, Decl(first.js, 4, 15))
 }
 /** @param {Wagon[]=} wagons */
@@ -57,6 +58,8 @@ class Sql extends Wagon {
 
     constructor() {
         super(); // error: not enough arguments
+>super : Symbol(Wagon, Decl(first.js, 0, 0))
+
         this.foonly = 12
 >this.foonly : Symbol(Sql.foonly, Decl(first.js, 22, 16))
 >this : Symbol(Sql, Decl(first.js, 18, 1))
@@ -80,7 +83,11 @@ class Sql extends Wagon {
         }
         else {
             super.speed() // run faster
+>super : Symbol(Wagon, Decl(first.js, 0, 0))
+
             if (super.weight() < 0) {
+>super : Symbol(Wagon, Decl(first.js, 0, 0))
+
                 // ????????????????????????
             }
         }
@@ -133,6 +140,7 @@ class Conestoga extends Wagon {
 
         // error: wrong type
         super('nope');
+>super : Symbol(Wagon, Decl(first.js, 0, 0))
     }
     // should error since others is not optional
     static circle(others: (typeof Wagon)[]) {

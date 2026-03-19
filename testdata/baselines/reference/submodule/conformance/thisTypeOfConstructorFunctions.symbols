@@ -12,11 +12,17 @@ function Cp(t) {
 
     /** @type {this} */
     this.dit = this
+>this : Symbol(Cp, Decl(thisTypeOfConstructorFunctions.js, 0, 0))
+>this : Symbol(Cp, Decl(thisTypeOfConstructorFunctions.js, 0, 0))
+
     this.y = t
+>this : Symbol(Cp, Decl(thisTypeOfConstructorFunctions.js, 0, 0))
 >t : Symbol(t, Decl(thisTypeOfConstructorFunctions.js, 5, 12))
 
     /** @return {this} */
     this.m3 = () => this
+>this : Symbol(Cp, Decl(thisTypeOfConstructorFunctions.js, 0, 0))
+>this : Symbol(Cp, Decl(thisTypeOfConstructorFunctions.js, 0, 0))
 }
 
 Cp.prototype = {
@@ -45,6 +51,7 @@ function Cpp(t) {
 >t : Symbol(t, Decl(thisTypeOfConstructorFunctions.js, 25, 13))
 
     this.y = t
+>this : Symbol(Cpp, Decl(thisTypeOfConstructorFunctions.js, 18, 1))
 >t : Symbol(t, Decl(thisTypeOfConstructorFunctions.js, 25, 13))
 }
 /** @return {this} */

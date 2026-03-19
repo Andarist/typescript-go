@@ -5,16 +5,15 @@
   */
  function Multimap() {
 ->Multimap : typeof Multimap
-+>Multimap : <K extends string, V>() => void
++>Multimap : { <K extends string, V>(): void; new <K extends string, V>(): Multimap; }
 
      /** @type {Object<string, V>} TODO: Remove the prototype from the fresh object */
      this._map = {};
  >this._map = {} : {}
 ->this._map : { [x: string]: V; }
-->this : this
-->_map : { [x: string]: V; }
 +>this._map : any
-+>this : any
+ >this : this
+->_map : { [x: string]: V; }
 +>_map : any
  >{} : {}
 
@@ -24,7 +23,7 @@
  >Multimap.prototype.get : any
  >Multimap.prototype : any
 ->Multimap : typeof Multimap
-+>Multimap : <K extends string, V>() => void
++>Multimap : { <K extends string, V>(): void; new <K extends string, V>(): Multimap; }
  >prototype : any
  >get : any
  >function (key) {    return this._map[key + ''];} : (key: K) => V

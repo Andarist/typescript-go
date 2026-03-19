@@ -8,13 +8,13 @@
  * @template V
  */
 function Multimap() {
->Multimap : { <K extends string, V>(): void; prototype: { get(key: K): V; }; }
+>Multimap : { <K extends string, V>(): void; new <K extends string, V>(): Multimap; prototype: { get(key: K): V; }; }
 
     /** @type {Object<string, V>} TODO: Remove the prototype from the fresh object */
     this._map = {};
 >this._map = {} : {}
 >this._map : any
->this : any
+>this : this
 >_map : any
 >{} : {}
 
@@ -23,7 +23,7 @@ function Multimap() {
 Multimap.prototype = {
 >Multimap.prototype = {    /**     * @param {K} key the key ok     * @returns {V} the value ok     */    get(key) {        return this._map[key + ''];    }} : { get(key: K): V; }
 >Multimap.prototype : { get(key: K): V; }
->Multimap : { <K extends string, V>(): void; prototype: { get(key: K): V; }; }
+>Multimap : { <K extends string, V>(): void; new <K extends string, V>(): Multimap; prototype: { get(key: K): V; }; }
 >prototype : { get(key: K): V; }
 >{    /**     * @param {K} key the key ok     * @returns {V} the value ok     */    get(key) {        return this._map[key + ''];    }} : { get(key: K): V; }
 

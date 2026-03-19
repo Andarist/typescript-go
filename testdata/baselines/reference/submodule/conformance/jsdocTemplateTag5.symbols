@@ -12,6 +12,8 @@ function Multimap() {
 
     /** @type {Object<string, V>} TODO: Remove the prototype from the fresh object */
     this._map = {};
+>this : Symbol(Multimap, Decl(a.js, 0, 0))
+
 };
 
 Multimap.prototype = {

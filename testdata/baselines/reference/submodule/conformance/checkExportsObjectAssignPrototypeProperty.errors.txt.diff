@@ -1,7 +1,7 @@
 --- old.checkExportsObjectAssignPrototypeProperty.errors.txt
 +++ new.checkExportsObjectAssignPrototypeProperty.errors.txt
 @@= skipped -0, +0 lines =@@
-+mod1.js(6,5): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
++mod1.js(6,10): error TS2339: Property 'name' does not exist on type 'Person'.
  validator.ts(1,8): error TS2882: Cannot find module or type declarations for side-effect import of './'.
 -validator.ts(19,4): error TS2540: Cannot assign to 'readonlyProp' because it is a read-only property.
 -validator.ts(20,4): error TS2540: Cannot assign to 'readonlyAccessor' because it is a read-only property.
@@ -57,8 +57,8 @@
       */
      function Person(name) {
          this.name = name;
-+        ~~~~
-+!!! error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
++             ~~~~
++!!! error TS2339: Property 'name' does not exist on type 'Person'.
      }
      Person.prototype.describe = function () {
          return "Person called " + this.name;

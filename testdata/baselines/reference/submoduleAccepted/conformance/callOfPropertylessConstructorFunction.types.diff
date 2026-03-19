@@ -5,7 +5,7 @@
   */
  function Dependency(j) {
 ->Dependency : typeof Dependency
-+>Dependency : (j: any) => any
++>Dependency : { (j: any): any; new (j: any): Dependency; }
  >j : any
 
    return j
@@ -14,5 +14,5 @@
  Dependency({})
  >Dependency({}) : any
 ->Dependency : typeof Dependency
-+>Dependency : (j: any) => any
++>Dependency : { (j: any): any; new (j: any): Dependency; }
  >{} : {}

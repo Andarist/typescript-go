@@ -25,9 +25,16 @@ function F() {
 >F : Symbol(F, Decl(a.js, 10, 20))
 
   this.a = {};
+>this : Symbol(F, Decl(a.js, 10, 20))
+
   this.a.b = {};
+>this : Symbol(F, Decl(a.js, 10, 20))
+
   this["b"] = {};
+>this : Symbol(F, Decl(a.js, 10, 20))
+
   this["b"]["c"] = {};
+>this : Symbol(F, Decl(a.js, 10, 20))
 }
 
 const f = new F();

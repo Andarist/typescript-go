@@ -273,11 +273,11 @@ if (x instanceof ctor) {
  * @param {any} val
  */
 function AtTop(val) { this.val = val }
->AtTop : (val: any) => void
+>AtTop : { (val: any): void; new (val: any): AtTop; }
 >val : any
 >this.val = val : any
 >this.val : any
->this : any
+>this : this
 >val : any
 >val : any
 
@@ -289,11 +289,11 @@ var v = 1;
 if (v instanceof AtTop) {
 >v instanceof AtTop : boolean
 >v : any
->AtTop : (val: any) => void
+>AtTop : { (val: any): void; new (val: any): AtTop; }
 
     v.val
 >v.val : any
->v : {}
+>v : AtTop
 >val : any
 }
 

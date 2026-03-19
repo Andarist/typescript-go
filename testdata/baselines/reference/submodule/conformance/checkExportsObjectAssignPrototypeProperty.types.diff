@@ -5,7 +5,7 @@
 
  import Person = require("./mod1");
 ->Person : typeof Person
-+>Person : (name: string) => void
++>Person : { (name: string): void; new (name: string): Person; }
 
  const m1 = new Person("Name")
 ->m1 : Person
@@ -13,7 +13,7 @@
 ->Person : typeof Person
 +>m1 : any
 +>new Person("Name") : any
-+>Person : (name: string) => void
++>Person : { (name: string): void; new (name: string): Person; }
  >"Name" : "Name"
 
  m1.thing;
@@ -140,23 +140,16 @@
   */
  function Person(name) {
 ->Person : typeof Person
-+>Person : (name: string) => void
++>Person : { (name: string): void; new (name: string): Person; }
  >name : string
 
      this.name = name;
- >this.name = name : string
- >this.name : any
-->this : this
-+>this : any
- >name : any
- >name : string
- }
 @@= skipped -14, +14 lines =@@
  >Person.prototype.describe = function () {    return "Person called " + this.name;} : () => string
  >Person.prototype.describe : any
  >Person.prototype : any
 ->Person : typeof Person
-+>Person : (name: string) => void
++>Person : { (name: string): void; new (name: string): Person; }
  >prototype : any
  >describe : any
  >function () {    return "Person called " + this.name;} : () => string
@@ -178,7 +171,7 @@
  >defineProperty : <T>(o: T, p: PropertyKey, attributes: PropertyDescriptor & ThisType<any>) => T
  >Person.prototype : any
 ->Person : typeof Person
-+>Person : (name: string) => void
++>Person : { (name: string): void; new (name: string): Person; }
  >prototype : any
  >"thing" : "thing"
  >{ value: 42, writable: true } : { value: number; writable: true; }
@@ -187,7 +180,7 @@
  >defineProperty : <T>(o: T, p: PropertyKey, attributes: PropertyDescriptor & ThisType<any>) => T
  >Person.prototype : any
 ->Person : typeof Person
-+>Person : (name: string) => void
++>Person : { (name: string): void; new (name: string): Person; }
  >prototype : any
  >"readonlyProp" : "readonlyProp"
  >{ value: "Smith", writable: false } : { value: string; writable: false; }
@@ -196,7 +189,7 @@
  >defineProperty : <T>(o: T, p: PropertyKey, attributes: PropertyDescriptor & ThisType<any>) => T
  >Person.prototype : any
 ->Person : typeof Person
-+>Person : (name: string) => void
++>Person : { (name: string): void; new (name: string): Person; }
  >prototype : any
  >"rwAccessors" : "rwAccessors"
  >{ get() { return 98122 }, set(_) { /*ignore*/ } } : { get(): number; set(_: any): void; }
@@ -205,7 +198,7 @@
  >defineProperty : <T>(o: T, p: PropertyKey, attributes: PropertyDescriptor & ThisType<any>) => T
  >Person.prototype : any
 ->Person : typeof Person
-+>Person : (name: string) => void
++>Person : { (name: string): void; new (name: string): Person; }
  >prototype : any
  >"readonlyAccessor" : "readonlyAccessor"
  >{ get() { return 21.75 } } : { get(): number; }
@@ -214,7 +207,7 @@
  >defineProperty : <T>(o: T, p: PropertyKey, attributes: PropertyDescriptor & ThisType<any>) => T
  >Person.prototype : any
 ->Person : typeof Person
-+>Person : (name: string) => void
++>Person : { (name: string): void; new (name: string): Person; }
  >prototype : any
  >"setonlyAccessor" : "setonlyAccessor"
  >{    /** @param {string} str */    set(str) {        this.rwAccessors = Number(str)    }} : { set(str: string): void; }
@@ -239,8 +232,8 @@
 ->module : { exports: typeof Person; }
 ->exports : typeof Person
 ->Person : typeof Person
-+>module.exports = Person : (name: string) => void
-+>module.exports : (name: string) => void
++>module.exports = Person : { (name: string): void; new (name: string): Person; }
++>module.exports : { (name: string): void; new (name: string): Person; }
 +>module : { Person(name: string): void; }
-+>exports : (name: string) => void
-+>Person : (name: string) => void
++>exports : { (name: string): void; new (name: string): Person; }
++>Person : { (name: string): void; new (name: string): Person; }

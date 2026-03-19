@@ -42,12 +42,12 @@ this["y"]["z"] = {};
 
 /** @constructor */
 function F() {
->F : () => void
+>F : { (): void; new (): F; }
 
   this.a = {};
 >this.a = {} : {}
 >this.a : any
->this : any
+>this : this
 >a : any
 >{} : {}
 
@@ -55,7 +55,7 @@ function F() {
 >this.a.b = {} : {}
 >this.a.b : any
 >this.a : any
->this : any
+>this : this
 >a : any
 >b : any
 >{} : {}
@@ -63,7 +63,7 @@ function F() {
   this["b"] = {};
 >this["b"] = {} : {}
 >this["b"] : any
->this : any
+>this : this
 >"b" : "b"
 >{} : {}
 
@@ -71,7 +71,7 @@ function F() {
 >this["b"]["c"] = {} : {}
 >this["b"]["c"] : any
 >this["b"] : any
->this : any
+>this : this
 >"b" : "b"
 >"c" : "c"
 >{} : {}
@@ -80,7 +80,7 @@ function F() {
 const f = new F();
 >f : any
 >new F() : any
->F : () => void
+>F : { (): void; new (): F; }
 
 f.a;
 >f.a : any

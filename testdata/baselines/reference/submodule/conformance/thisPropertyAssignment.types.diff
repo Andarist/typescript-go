@@ -43,46 +43,32 @@
  /** @constructor */
  function F() {
 ->F : typeof F
-+>F : () => void
++>F : { (): void; new (): F; }
 
    this.a = {};
  >this.a = {} : {}
- >this.a : any
-->this : this
-+>this : any
- >a : any
- >{} : {}
-
+@@= skipped -12, +12 lines =@@
    this.a.b = {};
  >this.a.b = {} : {}
  >this.a.b : any
 ->this.a : {}
-->this : this
-->a : {}
 +>this.a : any
-+>this : any
+ >this : this
+->a : {}
 +>a : any
  >b : any
  >{} : {}
 
-   this["b"] = {};
- >this["b"] = {} : {}
- >this["b"] : any
-->this : this
-+>this : any
- >"b" : "b"
- >{} : {}
-
+@@= skipped -16, +16 lines =@@
    this["b"]["c"] = {};
  >this["b"]["c"] = {} : {}
  >this["b"]["c"] : any
 ->this["b"] : {}
-->this : this
 +>this["b"] : any
-+>this : any
+ >this : this
  >"b" : "b"
  >"c" : "c"
- >{} : {}
+@@= skipped -8, +8 lines =@@
  }
 
  const f = new F();
@@ -91,7 +77,7 @@
 ->F : typeof F
 +>f : any
 +>new F() : any
-+>F : () => void
++>F : { (): void; new (): F; }
 
  f.a;
 ->f.a : {}

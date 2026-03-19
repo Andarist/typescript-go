@@ -62,7 +62,10 @@ function Cp(t) {
 >t : Symbol(t, Decl(propertiesOfGenericConstructorFunctions.js, 32, 12))
 
     this.x = 1
+>this : Symbol(Cp, Decl(propertiesOfGenericConstructorFunctions.js, 25, 23))
+
     this.y = t
+>this : Symbol(Cp, Decl(propertiesOfGenericConstructorFunctions.js, 25, 23))
 >t : Symbol(t, Decl(propertiesOfGenericConstructorFunctions.js, 32, 12))
 }
 Cp.prototype = {

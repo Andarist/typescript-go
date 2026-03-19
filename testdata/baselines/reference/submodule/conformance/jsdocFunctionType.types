@@ -89,13 +89,13 @@ var f = function (ab, onetwo) { return ab === "a" ? 3 : 4;  }
  * @param {number} n
  */
 function D(n) {
->D : (n: number) => void
+>D : { (n: number): void; new (n: number): D; }
 >n : number
 
   this.length = n;
 >this.length = n : number
 >this.length : any
->this : any
+>this : this
 >length : any
 >n : number
 }
@@ -104,7 +104,7 @@ var y2 = id2(D);
 >y2 : function
 >id2(D) : function
 >id2 : (c: any) => function
->D : (n: number) => void
+>D : { (n: number): void; new (n: number): D; }
 
 var z2 = new y2(33);
 >z2 : any
@@ -134,7 +134,7 @@ var z3 = construct(D);
 >z3 : D
 >construct(D) : D
 >construct : (dref: any) => D
->D : (n: number) => void
+>D : { (n: number): void; new (n: number): D; }
 
 z3.length;
 >z3.length : any

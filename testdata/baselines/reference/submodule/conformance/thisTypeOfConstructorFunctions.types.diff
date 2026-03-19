@@ -5,42 +5,21 @@
   */
  function Cp(t) {
 ->Cp : typeof Cp
-+>Cp : { <T>(t: T): void; prototype: { m4(): any; }; }
++>Cp : { <T>(t: T): void; new <T>(t: T): Cp; prototype: { m4(): any; }; }
  >t : T
 
      /** @type {this} */
      this.dit = this
-->this.dit = this : this
+ >this.dit = this : this
 ->this.dit : this
-->this : this
-->dit : this
-->this : this
-+>this.dit = this : any
 +>this.dit : any
-+>this : any
+ >this : this
+->dit : this
 +>dit : any
-+>this : any
+ >this : this
 
      this.y = t
- >this.y = t : T
- >this.y : any
-->this : this
-+>this : any
- >y : any
- >t : T
-
-     /** @return {this} */
-     this.m3 = () => this
-->this.m3 = () => this : () => this
-+>this.m3 = () => this : () => any
- >this.m3 : any
-->this : this
-+>this : any
- >m3 : any
-->() => this : () => this
-->this : this
-+>() => this : () => any
-+>this : any
+@@= skipped -29, +29 lines =@@
  }
 
  Cp.prototype = {
@@ -51,7 +30,7 @@
 ->{    /** @return {this} */    m4() {        this.z = this.y; return this    }} : { m4(): this; }
 +>Cp.prototype = {    /** @return {this} */    m4() {        this.z = this.y; return this    }} : { m4(): any; }
 +>Cp.prototype : { m4(): any; }
-+>Cp : { <T>(t: T): void; prototype: { m4(): any; }; }
++>Cp : { <T>(t: T): void; new <T>(t: T): Cp; prototype: { m4(): any; }; }
 +>prototype : { m4(): any; }
 +>{    /** @return {this} */    m4() {        this.z = this.y; return this    }} : { m4(): any; }
 
@@ -80,21 +59,16 @@
      }
  }
 
-@@= skipped -57, +57 lines =@@
+@@= skipped -28, +28 lines =@@
   * @param {T} t
   */
  function Cpp(t) {
 ->Cpp : typeof Cpp
-+>Cpp : <T>(t: T) => void
++>Cpp : { <T>(t: T): void; new <T>(t: T): Cpp; }
  >t : T
 
      this.y = t
- >this.y = t : T
- >this.y : any
-->this : this
-+>this : any
- >y : any
- >t : T
+@@= skipped -12, +12 lines =@@
  }
  /** @return {this} */
  Cpp.prototype.m2 = function () {
@@ -103,7 +77,7 @@
  >Cpp.prototype.m2 : any
  >Cpp.prototype : any
 ->Cpp : typeof Cpp
-+>Cpp : <T>(t: T) => void
++>Cpp : { <T>(t: T): void; new <T>(t: T): Cpp; }
  >prototype : any
  >m2 : any
 ->function () {    this.z = this.y; return this} : () => this
@@ -134,7 +108,7 @@
 ->Cp : typeof Cp
 +>cp : any
 +>new Cp(1) : any
-+>Cp : { <T>(t: T): void; prototype: { m4(): any; }; }
++>Cp : { <T>(t: T): void; new <T>(t: T): Cp; prototype: { m4(): any; }; }
  >1 : 1
 
  var cpp = new Cpp(2)
@@ -143,7 +117,7 @@
 ->Cpp : typeof Cpp
 +>cpp : any
 +>new Cpp(2) : any
-+>Cpp : <T>(t: T) => void
++>Cpp : { <T>(t: T): void; new <T>(t: T): Cpp; }
  >2 : 2
 
  cp.dit

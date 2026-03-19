@@ -5,7 +5,7 @@
  * @constructor
  */
 function Dependency(j) {
->Dependency : (j: any) => any
+>Dependency : { (j: any): any; new (j: any): Dependency; }
 >j : any
 
   return j
@@ -13,6 +13,6 @@ function Dependency(j) {
 }
 Dependency({})
 >Dependency({}) : any
->Dependency : (j: any) => any
+>Dependency : { (j: any): any; new (j: any): Dependency; }
 >{} : {}
 

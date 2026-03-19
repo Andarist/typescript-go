@@ -77,7 +77,7 @@
 
      this.name = name;
 ->this.name : Symbol(Person.name, Decl(mod1.js, 4, 23))
-->this : Symbol(Person, Decl(mod1.js, 0, 0))
+ >this : Symbol(Person, Decl(mod1.js, 0, 0))
 ->name : Symbol(Person.name, Decl(mod1.js, 4, 23))
  >name : Symbol(name, Decl(mod1.js, 4, 16))
  }
@@ -96,7 +96,7 @@
  };
  Object.defineProperty(Person.prototype, "thing", { value: 42, writable: true });
  >Object.defineProperty : Symbol(ObjectConstructor.defineProperty, Decl(lib.es5.d.ts, --, --))
-@@= skipped -24, +16 lines =@@
+@@= skipped -24, +17 lines =@@
  >Person.prototype : Symbol(Function.prototype, Decl(lib.es5.d.ts, --, --))
  >Person : Symbol(Person, Decl(mod1.js, 0, 0))
  >prototype : Symbol(Function.prototype, Decl(lib.es5.d.ts, --, --))

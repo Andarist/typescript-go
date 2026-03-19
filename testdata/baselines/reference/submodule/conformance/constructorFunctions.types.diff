@@ -93,20 +93,19 @@
  /** @class */
  function C3() {
 ->C3 : typeof C3
-+>C3 : () => any
++>C3 : { (): any; new (): C3; }
 
      if (!(this instanceof C3)) return new C3();
  >!(this instanceof C3) : boolean
  >(this instanceof C3) : boolean
  >this instanceof C3 : boolean
-->this : this
+ >this : this
 ->C3 : typeof C3
 ->new C3() : C3
 ->C3 : typeof C3
-+>this : any
-+>C3 : () => any
++>C3 : { (): any; new (): C3; }
 +>new C3() : any
-+>C3 : () => any
++>C3 : { (): any; new (): C3; }
 
  };
 
@@ -114,7 +113,7 @@
  >c3_v1 : any
  >C3() : any
 ->C3 : typeof C3
-+>C3 : () => any
++>C3 : { (): any; new (): C3; }
 
  const c3_v2 = new C3();
 ->c3_v2 : C3
@@ -122,7 +121,7 @@
 ->C3 : typeof C3
 +>c3_v2 : any
 +>new C3() : any
-+>C3 : () => any
++>C3 : { (): any; new (): C3; }
 
  /** @class */
  var C4 = function () {
@@ -183,16 +182,10 @@
  /** @class */
  function C6() {
 ->C6 : typeof C6
-+>C6 : () => void
++>C6 : { (): void; new (): C6; }
 
    this.functions = [x => x, x => x + 1, x => x - 1]
  >this.functions = [x => x, x => x + 1, x => x - 1] : ((x: any) => any)[]
- >this.functions : any
-->this : this
-+>this : any
- >functions : any
- >[x => x, x => x + 1, x => x - 1] : ((x: any) => any)[]
- >x => x : (x: any) => any
 @@= skipped -30, +30 lines =@@
  };
 
@@ -202,7 +195,7 @@
 ->C6 : typeof C6
 +>c6_v1 : any
 +>new C6() : any
-+>C6 : () => void
++>C6 : { (): void; new (): C6; }
 
 
  /**
@@ -211,7 +204,7 @@
   */
  function C7(num) {}
 ->C7 : typeof C7
-+>C7 : (num: number) => void
++>C7 : { (num: number): void; new (num: number): C7; }
  >num : number
 
  var c7_v1 = new C7();
@@ -220,4 +213,4 @@
 ->C7 : typeof C7
 +>c7_v1 : any
 +>new C7() : any
-+>C7 : (num: number) => void
++>C7 : { (num: number): void; new (num: number): C7; }

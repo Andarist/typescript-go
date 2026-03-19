@@ -258,6 +258,7 @@ if (x instanceof ctor) {
 function AtTop(val) { this.val = val }
 >AtTop : Symbol(AtTop, Decl(uglify.js, 0, 0))
 >val : Symbol(val, Decl(uglify.js, 4, 15))
+>this : Symbol(AtTop, Decl(uglify.js, 0, 0))
 >val : Symbol(val, Decl(uglify.js, 4, 15))
 
 /** @type {*} */

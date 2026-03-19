@@ -2,14 +2,13 @@ index.js(2,39): error TS2350: Only a void function can be called with the 'new' 
 index.js(7,15): error TS2350: Only a void function can be called with the 'new' keyword.
 index.js(10,39): error TS2350: Only a void function can be called with the 'new' keyword.
 index.js(15,15): error TS2350: Only a void function can be called with the 'new' keyword.
-index.js(19,39): error TS2350: Only a void function can be called with the 'new' keyword.
-index.js(23,15): error TS2350: Only a void function can be called with the 'new' keyword.
 index.js(27,39): error TS2350: Only a void function can be called with the 'new' keyword.
 index.js(31,15): error TS2350: Only a void function can be called with the 'new' keyword.
+index.js(43,8): error TS2339: Property 'functions' does not exist on type 'C6'.
 index.js(55,13): error TS2554: Expected 1 arguments, but got 0.
 
 
-==== index.js (9 errors) ====
+==== index.js (8 errors) ====
     function C1() {
         if (!(this instanceof C1)) return new C1();
                                           ~~~~~~~~
@@ -37,14 +36,10 @@ index.js(55,13): error TS2554: Expected 1 arguments, but got 0.
     /** @class */
     function C3() {
         if (!(this instanceof C3)) return new C3();
-                                          ~~~~~~~~
-!!! error TS2350: Only a void function can be called with the 'new' keyword.
     };
     
     const c3_v1 = C3(); // error: @class tag requires 'new'
     const c3_v2 = new C3();
-                  ~~~~~~~~
-!!! error TS2350: Only a void function can be called with the 'new' keyword.
     
     /** @class */
     var C4 = function () {
@@ -69,6 +64,8 @@ index.js(55,13): error TS2554: Expected 1 arguments, but got 0.
     /** @class */
     function C6() {
       this.functions = [x => x, x => x + 1, x => x - 1]
+           ~~~~~~~~~
+!!! error TS2339: Property 'functions' does not exist on type 'C6'.
     };
     
     var c6_v1 = new C6();

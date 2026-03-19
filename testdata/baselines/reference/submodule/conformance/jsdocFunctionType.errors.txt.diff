@@ -20,7 +20,7 @@
 +functions.js(30,21): error TS1005: '}' expected.
 +functions.js(31,19): error TS7006: Parameter 'ab' implicitly has an 'any' type.
 +functions.js(31,23): error TS7006: Parameter 'onetwo' implicitly has an 'any' type.
-+functions.js(39,3): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
++functions.js(39,8): error TS2339: Property 'length' does not exist on type 'D'.
 +functions.js(48,20): error TS1005: '}' expected.
 +functions.js(49,13): error TS2749: 'D' refers to a value, but is being used as a type here. Did you mean 'typeof D'?
 +functions.js(51,26): error TS7006: Parameter 'dref' implicitly has an 'any' type.
@@ -89,8 +89,8 @@
       */
      function D(n) {
        this.length = n;
-+      ~~~~
-+!!! error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
++           ~~~~~~
++!!! error TS2339: Property 'length' does not exist on type 'D'.
      }
      
      var y2 = id2(D);

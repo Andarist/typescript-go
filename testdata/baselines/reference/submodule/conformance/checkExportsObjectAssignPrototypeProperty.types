@@ -4,12 +4,12 @@
 import "./";
 
 import Person = require("./mod1");
->Person : (name: string) => void
+>Person : { (name: string): void; new (name: string): Person; }
 
 const m1 = new Person("Name")
 >m1 : any
 >new Person("Name") : any
->Person : (name: string) => void
+>Person : { (name: string): void; new (name: string): Person; }
 >"Name" : "Name"
 
 m1.thing;
@@ -102,13 +102,13 @@ m1.setonlyAccessor = 0;
  * @param {string} name
  */
 function Person(name) {
->Person : (name: string) => void
+>Person : { (name: string): void; new (name: string): Person; }
 >name : string
 
     this.name = name;
 >this.name = name : string
 >this.name : any
->this : any
+>this : this
 >name : any
 >name : string
 }
@@ -116,7 +116,7 @@ Person.prototype.describe = function () {
 >Person.prototype.describe = function () {    return "Person called " + this.name;} : () => string
 >Person.prototype.describe : any
 >Person.prototype : any
->Person : (name: string) => void
+>Person : { (name: string): void; new (name: string): Person; }
 >prototype : any
 >describe : any
 >function () {    return "Person called " + this.name;} : () => string
@@ -135,7 +135,7 @@ Object.defineProperty(Person.prototype, "thing", { value: 42, writable: true });
 >Object : ObjectConstructor
 >defineProperty : <T>(o: T, p: PropertyKey, attributes: PropertyDescriptor & ThisType<any>) => T
 >Person.prototype : any
->Person : (name: string) => void
+>Person : { (name: string): void; new (name: string): Person; }
 >prototype : any
 >"thing" : "thing"
 >{ value: 42, writable: true } : { value: number; writable: true; }
@@ -150,7 +150,7 @@ Object.defineProperty(Person.prototype, "readonlyProp", { value: "Smith", writab
 >Object : ObjectConstructor
 >defineProperty : <T>(o: T, p: PropertyKey, attributes: PropertyDescriptor & ThisType<any>) => T
 >Person.prototype : any
->Person : (name: string) => void
+>Person : { (name: string): void; new (name: string): Person; }
 >prototype : any
 >"readonlyProp" : "readonlyProp"
 >{ value: "Smith", writable: false } : { value: string; writable: false; }
@@ -165,7 +165,7 @@ Object.defineProperty(Person.prototype, "rwAccessors", { get() { return 98122 },
 >Object : ObjectConstructor
 >defineProperty : <T>(o: T, p: PropertyKey, attributes: PropertyDescriptor & ThisType<any>) => T
 >Person.prototype : any
->Person : (name: string) => void
+>Person : { (name: string): void; new (name: string): Person; }
 >prototype : any
 >"rwAccessors" : "rwAccessors"
 >{ get() { return 98122 }, set(_) { /*ignore*/ } } : { get(): number; set(_: any): void; }
@@ -180,7 +180,7 @@ Object.defineProperty(Person.prototype, "readonlyAccessor", { get() { return 21.
 >Object : ObjectConstructor
 >defineProperty : <T>(o: T, p: PropertyKey, attributes: PropertyDescriptor & ThisType<any>) => T
 >Person.prototype : any
->Person : (name: string) => void
+>Person : { (name: string): void; new (name: string): Person; }
 >prototype : any
 >"readonlyAccessor" : "readonlyAccessor"
 >{ get() { return 21.75 } } : { get(): number; }
@@ -193,7 +193,7 @@ Object.defineProperty(Person.prototype, "setonlyAccessor", {
 >Object : ObjectConstructor
 >defineProperty : <T>(o: T, p: PropertyKey, attributes: PropertyDescriptor & ThisType<any>) => T
 >Person.prototype : any
->Person : (name: string) => void
+>Person : { (name: string): void; new (name: string): Person; }
 >prototype : any
 >"setonlyAccessor" : "setonlyAccessor"
 >{    /** @param {string} str */    set(str) {        this.rwAccessors = Number(str)    }} : { set(str: string): void; }
@@ -214,9 +214,9 @@ Object.defineProperty(Person.prototype, "setonlyAccessor", {
     }
 });
 module.exports = Person;
->module.exports = Person : (name: string) => void
->module.exports : (name: string) => void
+>module.exports = Person : { (name: string): void; new (name: string): Person; }
+>module.exports : { (name: string): void; new (name: string): Person; }
 >module : { Person(name: string): void; }
->exports : (name: string) => void
->Person : (name: string) => void
+>exports : { (name: string): void; new (name: string): Person; }
+>Person : { (name: string): void; new (name: string): Person; }
 

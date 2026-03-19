@@ -16,10 +16,12 @@
 +  Property 'y' does not exist on type 'typeof globalThis'.
 +a.js(11,1): error TS7053: Element implicitly has an 'any' type because expression of type '"y"' can't be used to index type 'typeof globalThis'.
 +  Property 'y' does not exist on type 'typeof globalThis'.
-+a.js(15,3): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
-+a.js(16,3): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
-+a.js(17,3): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
-+a.js(18,3): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
++a.js(15,8): error TS2339: Property 'a' does not exist on type 'F'.
++a.js(16,8): error TS2339: Property 'a' does not exist on type 'F'.
++a.js(17,3): error TS7053: Element implicitly has an 'any' type because expression of type '"b"' can't be used to index type 'F'.
++  Property 'b' does not exist on type 'F'.
++a.js(18,3): error TS7053: Element implicitly has an 'any' type because expression of type '"b"' can't be used to index type 'F'.
++  Property 'b' does not exist on type 'F'.
 +a.js(21,11): error TS7009: 'new' expression, whose target lacks a construct signature, implicitly has an 'any' type.
 +
 +
@@ -27,7 +29,7 @@
      // This test is asserting that a single property/element access
      // on `this` is a special assignment declaration, but chaining
      // off that does not create additional declarations. I’m not sure
-@@= skipped -14, +19 lines =@@
+@@= skipped -14, +21 lines =@@
      // element access assignments to create declarations.
      
      this.x = {};
@@ -53,22 +55,24 @@
      /** @constructor */
      function F() {
        this.a = {};
-+      ~~~~
-+!!! error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
++           ~
++!!! error TS2339: Property 'a' does not exist on type 'F'.
        this.a.b = {};
 -             ~
 -!!! error TS2339: Property 'b' does not exist on type '{}'.
-+      ~~~~
-+!!! error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
++           ~
++!!! error TS2339: Property 'a' does not exist on type 'F'.
        this["b"] = {};
-+      ~~~~
-+!!! error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
++      ~~~~~~~~~
++!!! error TS7053: Element implicitly has an 'any' type because expression of type '"b"' can't be used to index type 'F'.
++!!! error TS7053:   Property 'b' does not exist on type 'F'.
        this["b"]["c"] = {};
 -      ~~~~~~~~~~~~~~
 -!!! error TS7053: Element implicitly has an 'any' type because expression of type '"c"' can't be used to index type '{}'.
 -!!! error TS7053:   Property 'c' does not exist on type '{}'.
-+      ~~~~
-+!!! error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
++      ~~~~~~~~~
++!!! error TS7053: Element implicitly has an 'any' type because expression of type '"b"' can't be used to index type 'F'.
++!!! error TS7053:   Property 'b' does not exist on type 'F'.
      }
      
      const f = new F();

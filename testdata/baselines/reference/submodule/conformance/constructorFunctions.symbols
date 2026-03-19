@@ -42,6 +42,7 @@ function C3() {
 >C3 : Symbol(C3, Decl(index.js, 14, 23))
 
     if (!(this instanceof C3)) return new C3();
+>this : Symbol(C3, Decl(index.js, 14, 23))
 >C3 : Symbol(C3, Decl(index.js, 14, 23))
 >C3 : Symbol(C3, Decl(index.js, 14, 23))
 
@@ -97,6 +98,7 @@ function C6() {
 >C6 : Symbol(C6, Decl(index.js, 38, 12))
 
   this.functions = [x => x, x => x + 1, x => x - 1]
+>this : Symbol(C6, Decl(index.js, 38, 12))
 >x : Symbol(x, Decl(index.js, 42, 20))
 >x : Symbol(x, Decl(index.js, 42, 20))
 >x : Symbol(x, Decl(index.js, 42, 27))

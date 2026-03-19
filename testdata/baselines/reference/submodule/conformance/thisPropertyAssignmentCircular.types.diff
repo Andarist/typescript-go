@@ -19,33 +19,23 @@
  /** @class */
  function C() {
 ->C : typeof C
-+>C : () => void
++>C : { (): void; new (): C; }
 
      this.x = 0;
  >this.x = 0 : 0
- >this.x : any
-->this : this
-+>this : any
- >x : any
- >0 : 0
-
-     this.x = function() { this.x.toString(); }
- >this.x = function() { this.x.toString(); } : () => void
- >this.x : any
-->this : this
-+>this : any
+@@= skipped -15, +15 lines =@@
+ >this : this
  >x : any
  >function() { this.x.toString(); } : () => void
 ->this.x.toString() : string
 ->this.x.toString : () => string
 ->this.x : () => void
-->this : this
-->x : () => void
-->toString : () => string
 +>this.x.toString() : any
 +>this.x.toString : any
 +>this.x : any
-+>this : any
+ >this : this
+->x : () => void
+->toString : () => string
 +>x : any
 +>toString : any
  }

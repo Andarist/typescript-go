@@ -11698,6 +11698,11 @@ func (c *Checker) tryGetThisTypeAtEx(node *ast.Node, includeGlobalThis bool, con
 		// Note: a parameter initializer should refer to class-this unless function-this is explicitly annotated.
 		// If this is a function in a JS file, it might be a class method.
 		if thisType == nil {
+			if c.isJSConstructor(container) {
+				thisType = c.getDeclaredTypeOfClassOrInterface(c.getMergedSymbol(c.getSymbolOfDeclaration(container))).AsInterfaceType().thisType
+			}
+		}
+		if thisType == nil {
 			thisType = c.getContextualThisParameterType(container)
 		}
 		if thisType != nil {
@@ -16732,7 +16737,7 @@ func (c *Checker) getConstraintOfDistributiveConditionalType(t *Type) *Type {
 func (c *Checker) getDeclaredTypeOfClassOrInterface(symbol *ast.Symbol) *Type {
 	links := c.declaredTypeLinks.Get(symbol)
 	if links.declaredType == nil {
-		kind := core.IfElse(symbol.Flags&ast.SymbolFlagsClass != 0, ObjectFlagsClass, ObjectFlagsInterface)
+		kind := core.IfElse(symbol.Flags&ast.SymbolFlagsClass != 0 || c.isJSConstructor(symbol.ValueDeclaration), ObjectFlagsClass, ObjectFlagsInterface)
 		t := c.newObjectType(kind, symbol)
 		links.declaredType = t
 		outerTypeParameters := c.getOuterTypeParametersOfClassOrInterface(symbol)
@@ -18549,6 +18554,8 @@ func (c *Checker) getBaseTypes(t *Type) []*Type {
 			if t.symbol.Flags&ast.SymbolFlagsInterface != 0 {
 				c.resolveBaseTypesOfInterface(t)
 			}
+		case c.isJSConstructor(t.symbol.ValueDeclaration):
+			data.resolvedBaseTypes = nil
 		default:
 			panic("Unhandled case in getBaseTypes")
 		}
@@ -20090,10 +20097,17 @@ func (c *Checker) resolveAnonymousTypeMembers(t *Type) {
 		d.signatures = c.getSignaturesOfSymbol(symbol)
 		d.callSignatureCount = len(d.signatures)
 	}
-	// And likewise for construct signatures for classes
-	if symbol.Flags&ast.SymbolFlagsClass != 0 {
+	// And likewise for construct signatures for classes and JS constructor functions.
+	if symbol.Flags&ast.SymbolFlagsClass != 0 || c.isJSConstructor(symbol.ValueDeclaration) {
 		classType := c.getDeclaredTypeOfClassOrInterface(symbol)
 		constructSignatures := c.getSignaturesOfSymbol(symbol.Members[ast.InternalSymbolNameConstructor])
+		if symbol.Flags&ast.SymbolFlagsFunction != 0 {
+			for _, sig := range d.signatures[:d.callSignatureCount] {
+				if c.isJSConstructor(sig.declaration) {
+					constructSignatures = append(constructSignatures, c.newSignature(sig.flags&SignatureFlagsPropagatingFlags, sig.declaration, sig.typeParameters, sig.thisParameter, sig.parameters, classType, nil /*resolvedTypePredicate*/, int(sig.minArgumentCount)))
+				}
+			}
+		}
 		if len(constructSignatures) == 0 {
 			constructSignatures = c.getDefaultConstructSignatures(classType)
 		}
@@ -22290,9 +22304,56 @@ func (c *Checker) getThisType(node *ast.Node) *Type {
 				return core.Coalesce(c.getDeclaredTypeOfClassOrInterface(c.getSymbolOfDeclaration(parent)).AsInterfaceType().thisType, c.errorType)
 			}
 		}
+		if c.isJSConstructor(container) && isNodeDescendantOf(node, container.Body()) {
+			return core.Coalesce(c.getDeclaredTypeOfClassOrInterface(c.getMergedSymbol(c.getSymbolOfDeclaration(container))).AsInterfaceType().thisType, c.errorType)
+		}
 	}
 	c.error(node, diagnostics.A_this_type_is_available_only_in_a_non_static_member_of_a_class_or_interface)
 	return c.errorType
+}
+
+func hasJSDocClassTag(node *ast.Node) bool {
+	for _, jsdoc := range node.JSDoc(nil) {
+		tags := jsdoc.AsJSDoc().Tags
+		if tags == nil {
+			continue
+		}
+		for _, tag := range tags.Nodes {
+			tagName := tag.TagName()
+			if tagName == nil {
+				continue
+			}
+			switch tagName.Text() {
+			case "class", "constructor":
+				return true
+			}
+		}
+	}
+	return false
+}
+
+func (c *Checker) isJSConstructor(node *ast.Node) bool {
+	if node == nil || !ast.IsInJSFile(node) {
+		return false
+	}
+	var fn *ast.Node
+	switch {
+	case ast.IsFunctionDeclaration(node), ast.IsFunctionExpression(node):
+		fn = node
+	case (ast.IsVariableDeclaration(node) || ast.IsPropertyAssignment(node)) && node.Initializer() != nil && ast.IsFunctionExpression(node.Initializer()):
+		fn = node.Initializer()
+	}
+	if fn == nil {
+		return false
+	}
+	if hasJSDocClassTag(node) {
+		return true
+	}
+	if ast.IsPropertyAssignment(ast.WalkUpParenthesizedExpressions(fn.Parent)) {
+		return false
+	}
+	symbol := c.getSymbolOfDeclaration(fn)
+	return symbol != nil && len(symbol.Members) != 0
 }
 
 func (c *Checker) getTypeFromLiteralTypeNode(node *ast.Node) *Type {
@@ -22987,7 +23048,7 @@ func (c *Checker) getDeclaredTypeOfSymbol(symbol *ast.Symbol) *Type {
 
 func (c *Checker) tryGetDeclaredTypeOfSymbol(symbol *ast.Symbol) *Type {
 	switch {
-	case symbol.Flags&(ast.SymbolFlagsClass|ast.SymbolFlagsInterface) != 0:
+	case symbol.Flags&(ast.SymbolFlagsClass|ast.SymbolFlagsInterface) != 0 || c.isJSConstructor(symbol.ValueDeclaration):
 		return c.getDeclaredTypeOfClassOrInterface(symbol)
 	case symbol.Flags&ast.SymbolFlagsTypeParameter != 0:
 		return c.getDeclaredTypeOfTypeParameter(symbol)

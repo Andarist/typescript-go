@@ -12,6 +12,7 @@
 ->this.numberOxen : Symbol(Wagon.numberOxen, Decl(first.js, 4, 28))
 ->this : Symbol(Wagon, Decl(first.js, 0, 0), Decl(first.js, 6, 1))
 ->numberOxen : Symbol(Wagon.numberOxen, Decl(first.js, 4, 28))
++>this : Symbol(Wagon, Decl(first.js, 0, 0))
  >numberOxen : Symbol(numberOxen, Decl(first.js, 4, 15))
  }
  /** @param {Wagon[]=} wagons */
@@ -22,7 +23,7 @@
  >circle : Symbol(Wagon.circle, Decl(first.js, 6, 1))
  >wagons : Symbol(wagons, Decl(first.js, 8, 25))
 
-@@= skipped -24, +21 lines =@@
+@@= skipped -24, +22 lines =@@
  }
  /** @param {*[]=} supplies - *[]= is my favourite type */
  Wagon.prototype.load = function (supplies) {
@@ -73,26 +74,28 @@
      constructor() {
          super(); // error: not enough arguments
 ->super : Symbol(Wagon, Decl(first.js, 0, 0), Decl(first.js, 6, 1))
--
++>super : Symbol(Wagon, Decl(first.js, 0, 0))
+
          this.foonly = 12
  >this.foonly : Symbol(Sql.foonly, Decl(first.js, 22, 16))
- >this : Symbol(Sql, Decl(first.js, 18, 1))
-@@= skipped -45, +36 lines =@@
+@@= skipped -45, +38 lines =@@
          }
          else {
              super.speed() // run faster
 ->super.speed : Symbol(Wagon.speed, Decl(first.js, 15, 68))
 ->super : Symbol(Wagon, Decl(first.js, 0, 0), Decl(first.js, 6, 1))
 ->speed : Symbol(Wagon.speed, Decl(first.js, 15, 68))
--
++>super : Symbol(Wagon, Decl(first.js, 0, 0))
+
              if (super.weight() < 0) {
 ->super.weight : Symbol(Wagon.weight, Decl(first.js, 13, 1))
 ->super : Symbol(Wagon, Decl(first.js, 0, 0), Decl(first.js, 6, 1))
 ->weight : Symbol(Wagon.weight, Decl(first.js, 13, 1))
--
++>super : Symbol(Wagon, Decl(first.js, 0, 0))
+
                  // ????????????????????????
              }
-         }
+@@= skipped -15, +11 lines =@@
      }
  }
  var db = new Sql();
@@ -111,7 +114,7 @@
  >foonly : Symbol(Sql.foonly, Decl(first.js, 22, 16))
 
  // error, can't extend a TS constructor function
-@@= skipped -56, +46 lines =@@
+@@= skipped -41, +39 lines =@@
  // ok
  class Conestoga extends Wagon {
  >Conestoga : Symbol(Conestoga, Decl(second.ts, 11, 1))
@@ -124,6 +127,7 @@
          // error: wrong type
          super('nope');
 ->super : Symbol(Wagon, Decl(first.js, 0, 0), Decl(first.js, 6, 1))
++>super : Symbol(Wagon, Decl(first.js, 0, 0))
      }
      // should error since others is not optional
      static circle(others: (typeof Wagon)[]) {
@@ -134,7 +138,7 @@
 
          return others.length
  >others.length : Symbol(Array.length, Decl(lib.es5.d.ts, --, --))
-@@= skipped -31, +30 lines =@@
+@@= skipped -31, +31 lines =@@
  >drunkOO : Symbol(Conestoga.drunkOO, Decl(second.ts, 14, 16))
 
  c.numberOxen

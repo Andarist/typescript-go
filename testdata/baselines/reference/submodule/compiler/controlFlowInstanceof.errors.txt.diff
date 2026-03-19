@@ -2,8 +2,8 @@
 +++ new.controlFlowInstanceof.errors.txt
 @@= skipped -0, +0 lines =@@
 -<no content>
-+uglify.js(5,23): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
-+uglify.js(9,7): error TS2339: Property 'val' does not exist on type '{}'.
++uglify.js(5,28): error TS2339: Property 'val' does not exist on type 'AtTop'.
++uglify.js(9,7): error TS2339: Property 'val' does not exist on type 'AtTop'.
 +
 +
 +==== controlFlowInstanceof.ts (0 errors) ====
@@ -121,13 +121,13 @@
 +     * @param {any} val
 +     */
 +    function AtTop(val) { this.val = val }
-+                          ~~~~
-+!!! error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
++                               ~~~
++!!! error TS2339: Property 'val' does not exist on type 'AtTop'.
 +    /** @type {*} */
 +    var v = 1;
 +    if (v instanceof AtTop) {
 +        v.val
 +          ~~~
-+!!! error TS2339: Property 'val' does not exist on type '{}'.
++!!! error TS2339: Property 'val' does not exist on type 'AtTop'.
 +    }
 +    

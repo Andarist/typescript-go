@@ -12,7 +12,8 @@
 ->this._map : Symbol(Multimap._map, Decl(a.js, 6, 21))
 ->this : Symbol(Multimap, Decl(a.js, 0, 0), Decl(a.js, 9, 2))
 ->_map : Symbol(Multimap._map, Decl(a.js, 6, 21))
--
++>this : Symbol(Multimap, Decl(a.js, 0, 0))
+
  };
 
  Multimap.prototype = {
@@ -22,7 +23,7 @@
  >prototype : Symbol(Multimap.prototype, Decl(a.js, 9, 2))
 
      /**
-@@= skipped -24, +20 lines =@@
+@@= skipped -24, +22 lines =@@
  >key : Symbol(key, Decl(a.js, 16, 8))
 
          return this._map[key + ''];

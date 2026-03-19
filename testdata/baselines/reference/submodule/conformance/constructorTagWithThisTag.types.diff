@@ -5,7 +5,7 @@
   */
  function C() {
 ->C : typeof C
-+>C : (this: { e: number; m: number; }) => void
++>C : { (this: { e: number; m: number; }): void; new (this: { e: number; m: number; }): C; }
 
      this.e = this.m + 1
  >this.e = this.m + 1 : number
