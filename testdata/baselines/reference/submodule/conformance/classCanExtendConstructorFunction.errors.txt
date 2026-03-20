@@ -1,9 +1,8 @@
-first.js(6,10): error TS2339: Property 'numberOxen' does not exist on type 'Wagon'.
+first.js(6,5): error TS7008: Member 'numberOxen' implicitly has an 'any' type.
 first.js(8,13): error TS2749: 'Wagon' refers to a value, but is being used as a type here. Did you mean 'typeof Wagon'?
 first.js(23,9): error TS2554: Expected 1 arguments, but got 0.
 first.js(36,19): error TS2339: Property 'speed' does not exist on type 'Wagon'.
 first.js(37,23): error TS2339: Property 'weight' does not exist on type 'Wagon'.
-first.js(44,4): error TS2339: Property 'numberOxen' does not exist on type 'Sql'.
 first.js(47,24): error TS2507: Type '(numberEaten: number) => void' is not a constructor function type.
 generic.js(6,5): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
 generic.js(9,23): error TS2507: Type '<T>(flavour: T) => void' is not a constructor function type.
@@ -21,18 +20,17 @@ second.ts(14,7): error TS2417: Class static side 'typeof Conestoga' incorrectly 
         Type 'Wagon[] | undefined' is not assignable to type '{ (numberOxen: number): void; new (numberOxen: number): Wagon; circle: (wagons?: Wagon[] | undefined) => number; }[]'.
           Type 'undefined' is not assignable to type '{ (numberOxen: number): void; new (numberOxen: number): Wagon; circle: (wagons?: Wagon[] | undefined) => number; }[]'.
 second.ts(17,15): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
-second.ts(26,3): error TS2339: Property 'numberOxen' does not exist on type 'Conestoga'.
 
 
-==== first.js (7 errors) ====
+==== first.js (6 errors) ====
     /**
      * @constructor
      * @param {number} numberOxen
      */
     function Wagon(numberOxen) {
         this.numberOxen = numberOxen
-             ~~~~~~~~~~
-!!! error TS2339: Property 'numberOxen' does not exist on type 'Wagon'.
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+!!! error TS7008: Member 'numberOxen' implicitly has an 'any' type.
     }
     /** @param {Wagon[]=} wagons */
                 ~~~~~
@@ -80,8 +78,6 @@ second.ts(26,3): error TS2339: Property 'numberOxen' does not exist on type 'Con
     }
     var db = new Sql();
     db.numberOxen = db.foonly
-       ~~~~~~~~~~
-!!! error TS2339: Property 'numberOxen' does not exist on type 'Sql'.
     
     // error, can't extend a TS constructor function
     class Drakkhen extends Dragon {
@@ -90,7 +86,7 @@ second.ts(26,3): error TS2339: Property 'numberOxen' does not exist on type 'Con
     
     }
     
-==== second.ts (5 errors) ====
+==== second.ts (4 errors) ====
     /**
      * @constructor
      */
@@ -130,8 +126,6 @@ second.ts(26,3): error TS2339: Property 'numberOxen' does not exist on type 'Con
     var c = new Conestoga(true);
     c.drunkOO
     c.numberOxen
-      ~~~~~~~~~~
-!!! error TS2339: Property 'numberOxen' does not exist on type 'Conestoga'.
     
 ==== generic.js (7 errors) ====
     /**

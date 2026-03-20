@@ -1,9 +1,7 @@
-thisPropertyAssignmentCircular.js(15,10): error TS2339: Property 'x' does not exist on type 'C'.
-thisPropertyAssignmentCircular.js(16,10): error TS2339: Property 'x' does not exist on type 'C'.
-thisPropertyAssignmentCircular.js(16,32): error TS2339: Property 'x' does not exist on type 'C'.
+thisPropertyAssignmentCircular.js(15,5): error TS7008: Member 'x' implicitly has an 'any' type.
 
 
-==== thisPropertyAssignmentCircular.js (3 errors) ====
+==== thisPropertyAssignmentCircular.js (1 errors) ====
     export class Foo {
         constructor() {
             this.foo = "Hello";
@@ -19,12 +17,8 @@ thisPropertyAssignmentCircular.js(16,32): error TS2339: Property 'x' does not ex
     /** @class */
     function C() {
         this.x = 0;
-             ~
-!!! error TS2339: Property 'x' does not exist on type 'C'.
+        ~~~~~~~~~~
+!!! error TS7008: Member 'x' implicitly has an 'any' type.
         this.x = function() { this.x.toString(); }
-             ~
-!!! error TS2339: Property 'x' does not exist on type 'C'.
-                                   ~
-!!! error TS2339: Property 'x' does not exist on type 'C'.
     }
     

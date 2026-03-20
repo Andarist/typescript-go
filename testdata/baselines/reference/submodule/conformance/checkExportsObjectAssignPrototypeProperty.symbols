@@ -62,7 +62,9 @@ function Person(name) {
 >name : Symbol(name, Decl(mod1.js, 4, 16))
 
     this.name = name;
+>this.name : Symbol(Person.name, Decl(mod1.js, 4, 23))
 >this : Symbol(Person, Decl(mod1.js, 0, 0))
+>name : Symbol(Person.name, Decl(mod1.js, 4, 23))
 >name : Symbol(name, Decl(mod1.js, 4, 16))
 }
 Person.prototype.describe = function () {

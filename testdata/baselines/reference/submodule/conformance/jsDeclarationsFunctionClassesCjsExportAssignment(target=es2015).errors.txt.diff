@@ -5,7 +5,7 @@
 +context.js(4,14): error TS1340: Module './timer' does not refer to a type, but is used as a type here. Did you mean 'typeof import('./timer')'?
 +context.js(5,14): error TS1340: Module './hook' does not refer to a type, but is used as a type here. Did you mean 'typeof import('./hook')'?
 +context.js(34,14): error TS7009: 'new' expression, whose target lacks a construct signature, implicitly has an 'any' type.
-+context.js(36,10): error TS2339: Property 'state' does not exist on type 'this & { construct(input: Input, handle?: HookHandler | undefined): State; }'.
++context.js(36,5): error TS7008: Member 'state' implicitly has an 'any' type.
 +hook.js(2,20): error TS1340: Module './context' does not refer to a type, but is used as a type here. Did you mean 'typeof import('./context')'?
 +hook.js(8,5): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
 +timer.js(5,5): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
@@ -80,8 +80,8 @@
 +!!! error TS7009: 'new' expression, whose target lacks a construct signature, implicitly has an 'any' type.
 +        }
 +        this.state = this.construct(input);
-+             ~~~~~
-+!!! error TS2339: Property 'state' does not exist on type 'this & { construct(input: Input, handle?: HookHandler | undefined): State; }'.
++        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++!!! error TS7008: Member 'state' implicitly has an 'any' type.
 +    }
 +    Context.prototype = {
 +        /**

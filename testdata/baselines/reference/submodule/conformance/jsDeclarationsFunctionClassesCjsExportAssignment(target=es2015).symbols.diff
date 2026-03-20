@@ -58,8 +58,8 @@
  >input : Symbol(input, Decl(context.js, 31, 17))
      }
      this.state = this.construct(input);
-->this.state : Symbol(Context.state, Decl(context.js, 34, 5))
-->state : Symbol(Context.state, Decl(context.js, 34, 5))
+ >this.state : Symbol(Context.state, Decl(context.js, 34, 5))
+ >state : Symbol(Context.state, Decl(context.js, 34, 5))
 ->this.construct : Symbol(construct, Decl(context.js, 37, 21), Decl(context.js, 37, 21))
 ->construct : Symbol(construct, Decl(context.js, 37, 21), Decl(context.js, 37, 21))
 +>this.construct : Symbol(construct, Decl(context.js, 37, 21))
@@ -73,7 +73,7 @@
  >prototype : Symbol(Context.prototype, Decl(context.js, 36, 1))
 
      /**
-@@= skipped -38, +36 lines =@@
+@@= skipped -38, +38 lines =@@
      }
  }
  module.exports = Context;

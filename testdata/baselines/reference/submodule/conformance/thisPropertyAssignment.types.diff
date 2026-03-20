@@ -47,28 +47,7 @@
 
    this.a = {};
  >this.a = {} : {}
-@@= skipped -12, +12 lines =@@
-   this.a.b = {};
- >this.a.b = {} : {}
- >this.a.b : any
-->this.a : {}
-+>this.a : any
- >this : this
-->a : {}
-+>a : any
- >b : any
- >{} : {}
-
-@@= skipped -16, +16 lines =@@
-   this["b"]["c"] = {};
- >this["b"]["c"] = {} : {}
- >this["b"]["c"] : any
-->this["b"] : {}
-+>this["b"] : any
- >this : this
- >"b" : "b"
- >"c" : "c"
-@@= skipped -8, +8 lines =@@
+@@= skipped -36, +36 lines =@@
  }
 
  const f = new F();

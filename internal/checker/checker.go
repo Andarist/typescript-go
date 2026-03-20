@@ -4840,9 +4840,24 @@ func (c *Checker) isPropertyInitializedInConstructor(propName *ast.Node, propTyp
 	}
 	reference.Expression().Parent = reference
 	reference.Parent = constructor
-	reference.FlowNodeData().FlowNode = constructor.AsConstructorDeclaration().ReturnFlowNode
+	reference.FlowNodeData().FlowNode = getReturnFlowNodeOfConstructorLike(constructor)
 	flowType := c.getFlowTypeOfReferenceEx(reference, propType, c.getOptionalType(propType, false), nil, nil)
 	return !c.containsUndefinedType(flowType)
+}
+
+func getReturnFlowNodeOfConstructorLike(constructor *ast.Node) *ast.FlowNode {
+	switch {
+	case constructor == nil:
+		return nil
+	case ast.IsConstructorDeclaration(constructor):
+		return constructor.AsConstructorDeclaration().ReturnFlowNode
+	case ast.IsFunctionDeclaration(constructor):
+		return constructor.AsFunctionDeclaration().ReturnFlowNode
+	case ast.IsFunctionExpression(constructor):
+		return constructor.AsFunctionExpression().ReturnFlowNode
+	default:
+		return nil
+	}
 }
 
 func (c *Checker) checkInterfaceDeclaration(node *ast.Node) {
@@ -18986,6 +19001,9 @@ func (c *Checker) resolveDeclaredMembers(t *Type) *InterfaceType {
 	d := t.AsInterfaceType()
 	if !d.declaredMembersResolved {
 		members := c.getMembersOfSymbol(t.symbol)
+		if c.isJSConstructor(t.symbol.ValueDeclaration) {
+			members = c.getMembersOfJSConstructor(t.symbol, members)
+		}
 		d.declaredMembersResolved = true
 		d.declaredMembers = members
 		d.declaredCallSignatures = c.getSignaturesOfSymbol(d.declaredMembers[ast.InternalSymbolNameCall])
@@ -18993,6 +19011,43 @@ func (c *Checker) resolveDeclaredMembers(t *Type) *InterfaceType {
 		d.declaredIndexInfos = c.getIndexInfosOfSymbol(t.symbol)
 	}
 	return d
+}
+
+func (c *Checker) getMembersOfJSConstructor(symbol *ast.Symbol, members ast.SymbolTable) ast.SymbolTable {
+	if symbol == nil || symbol.ValueDeclaration == nil || symbol.ValueDeclaration.Body() == nil {
+		return members
+	}
+	var updated ast.SymbolTable
+	var visit func(node *ast.Node) bool
+	visit = func(node *ast.Node) bool {
+		if ast.IsBinaryExpression(node) && ast.GetAssignmentDeclarationKind(node) == ast.JSDeclarationKindThisProperty {
+			left := node.AsBinaryExpression().Left
+			name := ast.GetElementOrPropertyAccessName(left)
+			if name != nil {
+				prop := c.newSymbol(ast.SymbolFlagsProperty, name.Text())
+				prop.Declarations = []*ast.Node{node}
+				prop.ValueDeclaration = node
+				prop.Parent = symbol
+				if updated == nil {
+					updated = maps.Clone(members)
+					if updated == nil {
+						updated = make(ast.SymbolTable)
+					}
+				}
+				if existing := updated[name.Text()]; existing != nil {
+					updated[name.Text()] = c.mergeSymbol(existing, prop, false /*unidirectional*/)
+				} else {
+					updated[name.Text()] = prop
+				}
+			}
+		}
+		return node.ForEachChild(visit)
+	}
+	visit(symbol.ValueDeclaration.Body())
+	if updated != nil {
+		return updated
+	}
+	return members
 }
 
 func (c *Checker) getIndexInfosOfSymbol(symbol *ast.Symbol) []*IndexInfo {
@@ -26627,7 +26682,7 @@ func (c *Checker) isAutoTypedProperty(symbol *ast.Symbol) bool {
 func (c *Checker) getDeclaringConstructor(symbol *ast.Symbol) *ast.Node {
 	for _, declaration := range symbol.Declarations {
 		container := ast.GetThisContainer(declaration, false /*includeArrowFunctions*/, false /*includeClassComputedPropertyName*/)
-		if container != nil && ast.IsConstructorDeclaration(container) {
+		if container != nil && (ast.IsConstructorDeclaration(container) || c.isJSConstructor(container)) {
 			return container
 		}
 	}

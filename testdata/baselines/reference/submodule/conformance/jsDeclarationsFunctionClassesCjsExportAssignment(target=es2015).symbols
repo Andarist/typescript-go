@@ -82,6 +82,8 @@ function Context(input) {
 >input : Symbol(input, Decl(context.js, 31, 17))
     }
     this.state = this.construct(input);
+>this.state : Symbol(Context.state, Decl(context.js, 34, 5))
+>state : Symbol(Context.state, Decl(context.js, 34, 5))
 >this.construct : Symbol(construct, Decl(context.js, 37, 21))
 >construct : Symbol(construct, Decl(context.js, 37, 21))
 >input : Symbol(input, Decl(context.js, 31, 17))

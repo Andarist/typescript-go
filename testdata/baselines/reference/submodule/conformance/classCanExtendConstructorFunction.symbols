@@ -10,7 +10,9 @@ function Wagon(numberOxen) {
 >numberOxen : Symbol(numberOxen, Decl(first.js, 4, 15))
 
     this.numberOxen = numberOxen
+>this.numberOxen : Symbol(Wagon.numberOxen, Decl(first.js, 4, 28))
 >this : Symbol(Wagon, Decl(first.js, 0, 0))
+>numberOxen : Symbol(Wagon.numberOxen, Decl(first.js, 4, 28))
 >numberOxen : Symbol(numberOxen, Decl(first.js, 4, 15))
 }
 /** @param {Wagon[]=} wagons */
@@ -98,7 +100,9 @@ var db = new Sql();
 >Sql : Symbol(Sql, Decl(first.js, 18, 1))
 
 db.numberOxen = db.foonly
+>db.numberOxen : Symbol(Wagon.numberOxen, Decl(first.js, 4, 28))
 >db : Symbol(db, Decl(first.js, 42, 3))
+>numberOxen : Symbol(Wagon.numberOxen, Decl(first.js, 4, 28))
 >db.foonly : Symbol(Sql.foonly, Decl(first.js, 22, 16))
 >db : Symbol(db, Decl(first.js, 42, 3))
 >foonly : Symbol(Sql.foonly, Decl(first.js, 22, 16))
@@ -164,7 +168,9 @@ c.drunkOO
 >drunkOO : Symbol(Conestoga.drunkOO, Decl(second.ts, 14, 16))
 
 c.numberOxen
+>c.numberOxen : Symbol(Wagon.numberOxen, Decl(first.js, 4, 28))
 >c : Symbol(c, Decl(second.ts, 23, 3))
+>numberOxen : Symbol(Wagon.numberOxen, Decl(first.js, 4, 28))
 
 === generic.js ===
 /**

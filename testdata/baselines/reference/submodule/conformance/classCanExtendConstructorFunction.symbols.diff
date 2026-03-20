@@ -9,10 +9,10 @@
  >numberOxen : Symbol(numberOxen, Decl(first.js, 4, 15))
 
      this.numberOxen = numberOxen
-->this.numberOxen : Symbol(Wagon.numberOxen, Decl(first.js, 4, 28))
+ >this.numberOxen : Symbol(Wagon.numberOxen, Decl(first.js, 4, 28))
 ->this : Symbol(Wagon, Decl(first.js, 0, 0), Decl(first.js, 6, 1))
-->numberOxen : Symbol(Wagon.numberOxen, Decl(first.js, 4, 28))
 +>this : Symbol(Wagon, Decl(first.js, 0, 0))
+ >numberOxen : Symbol(Wagon.numberOxen, Decl(first.js, 4, 28))
  >numberOxen : Symbol(numberOxen, Decl(first.js, 4, 15))
  }
  /** @param {Wagon[]=} wagons */
@@ -23,7 +23,7 @@
  >circle : Symbol(Wagon.circle, Decl(first.js, 6, 1))
  >wagons : Symbol(wagons, Decl(first.js, 8, 25))
 
-@@= skipped -24, +22 lines =@@
+@@= skipped -24, +24 lines =@@
  }
  /** @param {*[]=} supplies - *[]= is my favourite type */
  Wagon.prototype.load = function (supplies) {
@@ -104,17 +104,17 @@
  >Sql : Symbol(Sql, Decl(first.js, 18, 1))
 
  db.numberOxen = db.foonly
-->db.numberOxen : Symbol(Wagon.numberOxen, Decl(first.js, 4, 28))
+ >db.numberOxen : Symbol(Wagon.numberOxen, Decl(first.js, 4, 28))
 ->db : Symbol(db, Decl(first.js, 42, 3), Decl(first.js, 42, 19))
-->numberOxen : Symbol(Wagon.numberOxen, Decl(first.js, 4, 28))
 +>db : Symbol(db, Decl(first.js, 42, 3))
+ >numberOxen : Symbol(Wagon.numberOxen, Decl(first.js, 4, 28))
  >db.foonly : Symbol(Sql.foonly, Decl(first.js, 22, 16))
 ->db : Symbol(db, Decl(first.js, 42, 3), Decl(first.js, 42, 19))
 +>db : Symbol(db, Decl(first.js, 42, 3))
  >foonly : Symbol(Sql.foonly, Decl(first.js, 22, 16))
 
  // error, can't extend a TS constructor function
-@@= skipped -41, +39 lines =@@
+@@= skipped -41, +41 lines =@@
  // ok
  class Conestoga extends Wagon {
  >Conestoga : Symbol(Conestoga, Decl(second.ts, 11, 1))
@@ -138,17 +138,7 @@
 
          return others.length
  >others.length : Symbol(Array.length, Decl(lib.es5.d.ts, --, --))
-@@= skipped -31, +31 lines =@@
- >drunkOO : Symbol(Conestoga.drunkOO, Decl(second.ts, 14, 16))
-
- c.numberOxen
-->c.numberOxen : Symbol(Wagon.numberOxen, Decl(first.js, 4, 28))
- >c : Symbol(c, Decl(second.ts, 23, 3))
-->numberOxen : Symbol(Wagon.numberOxen, Decl(first.js, 4, 28))
-
- === generic.js ===
- /**
-@@= skipped -14, +12 lines =@@
+@@= skipped -45, +45 lines =@@
  >flavour : Symbol(flavour, Decl(generic.js, 4, 14))
 
      this.flavour = flavour

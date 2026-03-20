@@ -1,5 +1,4 @@
 a.js(8,16): error TS2315: Type 'Object' is not generic.
-a.js(9,10): error TS2339: Property '_map' does not exist on type 'Multimap'.
 a.js(14,16): error TS2304: Cannot find name 'K'.
 a.js(15,18): error TS2304: Cannot find name 'V'.
 a.js(18,21): error TS2339: Property '_map' does not exist on type '{ get(key: K): V; }'.
@@ -15,7 +14,7 @@ a.js(58,18): error TS2304: Cannot find name 'V'.
 a.js(61,21): error TS2339: Property '_map' does not exist on type '{ get(key: K): V; }'.
 
 
-==== a.js (15 errors) ====
+==== a.js (14 errors) ====
     /**
      * Should work for function declarations
      * @constructor
@@ -27,8 +26,6 @@ a.js(61,21): error TS2339: Property '_map' does not exist on type '{ get(key: K)
                    ~~~~~~~~~~~~~~~~~
 !!! error TS2315: Type 'Object' is not generic.
         this._map = {};
-             ~~~~
-!!! error TS2339: Property '_map' does not exist on type 'Multimap'.
     };
     
     Multimap.prototype = {

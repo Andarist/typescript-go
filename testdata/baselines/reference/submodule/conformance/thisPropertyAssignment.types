@@ -54,9 +54,9 @@ function F() {
   this.a.b = {};
 >this.a.b = {} : {}
 >this.a.b : any
->this.a : any
+>this.a : {}
 >this : this
->a : any
+>a : {}
 >b : any
 >{} : {}
 
@@ -70,7 +70,7 @@ function F() {
   this["b"]["c"] = {};
 >this["b"]["c"] = {} : {}
 >this["b"]["c"] : any
->this["b"] : any
+>this["b"] : {}
 >this : this
 >"b" : "b"
 >"c" : "c"

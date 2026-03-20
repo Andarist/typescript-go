@@ -12,16 +12,22 @@ function Cp(t) {
 
     /** @type {this} */
     this.dit = this
+>this.dit : Symbol(Cp.dit, Decl(thisTypeOfConstructorFunctions.js, 5, 16))
 >this : Symbol(Cp, Decl(thisTypeOfConstructorFunctions.js, 0, 0))
+>dit : Symbol(Cp.dit, Decl(thisTypeOfConstructorFunctions.js, 5, 16))
 >this : Symbol(Cp, Decl(thisTypeOfConstructorFunctions.js, 0, 0))
 
     this.y = t
+>this.y : Symbol(Cp.y, Decl(thisTypeOfConstructorFunctions.js, 7, 19))
 >this : Symbol(Cp, Decl(thisTypeOfConstructorFunctions.js, 0, 0))
+>y : Symbol(Cp.y, Decl(thisTypeOfConstructorFunctions.js, 7, 19))
 >t : Symbol(t, Decl(thisTypeOfConstructorFunctions.js, 5, 12))
 
     /** @return {this} */
     this.m3 = () => this
+>this.m3 : Symbol(Cp.m3, Decl(thisTypeOfConstructorFunctions.js, 8, 14))
 >this : Symbol(Cp, Decl(thisTypeOfConstructorFunctions.js, 0, 0))
+>m3 : Symbol(Cp.m3, Decl(thisTypeOfConstructorFunctions.js, 8, 14))
 >this : Symbol(Cp, Decl(thisTypeOfConstructorFunctions.js, 0, 0))
 }
 
@@ -51,7 +57,9 @@ function Cpp(t) {
 >t : Symbol(t, Decl(thisTypeOfConstructorFunctions.js, 25, 13))
 
     this.y = t
+>this.y : Symbol(Cpp.y, Decl(thisTypeOfConstructorFunctions.js, 25, 17))
 >this : Symbol(Cpp, Decl(thisTypeOfConstructorFunctions.js, 18, 1))
+>y : Symbol(Cpp.y, Decl(thisTypeOfConstructorFunctions.js, 25, 17))
 >t : Symbol(t, Decl(thisTypeOfConstructorFunctions.js, 25, 13))
 }
 /** @return {this} */

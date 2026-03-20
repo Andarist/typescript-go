@@ -10,27 +10,27 @@
 
      /** @type {this} */
      this.dit = this
-->this.dit : Symbol(Cp.dit, Decl(thisTypeOfConstructorFunctions.js, 5, 16))
-->this : Symbol(Cp, Decl(thisTypeOfConstructorFunctions.js, 0, 0), Decl(thisTypeOfConstructorFunctions.js, 11, 1))
-->dit : Symbol(Cp.dit, Decl(thisTypeOfConstructorFunctions.js, 5, 16))
+ >this.dit : Symbol(Cp.dit, Decl(thisTypeOfConstructorFunctions.js, 5, 16))
 ->this : Symbol(Cp, Decl(thisTypeOfConstructorFunctions.js, 0, 0), Decl(thisTypeOfConstructorFunctions.js, 11, 1))
 +>this : Symbol(Cp, Decl(thisTypeOfConstructorFunctions.js, 0, 0))
+ >dit : Symbol(Cp.dit, Decl(thisTypeOfConstructorFunctions.js, 5, 16))
+->this : Symbol(Cp, Decl(thisTypeOfConstructorFunctions.js, 0, 0), Decl(thisTypeOfConstructorFunctions.js, 11, 1))
 +>this : Symbol(Cp, Decl(thisTypeOfConstructorFunctions.js, 0, 0))
 
      this.y = t
-->this.y : Symbol(Cp.y, Decl(thisTypeOfConstructorFunctions.js, 7, 19))
+ >this.y : Symbol(Cp.y, Decl(thisTypeOfConstructorFunctions.js, 7, 19))
 ->this : Symbol(Cp, Decl(thisTypeOfConstructorFunctions.js, 0, 0), Decl(thisTypeOfConstructorFunctions.js, 11, 1))
-->y : Symbol(Cp.y, Decl(thisTypeOfConstructorFunctions.js, 7, 19))
 +>this : Symbol(Cp, Decl(thisTypeOfConstructorFunctions.js, 0, 0))
+ >y : Symbol(Cp.y, Decl(thisTypeOfConstructorFunctions.js, 7, 19))
  >t : Symbol(t, Decl(thisTypeOfConstructorFunctions.js, 5, 12))
 
      /** @return {this} */
      this.m3 = () => this
-->this.m3 : Symbol(Cp.m3, Decl(thisTypeOfConstructorFunctions.js, 8, 14))
-->this : Symbol(Cp, Decl(thisTypeOfConstructorFunctions.js, 0, 0), Decl(thisTypeOfConstructorFunctions.js, 11, 1))
-->m3 : Symbol(Cp.m3, Decl(thisTypeOfConstructorFunctions.js, 8, 14))
+ >this.m3 : Symbol(Cp.m3, Decl(thisTypeOfConstructorFunctions.js, 8, 14))
 ->this : Symbol(Cp, Decl(thisTypeOfConstructorFunctions.js, 0, 0), Decl(thisTypeOfConstructorFunctions.js, 11, 1))
 +>this : Symbol(Cp, Decl(thisTypeOfConstructorFunctions.js, 0, 0))
+ >m3 : Symbol(Cp.m3, Decl(thisTypeOfConstructorFunctions.js, 8, 14))
+->this : Symbol(Cp, Decl(thisTypeOfConstructorFunctions.js, 0, 0), Decl(thisTypeOfConstructorFunctions.js, 11, 1))
 +>this : Symbol(Cp, Decl(thisTypeOfConstructorFunctions.js, 0, 0))
  }
 
@@ -41,7 +41,7 @@
  >prototype : Symbol(Cp.prototype, Decl(thisTypeOfConstructorFunctions.js, 11, 1))
 
      /** @return {this} */
-@@= skipped -34, +28 lines =@@
+@@= skipped -34, +34 lines =@@
  >m4 : Symbol(m4, Decl(thisTypeOfConstructorFunctions.js, 13, 16))
 
          this.z = this.y; return this
@@ -58,14 +58,7 @@
      }
  }
 
-@@= skipped -20, +16 lines =@@
- >t : Symbol(t, Decl(thisTypeOfConstructorFunctions.js, 25, 13))
-
-     this.y = t
-->this.y : Symbol(Cpp.y, Decl(thisTypeOfConstructorFunctions.js, 25, 17))
- >this : Symbol(Cpp, Decl(thisTypeOfConstructorFunctions.js, 18, 1))
-->y : Symbol(Cpp.y, Decl(thisTypeOfConstructorFunctions.js, 25, 17))
- >t : Symbol(t, Decl(thisTypeOfConstructorFunctions.js, 25, 13))
+@@= skipped -27, +23 lines =@@
  }
  /** @return {this} */
  Cpp.prototype.m2 = function () {

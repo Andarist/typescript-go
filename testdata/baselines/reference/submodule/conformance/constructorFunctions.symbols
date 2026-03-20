@@ -98,7 +98,9 @@ function C6() {
 >C6 : Symbol(C6, Decl(index.js, 38, 12))
 
   this.functions = [x => x, x => x + 1, x => x - 1]
+>this.functions : Symbol(C6.functions, Decl(index.js, 41, 15))
 >this : Symbol(C6, Decl(index.js, 38, 12))
+>functions : Symbol(C6.functions, Decl(index.js, 41, 15))
 >x : Symbol(x, Decl(index.js, 42, 20))
 >x : Symbol(x, Decl(index.js, 42, 20))
 >x : Symbol(x, Decl(index.js, 42, 27))

@@ -3,7 +3,6 @@
 @@= skipped -0, +0 lines =@@
 -<no content>
 +a.js(8,16): error TS2315: Type 'Object' is not generic.
-+a.js(9,10): error TS2339: Property '_map' does not exist on type 'Multimap'.
 +a.js(13,12): error TS2304: Cannot find name 'K'.
 +a.js(14,14): error TS2304: Cannot find name 'V'.
 +a.js(27,16): error TS2315: Type 'Object' is not generic.
@@ -16,7 +15,7 @@
 +a.js(53,14): error TS2304: Cannot find name 'V'.
 +
 +
-+==== a.js (12 errors) ====
++==== a.js (11 errors) ====
 +    /**
 +     * Should work for function declarations
 +     * @constructor
@@ -28,8 +27,6 @@
 +                   ~~~~~~~~~~~~~~~~~
 +!!! error TS2315: Type 'Object' is not generic.
 +        this._map = {};
-+             ~~~~
-+!!! error TS2339: Property '_map' does not exist on type 'Multimap'.
 +    };
 +    
 +    /**

@@ -13,9 +13,9 @@ function Cp(t) {
     /** @type {this} */
     this.dit = this
 >this.dit = this : this
->this.dit : any
+>this.dit : this
 >this : this
->dit : any
+>dit : this
 >this : this
 
     this.y = t

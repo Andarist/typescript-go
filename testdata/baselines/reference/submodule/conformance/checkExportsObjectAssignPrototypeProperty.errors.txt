@@ -1,4 +1,3 @@
-mod1.js(6,10): error TS2339: Property 'name' does not exist on type 'Person'.
 validator.ts(1,8): error TS2882: Cannot find module or type declarations for side-effect import of './'.
 validator.ts(5,12): error TS7009: 'new' expression, whose target lacks a construct signature, implicitly has an 'any' type.
 
@@ -33,15 +32,13 @@ validator.ts(5,12): error TS7009: 'new' expression, whose target lacks a constru
     m1.setonlyAccessor = 0;
     
     
-==== mod1.js (1 errors) ====
+==== mod1.js (0 errors) ====
     /**
      * @constructor
      * @param {string} name
      */
     function Person(name) {
         this.name = name;
-             ~~~~
-!!! error TS2339: Property 'name' does not exist on type 'Person'.
     }
     Person.prototype.describe = function () {
         return "Person called " + this.name;

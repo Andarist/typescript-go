@@ -20,17 +20,7 @@
 
  /** @type {function ("a" | "b", 1 | 2): 3 | 4} */
  var f = function (ab, onetwo) { return ab === "a" ? 3 : 4;  }
-@@= skipped -21, +19 lines =@@
- >n : Symbol(n, Decl(functions.js, 37, 11))
-
-   this.length = n;
-->this.length : Symbol(D.length, Decl(functions.js, 37, 15))
- >this : Symbol(D, Decl(functions.js, 30, 61))
-->length : Symbol(D.length, Decl(functions.js, 37, 15))
- >n : Symbol(n, Decl(functions.js, 37, 11))
- }
-
-@@= skipped -16, +14 lines =@@
+@@= skipped -37, +35 lines =@@
  >y2 : Symbol(y2, Decl(functions.js, 41, 3))
 
  z2.length;

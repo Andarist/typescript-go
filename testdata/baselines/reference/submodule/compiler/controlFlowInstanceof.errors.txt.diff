@@ -2,8 +2,7 @@
 +++ new.controlFlowInstanceof.errors.txt
 @@= skipped -0, +0 lines =@@
 -<no content>
-+uglify.js(5,28): error TS2339: Property 'val' does not exist on type 'AtTop'.
-+uglify.js(9,7): error TS2339: Property 'val' does not exist on type 'AtTop'.
++uglify.js(5,23): error TS7008: Member 'val' implicitly has an 'any' type.
 +
 +
 +==== controlFlowInstanceof.ts (0 errors) ====
@@ -115,19 +114,17 @@
 +    }
 +    
 +    // Repro from #27550 (based on uglify code)
-+==== uglify.js (2 errors) ====
++==== uglify.js (1 errors) ====
 +    /**
 +     * @constructor
 +     * @param {any} val
 +     */
 +    function AtTop(val) { this.val = val }
-+                               ~~~
-+!!! error TS2339: Property 'val' does not exist on type 'AtTop'.
++                          ~~~~~~~~~~~~~~
++!!! error TS7008: Member 'val' implicitly has an 'any' type.
 +    /** @type {*} */
 +    var v = 1;
 +    if (v instanceof AtTop) {
 +        v.val
-+          ~~~
-+!!! error TS2339: Property 'val' does not exist on type 'AtTop'.
 +    }
 +    

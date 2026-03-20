@@ -23,29 +23,7 @@
 
  /** @constructor */
  function F() {
- >F : Symbol(F, Decl(a.js, 10, 20))
-
-   this.a = {};
-->this.a : Symbol(F.a, Decl(a.js, 13, 14))
- >this : Symbol(F, Decl(a.js, 10, 20))
-->a : Symbol(F.a, Decl(a.js, 13, 14))
-
-   this.a.b = {};
-->this.a : Symbol(F.a, Decl(a.js, 13, 14))
- >this : Symbol(F, Decl(a.js, 10, 20))
-->a : Symbol(F.a, Decl(a.js, 13, 14))
-
-   this["b"] = {};
- >this : Symbol(F, Decl(a.js, 10, 20))
-->"b" : Symbol(F["b"], Decl(a.js, 15, 16))
-
-   this["b"]["c"] = {};
- >this : Symbol(F, Decl(a.js, 10, 20))
-->"b" : Symbol(F["b"], Decl(a.js, 15, 16))
- }
-
- const f = new F();
-@@= skipped -45, +33 lines =@@
+@@= skipped -45, +39 lines =@@
  >F : Symbol(F, Decl(a.js, 10, 20))
 
  f.a;
