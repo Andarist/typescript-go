@@ -3,6 +3,8 @@ package parser
 import (
 	"github.com/microsoft/typescript-go/internal/ast"
 	"github.com/microsoft/typescript-go/internal/core"
+	"github.com/microsoft/typescript-go/internal/diagnostics"
+	"github.com/microsoft/typescript-go/internal/scanner"
 )
 
 func (p *Parser) finishReparsedNode(node *ast.Node, locationNode *ast.Node) {
@@ -59,8 +61,8 @@ func (p *Parser) reparseCommonJS(node *ast.Node, jsdoc []*ast.Node) {
 // Hosted tags find a host and add their children to the correct location under the host.
 // Unhosted tags add synthetic nodes to the reparse list.
 func (p *Parser) reparseTags(parent *ast.Node, jsDoc []*ast.Node) {
-	for _, j := range jsDoc {
-		isLast := j == jsDoc[len(jsDoc)-1]
+	for i, j := range jsDoc {
+		isLast := i == len(jsDoc)-1
 		tags := j.AsJSDoc().Tags
 		if tags == nil {
 			continue
@@ -69,11 +71,40 @@ func (p *Parser) reparseTags(parent *ast.Node, jsDoc []*ast.Node) {
 			if parent.Kind != ast.KindCommonJSExport && parent.Kind != ast.KindJSExportAssignment {
 				p.reparseUnhosted(tag, parent, j)
 			}
+			if !isLast && len(tags.Nodes) == 1 && tag.Kind == ast.KindJSDocParameterTag {
+				if typeExpression := tag.TypeExpression(); typeExpression != nil {
+					p.reportJSDocTypeGrammarErrors(typeExpression.Type())
+				}
+			}
 			if isLast {
 				p.reparseHosted(tag, parent, j)
 			}
 		}
 	}
+}
+
+func (p *Parser) reportJSDocTypeGrammarErrors(node *ast.Node) {
+	if node == nil {
+		return
+	}
+
+	switch node.Kind {
+	case ast.KindTypeReference, ast.KindExpressionWithTypeArguments, ast.KindImportType, ast.KindTypeQuery:
+		typeArguments := node.TypeArgumentList()
+		if typeArguments.HasTrailingComma() {
+			p.jsdocDiagnostics = append(p.jsdocDiagnostics, ast.NewDiagnostic(nil, core.NewTextRange(typeArguments.End()-len(","), typeArguments.End()), diagnostics.Trailing_comma_not_allowed))
+		}
+		if len(typeArguments.Nodes) == 0 {
+			start := typeArguments.Pos() - len("<")
+			end := scanner.SkipTrivia(p.sourceText, typeArguments.End()) + len(">")
+			p.jsdocDiagnostics = append(p.jsdocDiagnostics, ast.NewDiagnostic(nil, core.NewTextRange(start, end), diagnostics.Type_argument_list_cannot_be_empty))
+		}
+	}
+
+	node.ForEachChild(func(child *ast.Node) bool {
+		p.reportJSDocTypeGrammarErrors(child)
+		return false
+	})
 }
 
 func (p *Parser) reparseUnhosted(tag *ast.Node, parent *ast.Node, jsDoc *ast.Node) {

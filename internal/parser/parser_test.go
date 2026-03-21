@@ -206,3 +206,33 @@ test("", async function () {
 		}
 	}
 }
+
+func TestNonLastStandaloneJSDocParamBlocksOnlyContributeGrammarDiagnostics(t *testing.T) {
+	t.Parallel()
+	sourceText := `/** @param {C.<>} x */
+/** @param {C.<number,>} y */
+// @ts-ignore
+/** @param {C.<number,>} skipped */
+function f(x, y, skipped) {}
+`
+	opts := ast.SourceFileParseOptions{
+		FileName: "/index.js",
+		Path:     "/index.js",
+	}
+
+	file := parser.ParseSourceFile(opts, sourceText, core.ScriptKindJS)
+	fun := file.Statements.Nodes[0].AsFunctionDeclaration()
+
+	xType := fun.Parameters.Nodes[0].AsParameterDeclaration().Type
+	assert.Assert(t, xType == nil)
+
+	yType := fun.Parameters.Nodes[1].AsParameterDeclaration().Type
+	assert.Assert(t, yType == nil)
+
+	skippedType := fun.Parameters.Nodes[2].AsParameterDeclaration().Type
+	assert.Assert(t, skippedType != nil)
+	assert.Assert(t, ast.IsTypeReferenceNode(skippedType))
+	assert.Equal(t, len(file.JSDocDiagnostics()), 2)
+	assert.Equal(t, file.JSDocDiagnostics()[0].Code(), int32(1099))
+	assert.Equal(t, file.JSDocDiagnostics()[1].Code(), int32(1009))
+}
