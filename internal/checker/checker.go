@@ -13412,7 +13412,7 @@ func (c *Checker) checkObjectLiteralMethod(node *ast.Node, checkMode CheckMode) 
 func (c *Checker) checkExpressionForMutableLocation(node *ast.Node, checkMode CheckMode) *Type {
 	t := c.checkExpressionEx(node, checkMode)
 	switch {
-	case c.isConstContext(node):
+	case c.isConstContext(node) || ast.IsCommonJsExportedExpression(node) || ast.IsDefaultExportExpression(node):
 		return c.getRegularTypeOfLiteralType(t)
 	case isTypeAssertion(node):
 		return t
@@ -16115,7 +16115,11 @@ func (c *Checker) getTypeOfVariableOrParameterOrPropertyWorker(symbol *ast.Symbo
 		if declaration.Type() != nil {
 			result = c.getTypeFromTypeNode(declaration.Type())
 		} else {
-			result = c.widenTypeForVariableLikeDeclaration(c.checkExpressionCached(declaration.Expression()), declaration, false /*reportErrors*/)
+			exprType := c.checkExpressionCached(declaration.Expression())
+			if !declaration.AsExportAssignment().IsExportEquals {
+				exprType = c.checkExpressionForMutableLocation(declaration.Expression(), CheckModeNormal)
+			}
+			result = c.widenTypeForVariableLikeDeclaration(exprType, declaration, false /*reportErrors*/)
 		}
 	case ast.KindBinaryExpression, ast.KindCallExpression, ast.KindJSExportAssignment, ast.KindCommonJSExport:
 		result = c.getWidenedTypeForAssignmentDeclaration(symbol)

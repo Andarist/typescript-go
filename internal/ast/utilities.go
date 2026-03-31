@@ -1588,6 +1588,31 @@ func GetAssignmentDeclarationKind(node *Node) JSDeclarationKind {
 	return JSDeclarationKindNone
 }
 
+func IsCommonJsExportedExpression(node *Node) bool {
+	if !IsInJSFile(node) {
+		return false
+	}
+	return (IsObjectLiteralExpression(node.Parent) &&
+		node.Parent.Parent != nil &&
+		IsBinaryExpression(node.Parent.Parent) &&
+		GetAssignmentDeclarationKind(node.Parent.Parent) == JSDeclarationKindModuleExports) ||
+		IsCommonJsExportPropertyAssignment(node.Parent)
+}
+
+func IsCommonJsExportPropertyAssignment(node *Node) bool {
+	if !IsInJSFile(node) {
+		return false
+	}
+	return IsBinaryExpression(node) && GetAssignmentDeclarationKind(node) == JSDeclarationKindExportsProperty
+}
+
+func IsDefaultExportExpression(node *Node) bool {
+	return node.Parent != nil &&
+		IsExportAssignment(node.Parent) &&
+		!node.Parent.AsExportAssignment().IsExportEquals &&
+		node.Parent.Expression() == node
+}
+
 func IsBindableObjectDefinePropertyCall(node *Node) bool {
 	if args := node.Arguments(); len(args) == 3 {
 		if expr := node.Expression(); IsPropertyAccessExpression(expr) &&
