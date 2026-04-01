@@ -45,7 +45,7 @@ func (b *NodeBuilderImpl) pseudoTypeToNode(t *pseudochecker.PseudoType) *ast.Nod
 		d := t.AsPseudoTypeMaybeConstLocation()
 		// see checkExpressionWithContextualType for general literal widening rules which need to be emulated here, plus
 		// checkTemplateLiteralExpression for template literal widening rules if the pseudochecker ever supports literalized templates
-		isInConstContext := b.ch.isConstContext(d.Node) || ast.IsCommonJsExportedExpression(d.Node) || ast.IsDefaultExportExpression(d.Node)
+		isInConstContext := b.ch.isConstContext(d.Node) || ast.IsCommonJsExportedExpression(d.Node) || ast.IsDefaultExportExpression(d.Node) || ast.IsExportEqualsExpression(d.Node)
 		if !isInConstContext && pseudochecker.IsInConstContext(d.Node) {
 			// Only consult the contextual type if the pseudochecker's syntactic check also puts us in a const context.
 			// getContextualType returns post-inference results at node-printing time which may not have existed
@@ -572,7 +572,7 @@ func (b *NodeBuilderImpl) pseudoTypeToType(t *pseudochecker.PseudoType) *Type {
 		return nil // TODO: extract type selection logic from `serializeTypeForDeclaration`, not needed for current usecases but needed if completeness becomes required
 	case pseudochecker.PseudoTypeKindMaybeConstLocation:
 		d := t.AsPseudoTypeMaybeConstLocation()
-		if b.ch.isConstContext(d.Node) || ast.IsCommonJsExportedExpression(d.Node) || ast.IsDefaultExportExpression(d.Node) {
+		if b.ch.isConstContext(d.Node) || ast.IsCommonJsExportedExpression(d.Node) || ast.IsDefaultExportExpression(d.Node) || ast.IsExportEqualsExpression(d.Node) {
 			return b.pseudoTypeToType(d.ConstType)
 		}
 		return b.pseudoTypeToType(d.RegularType)

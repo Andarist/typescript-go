@@ -10,16 +10,7 @@
  //// [b.d.ts]
  declare const _default: 0;
  export default _default;
-@@= skipped -13, +14 lines =@@
- declare const _default: () => void;
- export = _default;
- //// [e.d.mts]
--declare const _default: 0;
-+declare const _default: number;
- export = _default;
- //// [f.d.cts]
- declare const _default: 0;
-@@= skipped -15, +15 lines =@@
+@@= skipped -28, +29 lines =@@
  //// [main3.d.cts]
  export {};
  //// [main4.d.cts]

@@ -1613,6 +1613,13 @@ func IsDefaultExportExpression(node *Node) bool {
 		node.Parent.Expression() == node
 }
 
+func IsExportEqualsExpression(node *Node) bool {
+	return node.Parent != nil &&
+		IsExportAssignment(node.Parent) &&
+		node.Parent.AsExportAssignment().IsExportEquals &&
+		node.Parent.Expression() == node
+}
+
 func IsBindableObjectDefinePropertyCall(node *Node) bool {
 	if args := node.Arguments(); len(args) == 3 {
 		if expr := node.Expression(); IsPropertyAccessExpression(expr) &&
