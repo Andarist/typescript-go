@@ -74,7 +74,12 @@ type diskFile struct {
 	realpathPath tspath.Path
 }
 
+func normalizeFileContent(content string) string {
+	return strings.TrimPrefix(content, "\uFEFF")
+}
+
 func newDiskFile(fileName string, content string) *diskFile {
+	content = normalizeFileContent(content)
 	return &diskFile{
 		fileBase: fileBase{
 			fileName: fileName,
@@ -123,6 +128,7 @@ type Overlay struct {
 }
 
 func newOverlay(fileName string, content string, version int32, kind core.ScriptKind) *Overlay {
+	content = normalizeFileContent(content)
 	return &Overlay{
 		fileBase: fileBase{
 			fileName: fileName,
