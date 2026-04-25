@@ -1,18 +1,6 @@
 --- old.jsDeclarationsExportForms(target=es2015).js
 +++ new.jsDeclarationsExportForms(target=es2015).js
-@@= skipped -260, +260 lines =@@
-
-
- //// [cls.d.ts]
--export class Foo {
-+export declare class Foo {
- }
- //// [func.d.ts]
--export function func(): void;
-+export declare function func(): void;
- //// [bar.d.ts]
- export * from "./cls";
- //// [bar2.d.ts]
+@@= skipped -270, +270 lines =@@
  export * from "./func";
  export * from "./cls";
  //// [baz.d.ts]
@@ -75,11 +63,11 @@
 +
 +
 +==== out/cls.d.ts (0 errors) ====
-+    export declare class Foo {
++    export class Foo {
 +    }
 +    
 +==== out/func.d.ts (0 errors) ====
-+    export declare function func(): void;
++    export function func(): void;
 +    
 +==== out/bar.d.ts (0 errors) ====
 +    export * from "./cls";

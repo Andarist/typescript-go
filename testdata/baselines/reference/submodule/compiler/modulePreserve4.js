@@ -195,7 +195,7 @@ export {}; // Silly test harness
 
 
 //// [a.d.ts]
-export declare const x = 0;
+export const x = 0;
 //// [b.d.ts]
 declare const _default = 0;
 export default _default;

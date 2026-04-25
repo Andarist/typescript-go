@@ -53,12 +53,12 @@ declare function require(): void;
 declare const exports: {};
 declare class Object {
 }
-export declare const __esModule = false;
+export const __esModule = false;
 export { require, exports, Object };
 //// [index.d.ts]
 declare function require(): void;
 declare const exports: {};
 declare class Object {
 }
-export declare const __esModule = false;
+export const __esModule = false;
 export { require, exports, Object };

@@ -32,7 +32,7 @@ export class foo1 {
 
 //// [index.d.ts]
 declare const prop = "prop";
-export declare class foo1 {
+export class foo1 {
     constructor();
     /**
      * @protected

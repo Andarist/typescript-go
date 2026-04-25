@@ -261,10 +261,10 @@ require("./bar2");
 
 
 //// [cls.d.ts]
-export declare class Foo {
+export class Foo {
 }
 //// [func.d.ts]
-export declare function func(): void;
+export function func(): void;
 //// [bar.d.ts]
 export * from "./cls";
 //// [bar2.d.ts]
@@ -320,11 +320,11 @@ out/cjs4.d.ts(1,15): error TS2502: 'ns' is referenced directly or indirectly in 
 
 
 ==== out/cls.d.ts (0 errors) ====
-    export declare class Foo {
+    export class Foo {
     }
     
 ==== out/func.d.ts (0 errors) ====
-    export declare function func(): void;
+    export function func(): void;
     
 ==== out/bar.d.ts (0 errors) ====
     export * from "./cls";

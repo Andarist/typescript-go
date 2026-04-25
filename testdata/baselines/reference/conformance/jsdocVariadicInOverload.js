@@ -106,7 +106,7 @@ declare class Node {
  * @template {string | undefined} [CompileResult=undefined]
  *   Output of `stringify` (optional).
  */
-export declare class Processor<ParseTree extends Node | undefined = undefined, HeadTree extends Node | undefined = undefined, TailTree extends Node | undefined = undefined, CompileTree extends Node | undefined = undefined, CompileResult extends string | undefined = undefined> {
+export class Processor<ParseTree extends Node | undefined = undefined, HeadTree extends Node | undefined = undefined, TailTree extends Node | undefined = undefined, CompileTree extends Node | undefined = undefined, CompileResult extends string | undefined = undefined> {
     /**
      * @overload
      * @param {string | null | undefined} [preset]

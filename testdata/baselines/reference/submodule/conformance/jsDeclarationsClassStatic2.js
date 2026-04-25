@@ -20,7 +20,7 @@ Bar.foo = "foo";
 declare class Base {
     static foo: string;
 }
-export declare class Foo extends Base {
+export class Foo extends Base {
 }
 export declare namespace Foo {
     var foo: string;

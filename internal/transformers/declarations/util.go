@@ -125,6 +125,9 @@ func maskModifierFlags(host DeclarationEmitHost, node *ast.Node, modifierMask as
 	if flags&ast.ModifierFlagsDefault != 0 && flags&ast.ModifierFlagsAmbient != 0 {
 		flags ^= ast.ModifierFlagsAmbient // `declare` is never required alongside `default` (and would be an error if printed)
 	}
+	if ast.IsInJSFile(node) && flags&ast.ModifierFlagsExport != 0 && flags&ast.ModifierFlagsAmbient != 0 {
+		flags ^= ast.ModifierFlagsAmbient // For JS-origin exported declarations, omit redundant `declare`
+	}
 	return flags
 }
 

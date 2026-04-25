@@ -48,12 +48,12 @@ export function fnWithPartialAnnotationOnDefaultparam(x = /** @type {P} */(somet
 export type P = {} & {
     name?: string;
 };
-export declare let vLet: P;
-export declare const vConst: P;
-export declare function fn(p?: P): void;
+export let vLet: P;
+export const vConst: P;
+export function fn(p?: P): void;
 /** @param {number} req */
-export declare function fnWithRequiredDefaultParam(p: P, req: number): void;
-export declare class C {
+export function fnWithRequiredDefaultParam(p: P, req: number): void;
+export class C {
     field: P;
     /** @optional */ optField: P;
     /** @readonly */ readonly roFiled: P;
@@ -71,4 +71,4 @@ export default _default;
  * @param {P} x
  * @param {number} b
  */
-export declare function fnWithPartialAnnotationOnDefaultparam(x: P, b: number): void;
+export function fnWithPartialAnnotationOnDefaultparam(x: P, b: number): void;

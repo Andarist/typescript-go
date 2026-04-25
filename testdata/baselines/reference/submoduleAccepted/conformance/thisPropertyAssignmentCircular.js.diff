@@ -1,12 +1,10 @@
 --- old.thisPropertyAssignmentCircular.js
 +++ new.thisPropertyAssignmentCircular.js
-@@= skipped -22, +22 lines =@@
-
+@@= skipped -23, +23 lines =@@
 
  //// [thisPropertyAssignmentCircular.d.ts]
--export class Foo {
+ export class Foo {
 -    foo: string;
-+export declare class Foo {
 +    constructor();
      slicey(): void;
      m(): void;

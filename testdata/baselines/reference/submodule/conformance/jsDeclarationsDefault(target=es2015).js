@@ -105,13 +105,13 @@ declare const _default = 12;
 export default _default;
 //// [index2.d.ts]
 export default function foo(): typeof foo;
-export declare const x: typeof foo;
+export const x: typeof foo;
 export { foo as bar };
 //// [index3.d.ts]
 export default class Foo {
     a: Foo;
 }
-export declare const X: typeof Foo;
+export const X: typeof Foo;
 export { Foo as Bar };
 //// [index4.d.ts]
 import Fab from "./index3";

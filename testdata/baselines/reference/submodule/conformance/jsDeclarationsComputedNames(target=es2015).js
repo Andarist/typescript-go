@@ -76,7 +76,7 @@ export = _default;
 //// [index2.d.ts]
 declare const TopLevelSym: unique symbol;
 declare const InnerSym: unique symbol;
-export declare class MyClass {
+export class MyClass {
     static [TopLevelSym]: number;
     [InnerSym]: string;
     /**

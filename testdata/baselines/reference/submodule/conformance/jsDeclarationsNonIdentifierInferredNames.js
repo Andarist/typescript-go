@@ -17,7 +17,7 @@ export const ExampleFunctionalComponent = ({ "data-testid": dataTestId, [dynProp
 
 //// [jsDeclarationsNonIdentifierInferredNames.d.ts]
 declare const dynPropName = "data-dyn";
-export declare const ExampleFunctionalComponent: ({ "data-testid": dataTestId, [dynPropName]: dynProp }: {
+export const ExampleFunctionalComponent: ({ "data-testid": dataTestId, [dynPropName]: dynProp }: {
     "data-dyn": any;
     "data-testid": any;
 }) => JSX.Element;
@@ -32,7 +32,7 @@ out/jsDeclarationsNonIdentifierInferredNames.d.ts(5,7): error TS2503: Cannot fin
 
 ==== out/jsDeclarationsNonIdentifierInferredNames.d.ts (1 errors) ====
     declare const dynPropName = "data-dyn";
-    export declare const ExampleFunctionalComponent: ({ "data-testid": dataTestId, [dynPropName]: dynProp }: {
+    export const ExampleFunctionalComponent: ({ "data-testid": dataTestId, [dynPropName]: dynProp }: {
         "data-dyn": any;
         "data-testid": any;
     }) => JSX.Element;

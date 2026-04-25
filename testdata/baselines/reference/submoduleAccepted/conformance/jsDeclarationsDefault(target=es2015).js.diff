@@ -10,14 +10,12 @@
  //// [index2.d.ts]
  export default function foo(): typeof foo;
 -export function x(): typeof foo;
-+export declare const x: typeof foo;
++export const x: typeof foo;
  export { foo as bar };
  //// [index3.d.ts]
  export default class Foo {
-     a: Foo;
- }
--export const X: typeof Foo;
-+export declare const X: typeof Foo;
+@@= skipped -13, +13 lines =@@
+ export const X: typeof Foo;
  export { Foo as Bar };
  //// [index4.d.ts]
 -export default Bar;

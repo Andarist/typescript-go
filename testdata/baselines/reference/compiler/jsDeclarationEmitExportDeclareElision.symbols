@@ -1,0 +1,14 @@
+//// [tests/cases/compiler/jsDeclarationEmitExportDeclareElision.ts] ////
+
+=== index.js ===
+/** @type {number} */
+export const value = 1;
+>value : Symbol(value, Decl(index.js, 1, 12))
+
+export class Example {
+>Example : Symbol(Example, Decl(index.js, 1, 23))
+
+    method() {}
+>method : Symbol(Example.method, Decl(index.js, 3, 22))
+}
+

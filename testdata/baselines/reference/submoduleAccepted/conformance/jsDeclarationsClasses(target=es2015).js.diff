@@ -1,34 +1,9 @@
 --- old.jsDeclarationsClasses(target=es2015).js
 +++ new.jsDeclarationsClasses(target=es2015).js
-@@= skipped -357, +357 lines =@@
-
-
- //// [index.d.ts]
--export class A {
-+export declare class A {
- }
--export class B {
-+export declare class B {
-     static cat: string;
- }
--export class C {
-+export declare class C {
-     static Cls: {
-         new (): {};
-     };
- }
--export class D {
-+export declare class D {
-     /**
-      * @param {number} a
-      * @param {number} b
-@@= skipped -20, +20 lines =@@
- /**
-  * @template T,U
+@@= skipped -379, +379 lines =@@
   */
--export class E<T, U> {
-+export declare class E<T, U> {
-+    /**
+ export class E<T, U> {
+     /**
 +     * @type {T & U}
 +     */
 +    field: T & U;
@@ -59,10 +34,11 @@
 +     * @param {U} b
 +     */
 +    constructor(a: T, b: U);
-     /**
++    /**
       * @type {string}
       */
-@@= skipped -12, +43 lines =@@
+     static staticField: string;
+@@= skipped -10, +41 lines =@@
      static readonly staticReadonlyField: string;
      static staticInitializedField: number;
      /**
@@ -120,9 +96,8 @@
  /**
   * @template T,U
   */
--export class F<T, U> {
-+export declare class F<T, U> {
-+    /**
+ export class F<T, U> {
+     /**
 +     * @type {T & U}
 +     */
 +    field: T & U;
@@ -131,7 +106,7 @@
 +     * @param {U} b
 +     */
 +    constructor(a: T, b: U);
-     /**
++    /**
       * @template A,B
       * @param {A} a
       * @param {B} b
@@ -147,13 +122,6 @@
 -     */
 -    field: T & U;
 -}
--export class I {
--}
--export class J {
--}
--export class K {
--    p1: number;
--    p2: string;
 +}
 +declare class G {
 +}
@@ -161,30 +129,28 @@
 +declare class HH {
 +}
 +export { HH as H };
-+export declare class I {
-+}
+ export class I {
+ }
 +export { I as II };
 +export { J as JJ };
-+export declare class J {
-+}
-+export declare class K {
+ export class J {
+ }
+ export class K {
+-    p1: number;
+-    p2: string;
 +    constructor();
      method(): number;
  }
--export class L extends K {
-+export declare class L extends K {
+ export class L extends K {
  }
 -export class M {
 -    prop: number;
-+export declare class M extends null {
++export class M extends null {
 +    constructor();
  }
  /**
   * @template T
-  */
--export class N<T> extends L {
-+export declare class N<T> extends L {
-     /**
+@@= skipped -74, +50 lines =@@
       * @param {T} param
       */
      constructor(param: T);
@@ -194,28 +160,23 @@
   * @template U
   * @extends {N<U>}
   */
--export class O<U> extends N<U> {
+ export class O<U> extends N<U> {
 -    another2: U;
--}
--declare const VariableBase_base: any;
--export class VariableBase extends VariableBase_base {
--    [x: string]: any;
--}
--export class HasStatics {
-+export declare class O<U> extends N<U> {
 +    /**
 +     * @param {U} param
 +     */
 +    constructor(param: U);
-+}
-+declare var x: any;
-+export declare class VariableBase extends x {
-+}
-+export declare class HasStatics {
-     static staticMethod(): void;
  }
--export class ExtendsStatics extends HasStatics {
-+export declare class ExtendsStatics extends HasStatics {
+-declare const VariableBase_base: any;
+-export class VariableBase extends VariableBase_base {
+-    [x: string]: any;
++declare var x: any;
++export class VariableBase extends x {
+ }
+ export class HasStatics {
+     static staticMethod(): void;
+@@= skipped -19, +20 lines =@@
+ export class ExtendsStatics extends HasStatics {
      static also(): void;
  }
 -export class G {
