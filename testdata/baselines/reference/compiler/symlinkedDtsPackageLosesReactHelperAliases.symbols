@@ -1,0 +1,111 @@
+//// [tests/cases/compiler/symlinkedDtsPackageLosesReactHelperAliases.ts] ////
+
+=== /project/repro.ts ===
+import type { StoryLike } from "symlinked-react-helpers";
+>StoryLike : Symbol(StoryLike, Decl(repro.ts, 0, 13))
+
+import type { ReactNode } from "react";
+>ReactNode : Symbol(ReactNode, Decl(repro.ts, 1, 13))
+
+interface LabelProps {
+>LabelProps : Symbol(LabelProps, Decl(repro.ts, 1, 39))
+
+  id: string;
+>id : Symbol(LabelProps.id, Decl(repro.ts, 3, 22))
+
+  children: ReactNode;
+>children : Symbol(LabelProps.children, Decl(repro.ts, 4, 13))
+>ReactNode : Symbol(ReactNode, Decl(repro.ts, 1, 13))
+}
+
+interface WidgetProps {
+>WidgetProps : Symbol(WidgetProps, Decl(repro.ts, 6, 1))
+
+  metric: number;
+>metric : Symbol(WidgetProps.metric, Decl(repro.ts, 8, 23))
+
+  label?: (props: LabelProps) => ReactNode;
+>label : Symbol(WidgetProps.label, Decl(repro.ts, 9, 17))
+>props : Symbol(props, Decl(repro.ts, 10, 11))
+>LabelProps : Symbol(LabelProps, Decl(repro.ts, 1, 39))
+>ReactNode : Symbol(ReactNode, Decl(repro.ts, 1, 13))
+}
+
+declare function Widget(props: WidgetProps): ReactNode;
+>Widget : Symbol(Widget, Decl(repro.ts, 11, 1))
+>props : Symbol(props, Decl(repro.ts, 13, 24))
+>WidgetProps : Symbol(WidgetProps, Decl(repro.ts, 6, 1))
+>ReactNode : Symbol(ReactNode, Decl(repro.ts, 1, 13))
+
+type Story = StoryLike<typeof Widget>;
+>Story : Symbol(Story, Decl(repro.ts, 13, 55))
+>StoryLike : Symbol(StoryLike, Decl(repro.ts, 0, 13))
+>Widget : Symbol(Widget, Decl(repro.ts, 11, 1))
+
+export const CustomLabel: Story = {
+>CustomLabel : Symbol(CustomLabel, Decl(repro.ts, 17, 12))
+>Story : Symbol(Story, Decl(repro.ts, 13, 55))
+
+  args: {
+>args : Symbol(args, Decl(repro.ts, 17, 35))
+
+    metric: 50,
+>metric : Symbol(metric, Decl(repro.ts, 18, 9))
+
+    label: ({ id, children }) => children,
+>label : Symbol(label, Decl(repro.ts, 19, 15))
+>id : Symbol(id, Decl(repro.ts, 20, 13))
+>children : Symbol(children, Decl(repro.ts, 20, 17))
+>children : Symbol(children, Decl(repro.ts, 20, 17))
+
+  },
+};
+
+=== /cache/symlinked-react-helpers/index.d.ts ===
+import type { ComponentProps, ComponentType } from "react";
+>ComponentProps : Symbol(ComponentProps, Decl(index.d.ts, 0, 13))
+>ComponentType : Symbol(ComponentType, Decl(index.d.ts, 0, 29))
+
+export type StoryLike<T> =
+>StoryLike : Symbol(StoryLike, Decl(index.d.ts, 0, 59))
+>T : Symbol(T, Decl(index.d.ts, 2, 22))
+
+  T extends ComponentType<any>
+>T : Symbol(T, Decl(index.d.ts, 2, 22))
+>ComponentType : Symbol(ComponentType, Decl(index.d.ts, 0, 29))
+
+    ? { args?: Partial<ComponentProps<T>> }
+>args : Symbol(args, Decl(index.d.ts, 4, 7))
+>Partial : Symbol(Partial, Decl(lib.es5.d.ts, --, --))
+>ComponentProps : Symbol(ComponentProps, Decl(index.d.ts, 0, 13))
+>T : Symbol(T, Decl(index.d.ts, 2, 22))
+
+    : { args?: T };
+>args : Symbol(args, Decl(index.d.ts, 5, 7))
+>T : Symbol(T, Decl(index.d.ts, 2, 22))
+
+=== /project/node_modules/@types/react/index.d.ts ===
+declare module "react" {
+>"react" : Symbol("react", Decl(index.d.ts, 0, 0))
+
+  export type ReactNode = {};
+>ReactNode : Symbol(ReactNode, Decl(index.d.ts, 0, 24))
+
+  export type ComponentType<P = {}> = (props: P) => ReactNode;
+>ComponentType : Symbol(ComponentType, Decl(index.d.ts, 1, 29))
+>P : Symbol(P, Decl(index.d.ts, 2, 28))
+>props : Symbol(props, Decl(index.d.ts, 2, 39))
+>P : Symbol(P, Decl(index.d.ts, 2, 28))
+>ReactNode : Symbol(ReactNode, Decl(index.d.ts, 0, 24))
+
+  export type ComponentProps<T extends ComponentType<any>> = T extends ComponentType<infer P> ? P : never;
+>ComponentProps : Symbol(ComponentProps, Decl(index.d.ts, 2, 62))
+>T : Symbol(T, Decl(index.d.ts, 3, 29))
+>ComponentType : Symbol(ComponentType, Decl(index.d.ts, 1, 29))
+>T : Symbol(T, Decl(index.d.ts, 3, 29))
+>ComponentType : Symbol(ComponentType, Decl(index.d.ts, 1, 29))
+>P : Symbol(P, Decl(index.d.ts, 3, 90))
+>P : Symbol(P, Decl(index.d.ts, 3, 90))
+}
+
+
