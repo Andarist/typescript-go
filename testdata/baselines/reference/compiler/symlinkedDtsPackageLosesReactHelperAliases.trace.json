@@ -1,0 +1,51 @@
+======== Resolving module 'symlinked-react-helpers' from '/project/repro.ts'. ========
+Explicitly specified module resolution kind: 'Bundler'.
+Resolving in CJS mode with conditions 'import', 'types'.
+File '/project/package.json' does not exist.
+File '/package.json' does not exist.
+Loading module 'symlinked-react-helpers' from 'node_modules' folder, target file types: TypeScript, JavaScript, Declaration, JSON.
+Searching all ancestor node_modules directories for preferred extensions: TypeScript, Declaration.
+Found 'package.json' at '/project/node_modules/symlinked-react-helpers/package.json'.
+File '/project/node_modules/symlinked-react-helpers.ts' does not exist.
+File '/project/node_modules/symlinked-react-helpers.tsx' does not exist.
+File '/project/node_modules/symlinked-react-helpers.d.ts' does not exist.
+'package.json' does not have a 'typesVersions' field.
+'package.json' does not have a 'typings' field.
+'package.json' has 'types' field 'index.d.ts' that references '/project/node_modules/symlinked-react-helpers/index.d.ts'.
+File '/project/node_modules/symlinked-react-helpers/index.d.ts' exists - use it as a name resolution result.
+'package.json' does not have a 'peerDependencies' field.
+Resolving real path for '/project/node_modules/symlinked-react-helpers/index.d.ts', result '/cache/symlinked-react-helpers/index.d.ts'.
+======== Module name 'symlinked-react-helpers' was successfully resolved to '/cache/symlinked-react-helpers/index.d.ts' with Package ID 'symlinked-react-helpers/index.d.ts@1.0.0'. ========
+======== Resolving module 'react' from '/project/repro.ts'. ========
+Explicitly specified module resolution kind: 'Bundler'.
+Resolving in CJS mode with conditions 'import', 'types'.
+File '/project/package.json' does not exist according to earlier cached lookups.
+File '/package.json' does not exist according to earlier cached lookups.
+Loading module 'react' from 'node_modules' folder, target file types: TypeScript, JavaScript, Declaration, JSON.
+Searching all ancestor node_modules directories for preferred extensions: TypeScript, Declaration.
+File '/project/node_modules/react.ts' does not exist.
+File '/project/node_modules/react.tsx' does not exist.
+File '/project/node_modules/react.d.ts' does not exist.
+Found 'package.json' at '/project/node_modules/@types/react/package.json'.
+File '/project/node_modules/@types/react.d.ts' does not exist.
+'package.json' does not have a 'typesVersions' field.
+'package.json' does not have a 'typings' field.
+'package.json' has 'types' field 'index.d.ts' that references '/project/node_modules/@types/react/index.d.ts'.
+File '/project/node_modules/@types/react/index.d.ts' exists - use it as a name resolution result.
+'package.json' does not have a 'peerDependencies' field.
+Resolving real path for '/project/node_modules/@types/react/index.d.ts', result '/project/node_modules/@types/react/index.d.ts'.
+======== Module name 'react' was successfully resolved to '/project/node_modules/@types/react/index.d.ts' with Package ID '@types/react/index.d.ts@1.0.0'. ========
+======== Resolving module 'react' from '/cache/symlinked-react-helpers/index.d.ts'. ========
+Explicitly specified module resolution kind: 'Bundler'.
+Resolving in CJS mode with conditions 'import', 'types'.
+Found 'package.json' at '/cache/symlinked-react-helpers/package.json'.
+Loading module 'react' from 'node_modules' folder, target file types: TypeScript, JavaScript, Declaration, JSON.
+Searching all ancestor node_modules directories for preferred extensions: TypeScript, Declaration.
+Directory '/cache/symlinked-react-helpers/node_modules' does not exist, skipping all lookups in it.
+Directory '/cache/node_modules' does not exist, skipping all lookups in it.
+Directory '/node_modules' does not exist, skipping all lookups in it.
+Searching all ancestor node_modules directories for fallback extensions: JavaScript, JSON.
+Directory '/cache/symlinked-react-helpers/node_modules' does not exist, skipping all lookups in it.
+Directory '/cache/node_modules' does not exist, skipping all lookups in it.
+Directory '/node_modules' does not exist, skipping all lookups in it.
+======== Module name 'react' was not resolved. ========

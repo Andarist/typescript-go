@@ -15,11 +15,9 @@ export type StoryLike<T> =
 { "name": "@types/react", "version": "1.0.0", "types": "index.d.ts" }
 
 //// [index.d.ts]
-declare module "react" {
-  export type ReactNode = {};
-  export type ComponentType<P = {}> = (props: P) => ReactNode;
-  export type ComponentProps<T extends ComponentType<any>> = T extends ComponentType<infer P> ? P : never;
-}
+export type ReactNode = {};
+export type ComponentType<P = {}> = (props: P) => ReactNode;
+export type ComponentProps<T extends ComponentType<any>> = T extends ComponentType<infer P> ? P : never;
 
 
 //// [repro.ts]

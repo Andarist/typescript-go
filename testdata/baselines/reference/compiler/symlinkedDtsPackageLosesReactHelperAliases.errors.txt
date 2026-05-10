@@ -1,0 +1,56 @@
+/cache/symlinked-react-helpers/index.d.ts(1,52): error TS2307: Cannot find module 'react' or its corresponding type declarations.
+/project/repro.ts(21,15): error TS7031: Binding element 'id' implicitly has an 'any' type.
+/project/repro.ts(21,19): error TS7031: Binding element 'children' implicitly has an 'any' type.
+
+
+==== /project/repro.ts (2 errors) ====
+    import type { StoryLike } from "symlinked-react-helpers";
+    import type { ReactNode } from "react";
+    
+    interface LabelProps {
+      id: string;
+      children: ReactNode;
+    }
+    
+    interface WidgetProps {
+      metric: number;
+      label?: (props: LabelProps) => ReactNode;
+    }
+    
+    declare function Widget(props: WidgetProps): ReactNode;
+    
+    type Story = StoryLike<typeof Widget>;
+    
+    export const CustomLabel: Story = {
+      args: {
+        metric: 50,
+        label: ({ id, children }) => children,
+                  ~~
+!!! error TS7031: Binding element 'id' implicitly has an 'any' type.
+                      ~~~~~~~~
+!!! error TS7031: Binding element 'children' implicitly has an 'any' type.
+      },
+    };
+    
+==== /cache/symlinked-react-helpers/package.json (0 errors) ====
+    { "name": "symlinked-react-helpers", "version": "1.0.0", "types": "index.d.ts" }
+    
+==== /cache/symlinked-react-helpers/index.d.ts (1 errors) ====
+    import type { ComponentProps, ComponentType } from "react";
+                                                       ~~~~~~~
+!!! error TS2307: Cannot find module 'react' or its corresponding type declarations.
+    
+    export type StoryLike<T> =
+      T extends ComponentType<any>
+        ? { args?: Partial<ComponentProps<T>> }
+        : { args?: T };
+    
+==== /project/node_modules/@types/react/package.json (0 errors) ====
+    { "name": "@types/react", "version": "1.0.0", "types": "index.d.ts" }
+    
+==== /project/node_modules/@types/react/index.d.ts (0 errors) ====
+    export type ReactNode = {};
+    export type ComponentType<P = {}> = (props: P) => ReactNode;
+    export type ComponentProps<T extends ComponentType<any>> = T extends ComponentType<infer P> ? P : never;
+    
+    

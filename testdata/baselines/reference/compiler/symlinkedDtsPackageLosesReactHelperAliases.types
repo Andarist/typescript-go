@@ -29,59 +29,55 @@ declare function Widget(props: WidgetProps): ReactNode;
 >props : WidgetProps
 
 type Story = StoryLike<typeof Widget>;
->Story : { args?: Partial<WidgetProps> | undefined; }
+>Story : { args?: Partial<ComponentProps<T>>; }
 >Widget : (props: WidgetProps) => ReactNode
 
 export const CustomLabel: Story = {
->CustomLabel : { args?: Partial<WidgetProps> | undefined; }
->{  args: {    metric: 50,    label: ({ id, children }) => children,  },} : { args: { metric: number; label: ({ id, children }: LabelProps) => ReactNode; }; }
+>CustomLabel : { args?: Partial<ComponentProps<T>>; }
+>{  args: {    metric: 50,    label: ({ id, children }) => children,  },} : { args: { metric: number; label: ({ id, children }: { children: any; id: any; }) => any; }; }
 
   args: {
->args : { metric: number; label: ({ id, children }: LabelProps) => ReactNode; }
->{    metric: 50,    label: ({ id, children }) => children,  } : { metric: number; label: ({ id, children }: LabelProps) => ReactNode; }
+>args : { metric: number; label: ({ id, children }: { children: any; id: any; }) => any; }
+>{    metric: 50,    label: ({ id, children }) => children,  } : { metric: number; label: ({ id, children }: { children: any; id: any; }) => any; }
 
     metric: 50,
 >metric : number
 >50 : 50
 
     label: ({ id, children }) => children,
->label : ({ id, children }: LabelProps) => ReactNode
->({ id, children }) => children : ({ id, children }: LabelProps) => ReactNode
->id : string
->children : ReactNode
->children : ReactNode
+>label : ({ id, children }: { children: any; id: any; }) => any
+>({ id, children }) => children : ({ id, children }: { children: any; id: any; }) => any
+>id : any
+>children : any
+>children : any
 
   },
 };
 
 === /cache/symlinked-react-helpers/index.d.ts ===
 import type { ComponentProps, ComponentType } from "react";
->ComponentProps : ComponentProps<T>
->ComponentType : ComponentType<P>
+>ComponentProps : any
+>ComponentType : any
 
 export type StoryLike<T> =
 >StoryLike : StoryLike<T>
 
   T extends ComponentType<any>
     ? { args?: Partial<ComponentProps<T>> }
->args : Partial<ComponentProps<T>> | undefined
+>args : any
 
     : { args?: T };
 >args : T | undefined
 
 === /project/node_modules/@types/react/index.d.ts ===
-declare module "react" {
->"react" : typeof import("react")
-
-  export type ReactNode = {};
+export type ReactNode = {};
 >ReactNode : ReactNode
 
-  export type ComponentType<P = {}> = (props: P) => ReactNode;
+export type ComponentType<P = {}> = (props: P) => ReactNode;
 >ComponentType : ComponentType<P>
 >props : P
 
-  export type ComponentProps<T extends ComponentType<any>> = T extends ComponentType<infer P> ? P : never;
+export type ComponentProps<T extends ComponentType<any>> = T extends ComponentType<infer P> ? P : never;
 >ComponentProps : ComponentProps<T>
-}
 
 

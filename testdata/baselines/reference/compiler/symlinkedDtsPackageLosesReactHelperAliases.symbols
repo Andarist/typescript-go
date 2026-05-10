@@ -85,27 +85,23 @@ export type StoryLike<T> =
 >T : Symbol(T, Decl(index.d.ts, 2, 22))
 
 === /project/node_modules/@types/react/index.d.ts ===
-declare module "react" {
->"react" : Symbol("react", Decl(index.d.ts, 0, 0))
+export type ReactNode = {};
+>ReactNode : Symbol(ReactNode, Decl(index.d.ts, 0, 0))
 
-  export type ReactNode = {};
->ReactNode : Symbol(ReactNode, Decl(index.d.ts, 0, 24))
+export type ComponentType<P = {}> = (props: P) => ReactNode;
+>ComponentType : Symbol(ComponentType, Decl(index.d.ts, 0, 27))
+>P : Symbol(P, Decl(index.d.ts, 1, 26))
+>props : Symbol(props, Decl(index.d.ts, 1, 37))
+>P : Symbol(P, Decl(index.d.ts, 1, 26))
+>ReactNode : Symbol(ReactNode, Decl(index.d.ts, 0, 0))
 
-  export type ComponentType<P = {}> = (props: P) => ReactNode;
->ComponentType : Symbol(ComponentType, Decl(index.d.ts, 1, 29))
->P : Symbol(P, Decl(index.d.ts, 2, 28))
->props : Symbol(props, Decl(index.d.ts, 2, 39))
->P : Symbol(P, Decl(index.d.ts, 2, 28))
->ReactNode : Symbol(ReactNode, Decl(index.d.ts, 0, 24))
-
-  export type ComponentProps<T extends ComponentType<any>> = T extends ComponentType<infer P> ? P : never;
->ComponentProps : Symbol(ComponentProps, Decl(index.d.ts, 2, 62))
->T : Symbol(T, Decl(index.d.ts, 3, 29))
->ComponentType : Symbol(ComponentType, Decl(index.d.ts, 1, 29))
->T : Symbol(T, Decl(index.d.ts, 3, 29))
->ComponentType : Symbol(ComponentType, Decl(index.d.ts, 1, 29))
->P : Symbol(P, Decl(index.d.ts, 3, 90))
->P : Symbol(P, Decl(index.d.ts, 3, 90))
-}
+export type ComponentProps<T extends ComponentType<any>> = T extends ComponentType<infer P> ? P : never;
+>ComponentProps : Symbol(ComponentProps, Decl(index.d.ts, 1, 60))
+>T : Symbol(T, Decl(index.d.ts, 2, 27))
+>ComponentType : Symbol(ComponentType, Decl(index.d.ts, 0, 27))
+>T : Symbol(T, Decl(index.d.ts, 2, 27))
+>ComponentType : Symbol(ComponentType, Decl(index.d.ts, 0, 27))
+>P : Symbol(P, Decl(index.d.ts, 2, 88))
+>P : Symbol(P, Decl(index.d.ts, 2, 88))
 
 
