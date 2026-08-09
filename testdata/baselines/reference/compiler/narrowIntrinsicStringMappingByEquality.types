@@ -1,0 +1,210 @@
+//// [tests/cases/compiler/narrowIntrinsicStringMappingByEquality.ts] ////
+
+=== narrowIntrinsicStringMappingByEquality.ts ===
+// https://github.com/microsoft/TypeScript/issues/63724
+
+let countryCode: "BE" | "LU" | "NL";
+>countryCode : "BE" | "LU" | "NL"
+
+declare const prefix: Uppercase<string>;
+>prefix : Uppercase<string>
+
+if (prefix === "BE" || prefix === "LU" || prefix === "NL") {
+>prefix === "BE" || prefix === "LU" || prefix === "NL" : boolean
+>prefix === "BE" || prefix === "LU" : boolean
+>prefix === "BE" : boolean
+>prefix : Uppercase<string>
+>"BE" : "BE"
+>prefix === "LU" : boolean
+>prefix : Uppercase<string>
+>"LU" : "LU"
+>prefix === "NL" : boolean
+>prefix : Uppercase<string>
+>"NL" : "NL"
+
+    countryCode = prefix;
+>countryCode = prefix : "BE" | "LU" | "NL"
+>countryCode : "BE" | "LU" | "NL"
+>prefix : "BE" | "LU" | "NL"
+}
+
+let lowerCountryCode: "be" | "lu" | "nl";
+>lowerCountryCode : "be" | "lu" | "nl"
+
+declare const lowerPrefix: Lowercase<string>;
+>lowerPrefix : Lowercase<string>
+
+if (lowerPrefix === "be" || lowerPrefix === "lu" || lowerPrefix === "nl") {
+>lowerPrefix === "be" || lowerPrefix === "lu" || lowerPrefix === "nl" : boolean
+>lowerPrefix === "be" || lowerPrefix === "lu" : boolean
+>lowerPrefix === "be" : boolean
+>lowerPrefix : Lowercase<string>
+>"be" : "be"
+>lowerPrefix === "lu" : boolean
+>lowerPrefix : Lowercase<string>
+>"lu" : "lu"
+>lowerPrefix === "nl" : boolean
+>lowerPrefix : Lowercase<string>
+>"nl" : "nl"
+
+    lowerCountryCode = lowerPrefix;
+>lowerCountryCode = lowerPrefix : "be" | "lu" | "nl"
+>lowerCountryCode : "be" | "lu" | "nl"
+>lowerPrefix : "be" | "lu" | "nl"
+}
+
+let capitalizedCountryCode: "Belgium" | "Luxembourg" | "Netherlands";
+>capitalizedCountryCode : "Belgium" | "Luxembourg" | "Netherlands"
+
+declare const capitalizedCountry: Capitalize<string>;
+>capitalizedCountry : Capitalize<string>
+
+if (capitalizedCountry === "Belgium" || capitalizedCountry === "Luxembourg" || capitalizedCountry === "Netherlands") {
+>capitalizedCountry === "Belgium" || capitalizedCountry === "Luxembourg" || capitalizedCountry === "Netherlands" : boolean
+>capitalizedCountry === "Belgium" || capitalizedCountry === "Luxembourg" : boolean
+>capitalizedCountry === "Belgium" : boolean
+>capitalizedCountry : Capitalize<string>
+>"Belgium" : "Belgium"
+>capitalizedCountry === "Luxembourg" : boolean
+>capitalizedCountry : Capitalize<string>
+>"Luxembourg" : "Luxembourg"
+>capitalizedCountry === "Netherlands" : boolean
+>capitalizedCountry : Capitalize<string>
+>"Netherlands" : "Netherlands"
+
+    capitalizedCountryCode = capitalizedCountry;
+>capitalizedCountryCode = capitalizedCountry : "Belgium" | "Luxembourg" | "Netherlands"
+>capitalizedCountryCode : "Belgium" | "Luxembourg" | "Netherlands"
+>capitalizedCountry : "Belgium" | "Luxembourg" | "Netherlands"
+}
+
+let uncapitalizedCountryCode: "belgium" | "luxembourg" | "netherlands";
+>uncapitalizedCountryCode : "belgium" | "luxembourg" | "netherlands"
+
+declare const uncapitalizedCountry: Uncapitalize<string>;
+>uncapitalizedCountry : Uncapitalize<string>
+
+if (uncapitalizedCountry === "belgium" || uncapitalizedCountry === "luxembourg" || uncapitalizedCountry === "netherlands") {
+>uncapitalizedCountry === "belgium" || uncapitalizedCountry === "luxembourg" || uncapitalizedCountry === "netherlands" : boolean
+>uncapitalizedCountry === "belgium" || uncapitalizedCountry === "luxembourg" : boolean
+>uncapitalizedCountry === "belgium" : boolean
+>uncapitalizedCountry : Uncapitalize<string>
+>"belgium" : "belgium"
+>uncapitalizedCountry === "luxembourg" : boolean
+>uncapitalizedCountry : Uncapitalize<string>
+>"luxembourg" : "luxembourg"
+>uncapitalizedCountry === "netherlands" : boolean
+>uncapitalizedCountry : Uncapitalize<string>
+>"netherlands" : "netherlands"
+
+    uncapitalizedCountryCode = uncapitalizedCountry;
+>uncapitalizedCountryCode = uncapitalizedCountry : "belgium" | "luxembourg" | "netherlands"
+>uncapitalizedCountryCode : "belgium" | "luxembourg" | "netherlands"
+>uncapitalizedCountry : "belgium" | "luxembourg" | "netherlands"
+}
+
+let upperPattern: "FOO-BAR" | "FOO-BAZ";
+>upperPattern : "FOO-BAR" | "FOO-BAZ"
+
+declare const upperPatternPrefix: Uppercase<`foo-${string}`>;
+>upperPatternPrefix : `FOO-${Uppercase<string>}`
+
+if (upperPatternPrefix === "FOO-BAR" || upperPatternPrefix === "FOO-BAZ") {
+>upperPatternPrefix === "FOO-BAR" || upperPatternPrefix === "FOO-BAZ" : boolean
+>upperPatternPrefix === "FOO-BAR" : boolean
+>upperPatternPrefix : `FOO-${Uppercase<string>}`
+>"FOO-BAR" : "FOO-BAR"
+>upperPatternPrefix === "FOO-BAZ" : boolean
+>upperPatternPrefix : `FOO-${Uppercase<string>}`
+>"FOO-BAZ" : "FOO-BAZ"
+
+    upperPattern = upperPatternPrefix;
+>upperPattern = upperPatternPrefix : "FOO-BAR" | "FOO-BAZ"
+>upperPattern : "FOO-BAR" | "FOO-BAZ"
+>upperPatternPrefix : "FOO-BAR" | "FOO-BAZ"
+}
+
+let lowerPattern: "foo-bar" | "foo-baz";
+>lowerPattern : "foo-bar" | "foo-baz"
+
+declare const lowerPatternPrefix: Lowercase<`FOO-${string}`>;
+>lowerPatternPrefix : `foo-${Lowercase<string>}`
+
+if (lowerPatternPrefix === "foo-bar" || lowerPatternPrefix === "foo-baz") {
+>lowerPatternPrefix === "foo-bar" || lowerPatternPrefix === "foo-baz" : boolean
+>lowerPatternPrefix === "foo-bar" : boolean
+>lowerPatternPrefix : `foo-${Lowercase<string>}`
+>"foo-bar" : "foo-bar"
+>lowerPatternPrefix === "foo-baz" : boolean
+>lowerPatternPrefix : `foo-${Lowercase<string>}`
+>"foo-baz" : "foo-baz"
+
+    lowerPattern = lowerPatternPrefix;
+>lowerPattern = lowerPatternPrefix : "foo-bar" | "foo-baz"
+>lowerPattern : "foo-bar" | "foo-baz"
+>lowerPatternPrefix : "foo-bar" | "foo-baz"
+}
+
+let capitalizedPattern: "Foo-bar" | "Foo-baz";
+>capitalizedPattern : "Foo-bar" | "Foo-baz"
+
+declare const capitalizedPatternPrefix: Capitalize<`foo-${string}`>;
+>capitalizedPatternPrefix : `Foo-${string}`
+
+if (capitalizedPatternPrefix === "Foo-bar" || capitalizedPatternPrefix === "Foo-baz") {
+>capitalizedPatternPrefix === "Foo-bar" || capitalizedPatternPrefix === "Foo-baz" : boolean
+>capitalizedPatternPrefix === "Foo-bar" : boolean
+>capitalizedPatternPrefix : `Foo-${string}`
+>"Foo-bar" : "Foo-bar"
+>capitalizedPatternPrefix === "Foo-baz" : boolean
+>capitalizedPatternPrefix : `Foo-${string}`
+>"Foo-baz" : "Foo-baz"
+
+    capitalizedPattern = capitalizedPatternPrefix;
+>capitalizedPattern = capitalizedPatternPrefix : "Foo-bar" | "Foo-baz"
+>capitalizedPattern : "Foo-bar" | "Foo-baz"
+>capitalizedPatternPrefix : "Foo-bar" | "Foo-baz"
+}
+
+// These literals aren't members of the corresponding string mapping types.
+if (lowerPrefix === "BE" || lowerPrefix === "LU" || lowerPrefix === "NL") {
+>lowerPrefix === "BE" || lowerPrefix === "LU" || lowerPrefix === "NL" : boolean
+>lowerPrefix === "BE" || lowerPrefix === "LU" : boolean
+>lowerPrefix === "BE" : boolean
+>lowerPrefix : Lowercase<string>
+>"BE" : "BE"
+>lowerPrefix === "LU" : boolean
+>lowerPrefix : Lowercase<string>
+>"LU" : "LU"
+>lowerPrefix === "NL" : boolean
+>lowerPrefix : Lowercase<string>
+>"NL" : "NL"
+
+    countryCode = lowerPrefix;
+>countryCode = lowerPrefix : Lowercase<string>
+>countryCode : "BE" | "LU" | "NL"
+>lowerPrefix : Lowercase<string>
+}
+
+if (upperPatternPrefix === "foo-bar") {
+>upperPatternPrefix === "foo-bar" : boolean
+>upperPatternPrefix : `FOO-${Uppercase<string>}`
+>"foo-bar" : "foo-bar"
+
+    upperPattern = upperPatternPrefix;
+>upperPattern = upperPatternPrefix : never
+>upperPattern : "FOO-BAR" | "FOO-BAZ"
+>upperPatternPrefix : never
+}
+
+if (capitalizedPatternPrefix === "foo-bar") {
+>capitalizedPatternPrefix === "foo-bar" : boolean
+>capitalizedPatternPrefix : `Foo-${string}`
+>"foo-bar" : "foo-bar"
+
+    capitalizedPattern = capitalizedPatternPrefix;
+>capitalizedPattern = capitalizedPatternPrefix : never
+>capitalizedPattern : "Foo-bar" | "Foo-baz"
+>capitalizedPatternPrefix : never
+}
+

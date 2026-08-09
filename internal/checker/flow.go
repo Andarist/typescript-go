@@ -1899,18 +1899,26 @@ func (c *Checker) isOrContainsMatchingReference(source *ast.Node, target *ast.No
 	return c.isMatchingReference(source, target) || c.containsMatchingReference(source, target)
 }
 
-// Return a new type in which occurrences of the string, number and bigint primitives and placeholder template
-// literal types in typeWithPrimitives have been replaced with occurrences of compatible and more specific types
+// Return a new type in which occurrences of the string, number and bigint primitives and pattern literal types
+// in typeWithPrimitives have been replaced with occurrences of compatible and more specific types
 // from typeWithLiterals. This is essentially a limited form of intersection between the two types. We avoid a
 // true intersection because it is more costly and, when applied to union types, generates a large number of
 // types we don't actually care about.
 func (c *Checker) replacePrimitivesWithLiterals(typeWithPrimitives *Type, typeWithLiterals *Type) *Type {
-	if c.maybeTypeOfKind(typeWithPrimitives, TypeFlagsString|TypeFlagsTemplateLiteral|TypeFlagsNumber|TypeFlagsBigInt) &&
+	if c.maybeTypeOfKind(typeWithPrimitives, TypeFlagsString|TypeFlagsTemplateLiteral|TypeFlagsStringMapping|TypeFlagsNumber|TypeFlagsBigInt) &&
 		c.maybeTypeOfKind(typeWithLiterals, TypeFlagsStringLiteral|TypeFlagsTemplateLiteral|TypeFlagsStringMapping|TypeFlagsNumberLiteral|TypeFlagsBigIntLiteral) {
 		return c.mapType(typeWithPrimitives, func(t *Type) *Type {
 			switch {
 			case t.flags&TypeFlagsString != 0:
 				return c.extractTypesOfKind(typeWithLiterals, TypeFlagsString|TypeFlagsStringLiteral|TypeFlagsTemplateLiteral|TypeFlagsStringMapping)
+			case t.flags&TypeFlagsStringMapping != 0 && !c.maybeTypeOfKind(typeWithLiterals, TypeFlagsString|TypeFlagsTemplateLiteral|TypeFlagsStringMapping):
+				matching := c.filterType(c.extractTypesOfKind(typeWithLiterals, TypeFlagsStringLiteral), func(source *Type) bool {
+					return c.isMemberOfStringMapping(c.getRegularTypeOfLiteralType(source), t)
+				})
+				if matching.flags&TypeFlagsNever == 0 {
+					return matching
+				}
+				return t
 			case c.isPatternLiteralType(t) && !c.maybeTypeOfKind(typeWithLiterals, TypeFlagsString|TypeFlagsTemplateLiteral|TypeFlagsStringMapping):
 				return c.extractTypesOfKind(typeWithLiterals, TypeFlagsStringLiteral)
 			case t.flags&TypeFlagsNumber != 0:
