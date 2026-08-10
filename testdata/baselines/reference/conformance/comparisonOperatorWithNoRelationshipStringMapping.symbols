@@ -158,3 +158,155 @@ function compareUppercaseIntersection(foo: Uppercase<string> & { __brand: "upper
 >foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 60, 38))
 }
 
+function compareGenericUppercase<T extends string>(foo: Uppercase<T>) {
+>compareGenericUppercase : Symbol(compareGenericUppercase, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 63, 1))
+>T : Symbol(T, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 65, 33))
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 65, 51))
+>Uppercase : Symbol(Uppercase, Decl(lib.es5.d.ts, --, --))
+>T : Symbol(T, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 65, 33))
+
+    if (foo === "BA") {} // No error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 65, 51))
+
+    if (foo === "ba") {} // Error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 65, 51))
+}
+
+function compareConstrainedGenericUppercase<T extends "ba" | "bb">(foo: Uppercase<T>) {
+>compareConstrainedGenericUppercase : Symbol(compareConstrainedGenericUppercase, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 68, 1))
+>T : Symbol(T, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 70, 44))
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 70, 67))
+>Uppercase : Symbol(Uppercase, Decl(lib.es5.d.ts, --, --))
+>T : Symbol(T, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 70, 44))
+
+    if (foo === "BA") {} // No error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 70, 67))
+
+    if (foo === "BC") {} // Error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 70, 67))
+}
+
+function compareGenericUppercaseUnion<T extends string>(foo: Uppercase<T> | number) {
+>compareGenericUppercaseUnion : Symbol(compareGenericUppercaseUnion, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 73, 1))
+>T : Symbol(T, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 75, 38))
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 75, 56))
+>Uppercase : Symbol(Uppercase, Decl(lib.es5.d.ts, --, --))
+>T : Symbol(T, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 75, 38))
+
+    if (foo === "BA") {} // No error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 75, 56))
+}
+
+function compareGenericUppercaseIntersection<T extends string>(foo: Uppercase<T> & { __brand: "uppercase" }) {
+>compareGenericUppercaseIntersection : Symbol(compareGenericUppercaseIntersection, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 77, 1))
+>T : Symbol(T, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 79, 45))
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 79, 63))
+>Uppercase : Symbol(Uppercase, Decl(lib.es5.d.ts, --, --))
+>T : Symbol(T, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 79, 45))
+>__brand : Symbol(__brand, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 79, 84))
+
+    if (foo === "BA") {} // No error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 79, 63))
+}
+
+type BrandedString = string & { __brand: "input" };
+>BrandedString : Symbol(BrandedString, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 81, 1))
+>__brand : Symbol(__brand, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 83, 31))
+
+function compareUppercaseBrandedString(foo: Uppercase<BrandedString>) {
+>compareUppercaseBrandedString : Symbol(compareUppercaseBrandedString, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 83, 51))
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 85, 39))
+>Uppercase : Symbol(Uppercase, Decl(lib.es5.d.ts, --, --))
+>BrandedString : Symbol(BrandedString, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 81, 1))
+
+    if (foo === "BA") {} // No error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 85, 39))
+}
+
+function compareGenericTemplate<T extends string>(foo: `foo-${T}`) {
+>compareGenericTemplate : Symbol(compareGenericTemplate, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 87, 1))
+>T : Symbol(T, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 89, 32))
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 89, 50))
+>T : Symbol(T, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 89, 32))
+
+    if (foo === "foo-ba") {} // Error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 89, 50))
+}
+
+function compareConstrainedGenericTemplate<T extends "ba" | "bb">(foo: `foo-${T}`) {
+>compareConstrainedGenericTemplate : Symbol(compareConstrainedGenericTemplate, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 91, 1))
+>T : Symbol(T, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 93, 43))
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 93, 66))
+>T : Symbol(T, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 93, 43))
+
+    if (foo === "foo-ba") {} // No error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 93, 66))
+
+    if (foo === "foo-bc") {} // Error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 93, 66))
+}
+
+function compareBrandedTemplate(foo: `${BrandedString}`) {
+>compareBrandedTemplate : Symbol(compareBrandedTemplate, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 96, 1))
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 98, 32))
+>BrandedString : Symbol(BrandedString, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 81, 1))
+
+    if (foo === "ba") {} // Error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 98, 32))
+}
+
+enum StringMappingComparisonValue {
+>StringMappingComparisonValue : Symbol(StringMappingComparisonValue, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 100, 1))
+
+    Uppercase = "BA",
+>Uppercase : Symbol(StringMappingComparisonValue.Uppercase, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 102, 35))
+
+    Lowercase = "ba",
+>Lowercase : Symbol(StringMappingComparisonValue.Lowercase, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 103, 21))
+}
+
+function compareUppercaseEnum(foo: Uppercase<string>) {
+>compareUppercaseEnum : Symbol(compareUppercaseEnum, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 105, 1))
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 107, 30))
+>Uppercase : Symbol(Uppercase, Decl(lib.es5.d.ts, --, --))
+
+    if (foo === StringMappingComparisonValue.Uppercase) {} // No error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 107, 30))
+>StringMappingComparisonValue.Uppercase : Symbol(StringMappingComparisonValue.Uppercase, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 102, 35))
+>StringMappingComparisonValue : Symbol(StringMappingComparisonValue, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 100, 1))
+>Uppercase : Symbol(StringMappingComparisonValue.Uppercase, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 102, 35))
+
+    if (foo === StringMappingComparisonValue.Lowercase) {} // Error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 107, 30))
+>StringMappingComparisonValue.Lowercase : Symbol(StringMappingComparisonValue.Lowercase, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 103, 21))
+>StringMappingComparisonValue : Symbol(StringMappingComparisonValue, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 100, 1))
+>Lowercase : Symbol(StringMappingComparisonValue.Lowercase, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 103, 21))
+}
+
+enum TemplateComparisonValue {
+>TemplateComparisonValue : Symbol(TemplateComparisonValue, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 110, 1))
+
+    Match = "foo-ba",
+>Match : Symbol(TemplateComparisonValue.Match, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 112, 30))
+
+    Miss = "bar-ba",
+>Miss : Symbol(TemplateComparisonValue.Miss, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 113, 21))
+}
+
+function compareTemplateEnum(foo: `foo-${string}`) {
+>compareTemplateEnum : Symbol(compareTemplateEnum, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 115, 1))
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 117, 29))
+
+    if (foo === TemplateComparisonValue.Match) {} // No error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 117, 29))
+>TemplateComparisonValue.Match : Symbol(TemplateComparisonValue.Match, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 112, 30))
+>TemplateComparisonValue : Symbol(TemplateComparisonValue, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 110, 1))
+>Match : Symbol(TemplateComparisonValue.Match, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 112, 30))
+
+    if (foo === TemplateComparisonValue.Miss) {} // Error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 117, 29))
+>TemplateComparisonValue.Miss : Symbol(TemplateComparisonValue.Miss, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 113, 21))
+>TemplateComparisonValue : Symbol(TemplateComparisonValue, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 110, 1))
+>Miss : Symbol(TemplateComparisonValue.Miss, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 113, 21))
+}
+

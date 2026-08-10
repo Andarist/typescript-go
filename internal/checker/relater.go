@@ -2555,6 +2555,15 @@ func (c *Checker) isMemberOfStringMapping(source *Type, target *Type) bool {
 	return false
 }
 
+func isStringMappingMembershipDecidable(target *Type) bool {
+	// The fixed-point membership check is complete only when the innermost mapping accepts every string.
+	// For narrower generic domains, a non-member may still be produced from a different input.
+	for target.flags&TypeFlagsStringMapping != 0 {
+		target = target.Target()
+	}
+	return target.flags&(TypeFlagsAny|TypeFlagsString) != 0
+}
+
 func (c *Checker) applyTargetStringMappingToSource(source *Type, target *Type) (*Type, *Type) {
 	inner := target.AsStringMappingType().target
 	if inner.flags&TypeFlagsStringMapping != 0 {
@@ -3829,9 +3838,16 @@ func (r *Relater) structuredTypeRelatedToWorker(source *Type, target *Type, repo
 			if result != TernaryFalse {
 				return result
 			}
-		} else if r.relation == r.c.comparableRelation && target.flags&TypeFlagsStringLiteral != 0 {
-			return core.IfElse(r.c.isMemberOfStringMapping(target, source), TernaryTrue, TernaryFalse)
 		} else {
+			if r.relation == r.c.comparableRelation && target.flags&TypeFlagsStringLiteral != 0 {
+				literalTarget := r.c.getStringLiteralType(getStringLiteralValue(target))
+				if r.c.isMemberOfStringMapping(literalTarget, source) {
+					return TernaryTrue
+				}
+				if isStringMappingMembershipDecidable(source) {
+					return TernaryFalse
+				}
+			}
 			constraint := r.c.getBaseConstraintOfType(source)
 			if constraint != nil {
 				result = r.isRelatedTo(constraint, target, RecursionFlagsSource, reportErrors)

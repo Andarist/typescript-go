@@ -64,3 +64,60 @@ function compareUppercaseIntersection(foo: Uppercase<string> & { __brand: "upper
     if (foo === "BA") {} // No error
     if (foo === "ba") {} // Error
 }
+
+function compareGenericUppercase<T extends string>(foo: Uppercase<T>) {
+    if (foo === "BA") {} // No error
+    if (foo === "ba") {} // Error
+}
+
+function compareConstrainedGenericUppercase<T extends "ba" | "bb">(foo: Uppercase<T>) {
+    if (foo === "BA") {} // No error
+    if (foo === "BC") {} // Error
+}
+
+function compareGenericUppercaseUnion<T extends string>(foo: Uppercase<T> | number) {
+    if (foo === "BA") {} // No error
+}
+
+function compareGenericUppercaseIntersection<T extends string>(foo: Uppercase<T> & { __brand: "uppercase" }) {
+    if (foo === "BA") {} // No error
+}
+
+type BrandedString = string & { __brand: "input" };
+
+function compareUppercaseBrandedString(foo: Uppercase<BrandedString>) {
+    if (foo === "BA") {} // No error
+}
+
+function compareGenericTemplate<T extends string>(foo: `foo-${T}`) {
+    if (foo === "foo-ba") {} // Error
+}
+
+function compareConstrainedGenericTemplate<T extends "ba" | "bb">(foo: `foo-${T}`) {
+    if (foo === "foo-ba") {} // No error
+    if (foo === "foo-bc") {} // Error
+}
+
+function compareBrandedTemplate(foo: `${BrandedString}`) {
+    if (foo === "ba") {} // Error
+}
+
+enum StringMappingComparisonValue {
+    Uppercase = "BA",
+    Lowercase = "ba",
+}
+
+function compareUppercaseEnum(foo: Uppercase<string>) {
+    if (foo === StringMappingComparisonValue.Uppercase) {} // No error
+    if (foo === StringMappingComparisonValue.Lowercase) {} // Error
+}
+
+enum TemplateComparisonValue {
+    Match = "foo-ba",
+    Miss = "bar-ba",
+}
+
+function compareTemplateEnum(foo: `foo-${string}`) {
+    if (foo === TemplateComparisonValue.Match) {} // No error
+    if (foo === TemplateComparisonValue.Miss) {} // Error
+}

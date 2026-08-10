@@ -197,3 +197,165 @@ function compareUppercaseIntersection(foo: Uppercase<string> & { __brand: "upper
 >"ba" : "ba"
 }
 
+function compareGenericUppercase<T extends string>(foo: Uppercase<T>) {
+>compareGenericUppercase : <T extends string>(foo: Uppercase<T>) => void
+>foo : Uppercase<T>
+
+    if (foo === "BA") {} // No error
+>foo === "BA" : boolean
+>foo : Uppercase<T>
+>"BA" : "BA"
+
+    if (foo === "ba") {} // Error
+>foo === "ba" : boolean
+>foo : Uppercase<T>
+>"ba" : "ba"
+}
+
+function compareConstrainedGenericUppercase<T extends "ba" | "bb">(foo: Uppercase<T>) {
+>compareConstrainedGenericUppercase : <T extends "ba" | "bb">(foo: Uppercase<T>) => void
+>foo : Uppercase<T>
+
+    if (foo === "BA") {} // No error
+>foo === "BA" : boolean
+>foo : Uppercase<T>
+>"BA" : "BA"
+
+    if (foo === "BC") {} // Error
+>foo === "BC" : boolean
+>foo : Uppercase<T>
+>"BC" : "BC"
+}
+
+function compareGenericUppercaseUnion<T extends string>(foo: Uppercase<T> | number) {
+>compareGenericUppercaseUnion : <T extends string>(foo: Uppercase<T> | number) => void
+>foo : number | Uppercase<T>
+
+    if (foo === "BA") {} // No error
+>foo === "BA" : boolean
+>foo : number | Uppercase<T>
+>"BA" : "BA"
+}
+
+function compareGenericUppercaseIntersection<T extends string>(foo: Uppercase<T> & { __brand: "uppercase" }) {
+>compareGenericUppercaseIntersection : <T extends string>(foo: Uppercase<T> & { __brand: "uppercase"; }) => void
+>foo : Uppercase<T> & { __brand: "uppercase"; }
+>__brand : "uppercase"
+
+    if (foo === "BA") {} // No error
+>foo === "BA" : boolean
+>foo : Uppercase<T> & { __brand: "uppercase"; }
+>"BA" : "BA"
+}
+
+type BrandedString = string & { __brand: "input" };
+>BrandedString : BrandedString
+>__brand : "input"
+
+function compareUppercaseBrandedString(foo: Uppercase<BrandedString>) {
+>compareUppercaseBrandedString : (foo: Uppercase<BrandedString>) => void
+>foo : Uppercase<`${BrandedString}`>
+
+    if (foo === "BA") {} // No error
+>foo === "BA" : boolean
+>foo : Uppercase<`${BrandedString}`>
+>"BA" : "BA"
+}
+
+function compareGenericTemplate<T extends string>(foo: `foo-${T}`) {
+>compareGenericTemplate : <T extends string>(foo: `foo-${T}`) => void
+>foo : `foo-${T}`
+
+    if (foo === "foo-ba") {} // Error
+>foo === "foo-ba" : boolean
+>foo : `foo-${T}`
+>"foo-ba" : "foo-ba"
+}
+
+function compareConstrainedGenericTemplate<T extends "ba" | "bb">(foo: `foo-${T}`) {
+>compareConstrainedGenericTemplate : <T extends "ba" | "bb">(foo: `foo-${T}`) => void
+>foo : `foo-${T}`
+
+    if (foo === "foo-ba") {} // No error
+>foo === "foo-ba" : boolean
+>foo : `foo-${T}`
+>"foo-ba" : "foo-ba"
+
+    if (foo === "foo-bc") {} // Error
+>foo === "foo-bc" : boolean
+>foo : `foo-${T}`
+>"foo-bc" : "foo-bc"
+}
+
+function compareBrandedTemplate(foo: `${BrandedString}`) {
+>compareBrandedTemplate : (foo: `${BrandedString}`) => void
+>foo : `${BrandedString}`
+
+    if (foo === "ba") {} // Error
+>foo === "ba" : boolean
+>foo : `${BrandedString}`
+>"ba" : "ba"
+}
+
+enum StringMappingComparisonValue {
+>StringMappingComparisonValue : StringMappingComparisonValue
+
+    Uppercase = "BA",
+>Uppercase : StringMappingComparisonValue.Uppercase
+>"BA" : "BA"
+
+    Lowercase = "ba",
+>Lowercase : StringMappingComparisonValue.Lowercase
+>"ba" : "ba"
+}
+
+function compareUppercaseEnum(foo: Uppercase<string>) {
+>compareUppercaseEnum : (foo: Uppercase<string>) => void
+>foo : Uppercase<string>
+
+    if (foo === StringMappingComparisonValue.Uppercase) {} // No error
+>foo === StringMappingComparisonValue.Uppercase : boolean
+>foo : Uppercase<string>
+>StringMappingComparisonValue.Uppercase : StringMappingComparisonValue.Uppercase
+>StringMappingComparisonValue : typeof StringMappingComparisonValue
+>Uppercase : StringMappingComparisonValue.Uppercase
+
+    if (foo === StringMappingComparisonValue.Lowercase) {} // Error
+>foo === StringMappingComparisonValue.Lowercase : boolean
+>foo : Uppercase<string>
+>StringMappingComparisonValue.Lowercase : StringMappingComparisonValue.Lowercase
+>StringMappingComparisonValue : typeof StringMappingComparisonValue
+>Lowercase : StringMappingComparisonValue.Lowercase
+}
+
+enum TemplateComparisonValue {
+>TemplateComparisonValue : TemplateComparisonValue
+
+    Match = "foo-ba",
+>Match : TemplateComparisonValue.Match
+>"foo-ba" : "foo-ba"
+
+    Miss = "bar-ba",
+>Miss : TemplateComparisonValue.Miss
+>"bar-ba" : "bar-ba"
+}
+
+function compareTemplateEnum(foo: `foo-${string}`) {
+>compareTemplateEnum : (foo: `foo-${string}`) => void
+>foo : `foo-${string}`
+
+    if (foo === TemplateComparisonValue.Match) {} // No error
+>foo === TemplateComparisonValue.Match : boolean
+>foo : `foo-${string}`
+>TemplateComparisonValue.Match : TemplateComparisonValue.Match
+>TemplateComparisonValue : typeof TemplateComparisonValue
+>Match : TemplateComparisonValue.Match
+
+    if (foo === TemplateComparisonValue.Miss) {} // Error
+>foo === TemplateComparisonValue.Miss : boolean
+>foo : `foo-${string}`
+>TemplateComparisonValue.Miss : TemplateComparisonValue.Miss
+>TemplateComparisonValue : typeof TemplateComparisonValue
+>Miss : TemplateComparisonValue.Miss
+}
+

@@ -10,9 +10,16 @@ comparisonOperatorWithNoRelationshipStringMapping.ts(43,9): error TS2367: This c
 comparisonOperatorWithNoRelationshipStringMapping.ts(48,9): error TS2367: This comparison appears to be unintentional because the types 'number | Uppercase<string>' and '"ba"' have no overlap.
 comparisonOperatorWithNoRelationshipStringMapping.ts(58,9): error TS2367: This comparison appears to be unintentional because the types 'Lowercase<string> | Uppercase<string>' and '"Ba"' have no overlap.
 comparisonOperatorWithNoRelationshipStringMapping.ts(63,9): error TS2367: This comparison appears to be unintentional because the types 'Uppercase<string> & { __brand: "uppercase"; }' and '"ba"' have no overlap.
+comparisonOperatorWithNoRelationshipStringMapping.ts(68,9): error TS2367: This comparison appears to be unintentional because the types 'Uppercase<T>' and '"ba"' have no overlap.
+comparisonOperatorWithNoRelationshipStringMapping.ts(73,9): error TS2367: This comparison appears to be unintentional because the types 'Uppercase<T>' and '"BC"' have no overlap.
+comparisonOperatorWithNoRelationshipStringMapping.ts(91,9): error TS2367: This comparison appears to be unintentional because the types '`foo-${T}`' and '"foo-ba"' have no overlap.
+comparisonOperatorWithNoRelationshipStringMapping.ts(96,9): error TS2367: This comparison appears to be unintentional because the types '`foo-${T}`' and '"foo-bc"' have no overlap.
+comparisonOperatorWithNoRelationshipStringMapping.ts(100,9): error TS2367: This comparison appears to be unintentional because the types '`${BrandedString}`' and '"ba"' have no overlap.
+comparisonOperatorWithNoRelationshipStringMapping.ts(110,9): error TS2367: This comparison appears to be unintentional because the types 'Uppercase<string>' and 'StringMappingComparisonValue.Lowercase' have no overlap.
+comparisonOperatorWithNoRelationshipStringMapping.ts(120,9): error TS2367: This comparison appears to be unintentional because the types '`foo-${string}`' and 'TemplateComparisonValue.Miss' have no overlap.
 
 
-==== comparisonOperatorWithNoRelationshipStringMapping.ts (12 errors) ====
+==== comparisonOperatorWithNoRelationshipStringMapping.ts (19 errors) ====
     function compareUppercase(foo: Uppercase<string>) {
         if (foo === "BA") {} // No error
         if (foo === "ba") {} // Error
@@ -100,5 +107,76 @@ comparisonOperatorWithNoRelationshipStringMapping.ts(63,9): error TS2367: This c
         if (foo === "ba") {} // Error
             ~~~~~~~~~~~~
 !!! error TS2367: This comparison appears to be unintentional because the types 'Uppercase<string> & { __brand: "uppercase"; }' and '"ba"' have no overlap.
+    }
+    
+    function compareGenericUppercase<T extends string>(foo: Uppercase<T>) {
+        if (foo === "BA") {} // No error
+        if (foo === "ba") {} // Error
+            ~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types 'Uppercase<T>' and '"ba"' have no overlap.
+    }
+    
+    function compareConstrainedGenericUppercase<T extends "ba" | "bb">(foo: Uppercase<T>) {
+        if (foo === "BA") {} // No error
+        if (foo === "BC") {} // Error
+            ~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types 'Uppercase<T>' and '"BC"' have no overlap.
+    }
+    
+    function compareGenericUppercaseUnion<T extends string>(foo: Uppercase<T> | number) {
+        if (foo === "BA") {} // No error
+    }
+    
+    function compareGenericUppercaseIntersection<T extends string>(foo: Uppercase<T> & { __brand: "uppercase" }) {
+        if (foo === "BA") {} // No error
+    }
+    
+    type BrandedString = string & { __brand: "input" };
+    
+    function compareUppercaseBrandedString(foo: Uppercase<BrandedString>) {
+        if (foo === "BA") {} // No error
+    }
+    
+    function compareGenericTemplate<T extends string>(foo: `foo-${T}`) {
+        if (foo === "foo-ba") {} // Error
+            ~~~~~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types '`foo-${T}`' and '"foo-ba"' have no overlap.
+    }
+    
+    function compareConstrainedGenericTemplate<T extends "ba" | "bb">(foo: `foo-${T}`) {
+        if (foo === "foo-ba") {} // No error
+        if (foo === "foo-bc") {} // Error
+            ~~~~~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types '`foo-${T}`' and '"foo-bc"' have no overlap.
+    }
+    
+    function compareBrandedTemplate(foo: `${BrandedString}`) {
+        if (foo === "ba") {} // Error
+            ~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types '`${BrandedString}`' and '"ba"' have no overlap.
+    }
+    
+    enum StringMappingComparisonValue {
+        Uppercase = "BA",
+        Lowercase = "ba",
+    }
+    
+    function compareUppercaseEnum(foo: Uppercase<string>) {
+        if (foo === StringMappingComparisonValue.Uppercase) {} // No error
+        if (foo === StringMappingComparisonValue.Lowercase) {} // Error
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types 'Uppercase<string>' and 'StringMappingComparisonValue.Lowercase' have no overlap.
+    }
+    
+    enum TemplateComparisonValue {
+        Match = "foo-ba",
+        Miss = "bar-ba",
+    }
+    
+    function compareTemplateEnum(foo: `foo-${string}`) {
+        if (foo === TemplateComparisonValue.Match) {} // No error
+        if (foo === TemplateComparisonValue.Miss) {} // Error
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types '`foo-${string}`' and 'TemplateComparisonValue.Miss' have no overlap.
     }
     
