@@ -28,6 +28,17 @@ function narrowUppercase(prefix: Uppercase<string>) {
 >countryCode : "BE" | "LU" | "NL"
 >prefix : "BE" | "LU" | "NL"
     }
+
+    if (prefix === "be") {
+>prefix === "be" : boolean
+>prefix : Uppercase<string>
+>"be" : "be"
+
+        countryCode = prefix;
+>countryCode = prefix : never
+>countryCode : "BE" | "LU" | "NL"
+>prefix : never
+    }
 }
 
 function narrowLowercase(prefix: Lowercase<string>) {
@@ -56,25 +67,14 @@ function narrowLowercase(prefix: Lowercase<string>) {
 >prefix : "be" | "lu" | "nl"
     }
 
-    let uppercaseCountryCode: "BE" | "LU" | "NL";
->uppercaseCountryCode : "BE" | "LU" | "NL"
-
-    if (prefix === "BE" || prefix === "LU" || prefix === "NL") {
->prefix === "BE" || prefix === "LU" || prefix === "NL" : boolean
->prefix === "BE" || prefix === "LU" : boolean
+    if (prefix === "BE") {
 >prefix === "BE" : boolean
 >prefix : Lowercase<string>
 >"BE" : "BE"
->prefix === "LU" : boolean
->prefix : Lowercase<string>
->"LU" : "LU"
->prefix === "NL" : boolean
->prefix : Lowercase<string>
->"NL" : "NL"
 
-        uppercaseCountryCode = prefix;
->uppercaseCountryCode = prefix : never
->uppercaseCountryCode : "BE" | "LU" | "NL"
+        countryCode = prefix;
+>countryCode = prefix : never
+>countryCode : "be" | "lu" | "nl"
 >prefix : never
     }
 }
@@ -104,6 +104,17 @@ function narrowCapitalize(country: Capitalize<string>) {
 >countryName : "Belgium" | "Luxembourg" | "Netherlands"
 >country : "Belgium" | "Luxembourg" | "Netherlands"
     }
+
+    if (country === "belgium") {
+>country === "belgium" : boolean
+>country : Capitalize<string>
+>"belgium" : "belgium"
+
+        countryName = country;
+>countryName = country : never
+>countryName : "Belgium" | "Luxembourg" | "Netherlands"
+>country : never
+    }
 }
 
 function narrowUncapitalize(country: Uncapitalize<string>) {
@@ -130,6 +141,17 @@ function narrowUncapitalize(country: Uncapitalize<string>) {
 >countryName = country : "belgium" | "luxembourg" | "netherlands"
 >countryName : "belgium" | "luxembourg" | "netherlands"
 >country : "belgium" | "luxembourg" | "netherlands"
+    }
+
+    if (country === "Belgium") {
+>country === "Belgium" : boolean
+>country : Uncapitalize<string>
+>"Belgium" : "Belgium"
+
+        countryName = country;
+>countryName = country : never
+>countryName : "belgium" | "luxembourg" | "netherlands"
+>country : never
     }
 }
 
@@ -188,6 +210,17 @@ function narrowLowercasePattern(prefix: Lowercase<`FOO-${string}`>) {
 >pattern : "foo-bar" | "foo-baz"
 >prefix : "foo-bar" | "foo-baz"
     }
+
+    if (prefix === "foo-BAR") {
+>prefix === "foo-BAR" : boolean
+>prefix : `foo-${Lowercase<string>}`
+>"foo-BAR" : "foo-BAR"
+
+        pattern = prefix;
+>pattern = prefix : never
+>pattern : "foo-bar" | "foo-baz"
+>prefix : never
+    }
 }
 
 function narrowCapitalizePattern(prefix: Capitalize<`foo-${string}`>) {
@@ -220,6 +253,40 @@ function narrowCapitalizePattern(prefix: Capitalize<`foo-${string}`>) {
         pattern = prefix;
 >pattern = prefix : never
 >pattern : "Foo-bar" | "Foo-baz"
+>prefix : never
+    }
+}
+
+function narrowUncapitalizePattern(prefix: Uncapitalize<`Foo-${string}`>) {
+>narrowUncapitalizePattern : (prefix: Uncapitalize<`Foo-${string}`>) => void
+>prefix : `foo-${string}`
+
+    let pattern: "foo-bar" | "foo-baz";
+>pattern : "foo-bar" | "foo-baz"
+
+    if (prefix === "foo-bar" || prefix === "foo-baz") {
+>prefix === "foo-bar" || prefix === "foo-baz" : boolean
+>prefix === "foo-bar" : boolean
+>prefix : `foo-${string}`
+>"foo-bar" : "foo-bar"
+>prefix === "foo-baz" : boolean
+>prefix : `foo-${string}`
+>"foo-baz" : "foo-baz"
+
+        pattern = prefix;
+>pattern = prefix : "foo-bar" | "foo-baz"
+>pattern : "foo-bar" | "foo-baz"
+>prefix : "foo-bar" | "foo-baz"
+    }
+
+    if (prefix === "Foo-bar") {
+>prefix === "Foo-bar" : boolean
+>prefix : `foo-${string}`
+>"Foo-bar" : "Foo-bar"
+
+        pattern = prefix;
+>pattern = prefix : never
+>pattern : "foo-bar" | "foo-baz"
 >prefix : never
     }
 }

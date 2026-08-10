@@ -1,17 +1,26 @@
-narrowIntrinsicStringMappingByEquality.ts(20,9): error TS2367: This comparison appears to be unintentional because the types 'Lowercase<string>' and '"BE"' have no overlap.
-narrowIntrinsicStringMappingByEquality.ts(20,28): error TS2367: This comparison appears to be unintentional because the types 'Lowercase<string>' and '"LU"' have no overlap.
-narrowIntrinsicStringMappingByEquality.ts(20,47): error TS2367: This comparison appears to be unintentional because the types 'Lowercase<string>' and '"NL"' have no overlap.
-narrowIntrinsicStringMappingByEquality.ts(48,9): error TS2367: This comparison appears to be unintentional because the types '`FOO-${Uppercase<string>}`' and '"foo-bar"' have no overlap.
-narrowIntrinsicStringMappingByEquality.ts(68,9): error TS2367: This comparison appears to be unintentional because the types '`Foo-${string}`' and '"foo-bar"' have no overlap.
+narrowIntrinsicStringMappingByEquality.ts(10,9): error TS2367: This comparison appears to be unintentional because the types 'Uppercase<string>' and '"be"' have no overlap.
+narrowIntrinsicStringMappingByEquality.ts(22,9): error TS2367: This comparison appears to be unintentional because the types 'Lowercase<string>' and '"BE"' have no overlap.
+narrowIntrinsicStringMappingByEquality.ts(34,9): error TS2367: This comparison appears to be unintentional because the types 'Capitalize<string>' and '"belgium"' have no overlap.
+narrowIntrinsicStringMappingByEquality.ts(46,9): error TS2367: This comparison appears to be unintentional because the types 'Uncapitalize<string>' and '"Belgium"' have no overlap.
+narrowIntrinsicStringMappingByEquality.ts(58,9): error TS2367: This comparison appears to be unintentional because the types '`FOO-${Uppercase<string>}`' and '"foo-bar"' have no overlap.
+narrowIntrinsicStringMappingByEquality.ts(70,9): error TS2367: This comparison appears to be unintentional because the types '`foo-${Lowercase<string>}`' and '"foo-BAR"' have no overlap.
+narrowIntrinsicStringMappingByEquality.ts(82,9): error TS2367: This comparison appears to be unintentional because the types '`Foo-${string}`' and '"foo-bar"' have no overlap.
+narrowIntrinsicStringMappingByEquality.ts(94,9): error TS2367: This comparison appears to be unintentional because the types '`foo-${string}`' and '"Foo-bar"' have no overlap.
 
 
-==== narrowIntrinsicStringMappingByEquality.ts (5 errors) ====
+==== narrowIntrinsicStringMappingByEquality.ts (8 errors) ====
     // https://github.com/microsoft/TypeScript/issues/63724
     
     function narrowUppercase(prefix: Uppercase<string>) {
         let countryCode: "BE" | "LU" | "NL";
     
         if (prefix === "BE" || prefix === "LU" || prefix === "NL") {
+            countryCode = prefix;
+        }
+    
+        if (prefix === "be") {
+            ~~~~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types 'Uppercase<string>' and '"be"' have no overlap.
             countryCode = prefix;
         }
     }
@@ -23,16 +32,10 @@ narrowIntrinsicStringMappingByEquality.ts(68,9): error TS2367: This comparison a
             countryCode = prefix;
         }
     
-        let uppercaseCountryCode: "BE" | "LU" | "NL";
-    
-        if (prefix === "BE" || prefix === "LU" || prefix === "NL") {
+        if (prefix === "BE") {
             ~~~~~~~~~~~~~~~
 !!! error TS2367: This comparison appears to be unintentional because the types 'Lowercase<string>' and '"BE"' have no overlap.
-                               ~~~~~~~~~~~~~~~
-!!! error TS2367: This comparison appears to be unintentional because the types 'Lowercase<string>' and '"LU"' have no overlap.
-                                                  ~~~~~~~~~~~~~~~
-!!! error TS2367: This comparison appears to be unintentional because the types 'Lowercase<string>' and '"NL"' have no overlap.
-            uppercaseCountryCode = prefix;
+            countryCode = prefix;
         }
     }
     
@@ -42,12 +45,24 @@ narrowIntrinsicStringMappingByEquality.ts(68,9): error TS2367: This comparison a
         if (country === "Belgium" || country === "Luxembourg" || country === "Netherlands") {
             countryName = country;
         }
+    
+        if (country === "belgium") {
+            ~~~~~~~~~~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types 'Capitalize<string>' and '"belgium"' have no overlap.
+            countryName = country;
+        }
     }
     
     function narrowUncapitalize(country: Uncapitalize<string>) {
         let countryName: "belgium" | "luxembourg" | "netherlands";
     
         if (country === "belgium" || country === "luxembourg" || country === "netherlands") {
+            countryName = country;
+        }
+    
+        if (country === "Belgium") {
+            ~~~~~~~~~~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types 'Uncapitalize<string>' and '"Belgium"' have no overlap.
             countryName = country;
         }
     }
@@ -72,6 +87,12 @@ narrowIntrinsicStringMappingByEquality.ts(68,9): error TS2367: This comparison a
         if (prefix === "foo-bar" || prefix === "foo-baz") {
             pattern = prefix;
         }
+    
+        if (prefix === "foo-BAR") {
+            ~~~~~~~~~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types '`foo-${Lowercase<string>}`' and '"foo-BAR"' have no overlap.
+            pattern = prefix;
+        }
     }
     
     function narrowCapitalizePattern(prefix: Capitalize<`foo-${string}`>) {
@@ -84,6 +105,20 @@ narrowIntrinsicStringMappingByEquality.ts(68,9): error TS2367: This comparison a
         if (prefix === "foo-bar") {
             ~~~~~~~~~~~~~~~~~~~~
 !!! error TS2367: This comparison appears to be unintentional because the types '`Foo-${string}`' and '"foo-bar"' have no overlap.
+            pattern = prefix;
+        }
+    }
+    
+    function narrowUncapitalizePattern(prefix: Uncapitalize<`Foo-${string}`>) {
+        let pattern: "foo-bar" | "foo-baz";
+    
+        if (prefix === "foo-bar" || prefix === "foo-baz") {
+            pattern = prefix;
+        }
+    
+        if (prefix === "Foo-bar") {
+            ~~~~~~~~~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types '`foo-${string}`' and '"Foo-bar"' have no overlap.
             pattern = prefix;
         }
     }

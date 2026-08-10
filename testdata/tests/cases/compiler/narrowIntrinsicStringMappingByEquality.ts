@@ -8,6 +8,10 @@ function narrowUppercase(prefix: Uppercase<string>) {
     if (prefix === "BE" || prefix === "LU" || prefix === "NL") {
         countryCode = prefix;
     }
+
+    if (prefix === "be") {
+        countryCode = prefix;
+    }
 }
 
 function narrowLowercase(prefix: Lowercase<string>) {
@@ -17,10 +21,8 @@ function narrowLowercase(prefix: Lowercase<string>) {
         countryCode = prefix;
     }
 
-    let uppercaseCountryCode: "BE" | "LU" | "NL";
-
-    if (prefix === "BE" || prefix === "LU" || prefix === "NL") {
-        uppercaseCountryCode = prefix;
+    if (prefix === "BE") {
+        countryCode = prefix;
     }
 }
 
@@ -30,12 +32,20 @@ function narrowCapitalize(country: Capitalize<string>) {
     if (country === "Belgium" || country === "Luxembourg" || country === "Netherlands") {
         countryName = country;
     }
+
+    if (country === "belgium") {
+        countryName = country;
+    }
 }
 
 function narrowUncapitalize(country: Uncapitalize<string>) {
     let countryName: "belgium" | "luxembourg" | "netherlands";
 
     if (country === "belgium" || country === "luxembourg" || country === "netherlands") {
+        countryName = country;
+    }
+
+    if (country === "Belgium") {
         countryName = country;
     }
 }
@@ -58,6 +68,10 @@ function narrowLowercasePattern(prefix: Lowercase<`FOO-${string}`>) {
     if (prefix === "foo-bar" || prefix === "foo-baz") {
         pattern = prefix;
     }
+
+    if (prefix === "foo-BAR") {
+        pattern = prefix;
+    }
 }
 
 function narrowCapitalizePattern(prefix: Capitalize<`foo-${string}`>) {
@@ -68,6 +82,18 @@ function narrowCapitalizePattern(prefix: Capitalize<`foo-${string}`>) {
     }
 
     if (prefix === "foo-bar") {
+        pattern = prefix;
+    }
+}
+
+function narrowUncapitalizePattern(prefix: Uncapitalize<`Foo-${string}`>) {
+    let pattern: "foo-bar" | "foo-baz";
+
+    if (prefix === "foo-bar" || prefix === "foo-baz") {
+        pattern = prefix;
+    }
+
+    if (prefix === "Foo-bar") {
         pattern = prefix;
     }
 }
