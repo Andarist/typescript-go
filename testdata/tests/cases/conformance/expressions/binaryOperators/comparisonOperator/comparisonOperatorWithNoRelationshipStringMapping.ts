@@ -44,3 +44,23 @@ function compareTemplate(foo: `foo-${string}`) {
     if (foo === "foo-c") {} // No error
     if (foo === "bar-c") {} // Error
 }
+
+function compareUppercaseUnion(foo: Uppercase<string> | number) {
+    if (foo === "BA") {} // No error
+    if (foo === "ba") {} // Error
+}
+
+function compareUppercaseUnionWithLiteral(foo: Uppercase<string> | "ba") {
+    if (foo === "ba") {} // No error
+}
+
+function compareStringMappingUnion(foo: Uppercase<string> | Lowercase<string>) {
+    if (foo === "BA") {} // No error
+    if (foo === "ba") {} // No error
+    if (foo === "Ba") {} // Error
+}
+
+function compareUppercaseIntersection(foo: Uppercase<string> & { __brand: "uppercase" }) {
+    if (foo === "BA") {} // No error
+    if (foo === "ba") {} // Error
+}

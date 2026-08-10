@@ -108,3 +108,53 @@ function compareTemplate(foo: `foo-${string}`) {
 >foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 40, 25))
 }
 
+function compareUppercaseUnion(foo: Uppercase<string> | number) {
+>compareUppercaseUnion : Symbol(compareUppercaseUnion, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 43, 1))
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 45, 31))
+>Uppercase : Symbol(Uppercase, Decl(lib.es5.d.ts, --, --))
+
+    if (foo === "BA") {} // No error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 45, 31))
+
+    if (foo === "ba") {} // Error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 45, 31))
+}
+
+function compareUppercaseUnionWithLiteral(foo: Uppercase<string> | "ba") {
+>compareUppercaseUnionWithLiteral : Symbol(compareUppercaseUnionWithLiteral, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 48, 1))
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 50, 42))
+>Uppercase : Symbol(Uppercase, Decl(lib.es5.d.ts, --, --))
+
+    if (foo === "ba") {} // No error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 50, 42))
+}
+
+function compareStringMappingUnion(foo: Uppercase<string> | Lowercase<string>) {
+>compareStringMappingUnion : Symbol(compareStringMappingUnion, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 52, 1))
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 54, 35))
+>Uppercase : Symbol(Uppercase, Decl(lib.es5.d.ts, --, --))
+>Lowercase : Symbol(Lowercase, Decl(lib.es5.d.ts, --, --))
+
+    if (foo === "BA") {} // No error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 54, 35))
+
+    if (foo === "ba") {} // No error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 54, 35))
+
+    if (foo === "Ba") {} // Error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 54, 35))
+}
+
+function compareUppercaseIntersection(foo: Uppercase<string> & { __brand: "uppercase" }) {
+>compareUppercaseIntersection : Symbol(compareUppercaseIntersection, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 58, 1))
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 60, 38))
+>Uppercase : Symbol(Uppercase, Decl(lib.es5.d.ts, --, --))
+>__brand : Symbol(__brand, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 60, 64))
+
+    if (foo === "BA") {} // No error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 60, 38))
+
+    if (foo === "ba") {} // Error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 60, 38))
+}
+

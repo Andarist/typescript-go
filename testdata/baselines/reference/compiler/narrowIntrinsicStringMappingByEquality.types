@@ -181,9 +181,9 @@ if (lowerPrefix === "BE" || lowerPrefix === "LU" || lowerPrefix === "NL") {
 >"NL" : "NL"
 
     countryCode = lowerPrefix;
->countryCode = lowerPrefix : Lowercase<string>
+>countryCode = lowerPrefix : never
 >countryCode : "BE" | "LU" | "NL"
->lowerPrefix : Lowercase<string>
+>lowerPrefix : never
 }
 
 if (upperPatternPrefix === "foo-bar") {

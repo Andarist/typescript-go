@@ -7,9 +7,12 @@ comparisonOperatorWithNoRelationshipStringMapping.ts(28,9): error TS2367: This c
 comparisonOperatorWithNoRelationshipStringMapping.ts(33,9): error TS2367: This comparison appears to be unintentional because the types '`Foo-${string}`' and '"foo-ba"' have no overlap.
 comparisonOperatorWithNoRelationshipStringMapping.ts(38,9): error TS2367: This comparison appears to be unintentional because the types '`foo-${string}`' and '"Foo-ba"' have no overlap.
 comparisonOperatorWithNoRelationshipStringMapping.ts(43,9): error TS2367: This comparison appears to be unintentional because the types '`foo-${string}`' and '"bar-c"' have no overlap.
+comparisonOperatorWithNoRelationshipStringMapping.ts(48,9): error TS2367: This comparison appears to be unintentional because the types 'number | Uppercase<string>' and '"ba"' have no overlap.
+comparisonOperatorWithNoRelationshipStringMapping.ts(58,9): error TS2367: This comparison appears to be unintentional because the types 'Lowercase<string> | Uppercase<string>' and '"Ba"' have no overlap.
+comparisonOperatorWithNoRelationshipStringMapping.ts(63,9): error TS2367: This comparison appears to be unintentional because the types 'Uppercase<string> & { __brand: "uppercase"; }' and '"ba"' have no overlap.
 
 
-==== comparisonOperatorWithNoRelationshipStringMapping.ts (9 errors) ====
+==== comparisonOperatorWithNoRelationshipStringMapping.ts (12 errors) ====
     function compareUppercase(foo: Uppercase<string>) {
         if (foo === "BA") {} // No error
         if (foo === "ba") {} // Error
@@ -71,5 +74,31 @@ comparisonOperatorWithNoRelationshipStringMapping.ts(43,9): error TS2367: This c
         if (foo === "bar-c") {} // Error
             ~~~~~~~~~~~~~~~
 !!! error TS2367: This comparison appears to be unintentional because the types '`foo-${string}`' and '"bar-c"' have no overlap.
+    }
+    
+    function compareUppercaseUnion(foo: Uppercase<string> | number) {
+        if (foo === "BA") {} // No error
+        if (foo === "ba") {} // Error
+            ~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types 'number | Uppercase<string>' and '"ba"' have no overlap.
+    }
+    
+    function compareUppercaseUnionWithLiteral(foo: Uppercase<string> | "ba") {
+        if (foo === "ba") {} // No error
+    }
+    
+    function compareStringMappingUnion(foo: Uppercase<string> | Lowercase<string>) {
+        if (foo === "BA") {} // No error
+        if (foo === "ba") {} // No error
+        if (foo === "Ba") {} // Error
+            ~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types 'Lowercase<string> | Uppercase<string>' and '"Ba"' have no overlap.
+    }
+    
+    function compareUppercaseIntersection(foo: Uppercase<string> & { __brand: "uppercase" }) {
+        if (foo === "BA") {} // No error
+        if (foo === "ba") {} // Error
+            ~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types 'Uppercase<string> & { __brand: "uppercase"; }' and '"ba"' have no overlap.
     }
     

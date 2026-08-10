@@ -12864,9 +12864,6 @@ func (c *Checker) isGlobalNaN(expr *ast.Expression) bool {
 }
 
 func (c *Checker) isTypeEqualityComparableTo(source *Type, target *Type) bool {
-	if source.flags&TypeFlagsStringMapping != 0 && target.flags&TypeFlagsStringLiteral != 0 {
-		return c.isMemberOfStringMapping(c.getRegularTypeOfLiteralType(target), source)
-	}
 	return (target.flags&TypeFlagsNullable) != 0 || c.isTypeComparableTo(source, target)
 }
 
