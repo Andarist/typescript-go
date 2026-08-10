@@ -3,146 +3,162 @@
 === narrowIntrinsicStringMappingByEquality.ts ===
 // https://github.com/microsoft/TypeScript/issues/63724
 
-let countryCode: "BE" | "LU" | "NL";
->countryCode : Symbol(countryCode, Decl(narrowIntrinsicStringMappingByEquality.ts, 2, 3))
-
-declare const prefix: Uppercase<string>;
->prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 4, 13))
+function narrowUppercase(prefix: Uppercase<string>) {
+>narrowUppercase : Symbol(narrowUppercase, Decl(narrowIntrinsicStringMappingByEquality.ts, 0, 0))
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 2, 25))
 >Uppercase : Symbol(Uppercase, Decl(lib.es5.d.ts, --, --))
 
-if (prefix === "BE" || prefix === "LU" || prefix === "NL") {
->prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 4, 13))
->prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 4, 13))
->prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 4, 13))
+    let countryCode: "BE" | "LU" | "NL";
+>countryCode : Symbol(countryCode, Decl(narrowIntrinsicStringMappingByEquality.ts, 3, 7))
 
-    countryCode = prefix;
->countryCode : Symbol(countryCode, Decl(narrowIntrinsicStringMappingByEquality.ts, 2, 3))
->prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 4, 13))
+    if (prefix === "BE" || prefix === "LU" || prefix === "NL") {
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 2, 25))
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 2, 25))
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 2, 25))
+
+        countryCode = prefix;
+>countryCode : Symbol(countryCode, Decl(narrowIntrinsicStringMappingByEquality.ts, 3, 7))
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 2, 25))
+    }
 }
 
-let lowerCountryCode: "be" | "lu" | "nl";
->lowerCountryCode : Symbol(lowerCountryCode, Decl(narrowIntrinsicStringMappingByEquality.ts, 10, 3))
-
-declare const lowerPrefix: Lowercase<string>;
->lowerPrefix : Symbol(lowerPrefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 12, 13))
+function narrowLowercase(prefix: Lowercase<string>) {
+>narrowLowercase : Symbol(narrowLowercase, Decl(narrowIntrinsicStringMappingByEquality.ts, 8, 1))
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 10, 25))
 >Lowercase : Symbol(Lowercase, Decl(lib.es5.d.ts, --, --))
 
-if (lowerPrefix === "be" || lowerPrefix === "lu" || lowerPrefix === "nl") {
->lowerPrefix : Symbol(lowerPrefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 12, 13))
->lowerPrefix : Symbol(lowerPrefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 12, 13))
->lowerPrefix : Symbol(lowerPrefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 12, 13))
+    let countryCode: "be" | "lu" | "nl";
+>countryCode : Symbol(countryCode, Decl(narrowIntrinsicStringMappingByEquality.ts, 11, 7))
 
-    lowerCountryCode = lowerPrefix;
->lowerCountryCode : Symbol(lowerCountryCode, Decl(narrowIntrinsicStringMappingByEquality.ts, 10, 3))
->lowerPrefix : Symbol(lowerPrefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 12, 13))
+    if (prefix === "be" || prefix === "lu" || prefix === "nl") {
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 10, 25))
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 10, 25))
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 10, 25))
+
+        countryCode = prefix;
+>countryCode : Symbol(countryCode, Decl(narrowIntrinsicStringMappingByEquality.ts, 11, 7))
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 10, 25))
+    }
+
+    let uppercaseCountryCode: "BE" | "LU" | "NL";
+>uppercaseCountryCode : Symbol(uppercaseCountryCode, Decl(narrowIntrinsicStringMappingByEquality.ts, 17, 7))
+
+    if (prefix === "BE" || prefix === "LU" || prefix === "NL") {
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 10, 25))
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 10, 25))
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 10, 25))
+
+        uppercaseCountryCode = prefix;
+>uppercaseCountryCode : Symbol(uppercaseCountryCode, Decl(narrowIntrinsicStringMappingByEquality.ts, 17, 7))
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 10, 25))
+    }
 }
 
-let capitalizedCountryCode: "Belgium" | "Luxembourg" | "Netherlands";
->capitalizedCountryCode : Symbol(capitalizedCountryCode, Decl(narrowIntrinsicStringMappingByEquality.ts, 18, 3))
-
-declare const capitalizedCountry: Capitalize<string>;
->capitalizedCountry : Symbol(capitalizedCountry, Decl(narrowIntrinsicStringMappingByEquality.ts, 20, 13))
+function narrowCapitalize(country: Capitalize<string>) {
+>narrowCapitalize : Symbol(narrowCapitalize, Decl(narrowIntrinsicStringMappingByEquality.ts, 22, 1))
+>country : Symbol(country, Decl(narrowIntrinsicStringMappingByEquality.ts, 24, 26))
 >Capitalize : Symbol(Capitalize, Decl(lib.es5.d.ts, --, --))
 
-if (capitalizedCountry === "Belgium" || capitalizedCountry === "Luxembourg" || capitalizedCountry === "Netherlands") {
->capitalizedCountry : Symbol(capitalizedCountry, Decl(narrowIntrinsicStringMappingByEquality.ts, 20, 13))
->capitalizedCountry : Symbol(capitalizedCountry, Decl(narrowIntrinsicStringMappingByEquality.ts, 20, 13))
->capitalizedCountry : Symbol(capitalizedCountry, Decl(narrowIntrinsicStringMappingByEquality.ts, 20, 13))
+    let countryName: "Belgium" | "Luxembourg" | "Netherlands";
+>countryName : Symbol(countryName, Decl(narrowIntrinsicStringMappingByEquality.ts, 25, 7))
 
-    capitalizedCountryCode = capitalizedCountry;
->capitalizedCountryCode : Symbol(capitalizedCountryCode, Decl(narrowIntrinsicStringMappingByEquality.ts, 18, 3))
->capitalizedCountry : Symbol(capitalizedCountry, Decl(narrowIntrinsicStringMappingByEquality.ts, 20, 13))
+    if (country === "Belgium" || country === "Luxembourg" || country === "Netherlands") {
+>country : Symbol(country, Decl(narrowIntrinsicStringMappingByEquality.ts, 24, 26))
+>country : Symbol(country, Decl(narrowIntrinsicStringMappingByEquality.ts, 24, 26))
+>country : Symbol(country, Decl(narrowIntrinsicStringMappingByEquality.ts, 24, 26))
+
+        countryName = country;
+>countryName : Symbol(countryName, Decl(narrowIntrinsicStringMappingByEquality.ts, 25, 7))
+>country : Symbol(country, Decl(narrowIntrinsicStringMappingByEquality.ts, 24, 26))
+    }
 }
 
-let uncapitalizedCountryCode: "belgium" | "luxembourg" | "netherlands";
->uncapitalizedCountryCode : Symbol(uncapitalizedCountryCode, Decl(narrowIntrinsicStringMappingByEquality.ts, 26, 3))
-
-declare const uncapitalizedCountry: Uncapitalize<string>;
->uncapitalizedCountry : Symbol(uncapitalizedCountry, Decl(narrowIntrinsicStringMappingByEquality.ts, 28, 13))
+function narrowUncapitalize(country: Uncapitalize<string>) {
+>narrowUncapitalize : Symbol(narrowUncapitalize, Decl(narrowIntrinsicStringMappingByEquality.ts, 30, 1))
+>country : Symbol(country, Decl(narrowIntrinsicStringMappingByEquality.ts, 32, 28))
 >Uncapitalize : Symbol(Uncapitalize, Decl(lib.es5.d.ts, --, --))
 
-if (uncapitalizedCountry === "belgium" || uncapitalizedCountry === "luxembourg" || uncapitalizedCountry === "netherlands") {
->uncapitalizedCountry : Symbol(uncapitalizedCountry, Decl(narrowIntrinsicStringMappingByEquality.ts, 28, 13))
->uncapitalizedCountry : Symbol(uncapitalizedCountry, Decl(narrowIntrinsicStringMappingByEquality.ts, 28, 13))
->uncapitalizedCountry : Symbol(uncapitalizedCountry, Decl(narrowIntrinsicStringMappingByEquality.ts, 28, 13))
+    let countryName: "belgium" | "luxembourg" | "netherlands";
+>countryName : Symbol(countryName, Decl(narrowIntrinsicStringMappingByEquality.ts, 33, 7))
 
-    uncapitalizedCountryCode = uncapitalizedCountry;
->uncapitalizedCountryCode : Symbol(uncapitalizedCountryCode, Decl(narrowIntrinsicStringMappingByEquality.ts, 26, 3))
->uncapitalizedCountry : Symbol(uncapitalizedCountry, Decl(narrowIntrinsicStringMappingByEquality.ts, 28, 13))
+    if (country === "belgium" || country === "luxembourg" || country === "netherlands") {
+>country : Symbol(country, Decl(narrowIntrinsicStringMappingByEquality.ts, 32, 28))
+>country : Symbol(country, Decl(narrowIntrinsicStringMappingByEquality.ts, 32, 28))
+>country : Symbol(country, Decl(narrowIntrinsicStringMappingByEquality.ts, 32, 28))
+
+        countryName = country;
+>countryName : Symbol(countryName, Decl(narrowIntrinsicStringMappingByEquality.ts, 33, 7))
+>country : Symbol(country, Decl(narrowIntrinsicStringMappingByEquality.ts, 32, 28))
+    }
 }
 
-let upperPattern: "FOO-BAR" | "FOO-BAZ";
->upperPattern : Symbol(upperPattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 34, 3))
-
-declare const upperPatternPrefix: Uppercase<`foo-${string}`>;
->upperPatternPrefix : Symbol(upperPatternPrefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 36, 13))
+function narrowUppercasePattern(prefix: Uppercase<`foo-${string}`>) {
+>narrowUppercasePattern : Symbol(narrowUppercasePattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 38, 1))
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 40, 32))
 >Uppercase : Symbol(Uppercase, Decl(lib.es5.d.ts, --, --))
 
-if (upperPatternPrefix === "FOO-BAR" || upperPatternPrefix === "FOO-BAZ") {
->upperPatternPrefix : Symbol(upperPatternPrefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 36, 13))
->upperPatternPrefix : Symbol(upperPatternPrefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 36, 13))
+    let pattern: "FOO-BAR" | "FOO-BAZ";
+>pattern : Symbol(pattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 41, 7))
 
-    upperPattern = upperPatternPrefix;
->upperPattern : Symbol(upperPattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 34, 3))
->upperPatternPrefix : Symbol(upperPatternPrefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 36, 13))
+    if (prefix === "FOO-BAR" || prefix === "FOO-BAZ") {
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 40, 32))
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 40, 32))
+
+        pattern = prefix;
+>pattern : Symbol(pattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 41, 7))
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 40, 32))
+    }
+
+    if (prefix === "foo-bar") {
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 40, 32))
+
+        pattern = prefix;
+>pattern : Symbol(pattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 41, 7))
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 40, 32))
+    }
 }
 
-let lowerPattern: "foo-bar" | "foo-baz";
->lowerPattern : Symbol(lowerPattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 42, 3))
-
-declare const lowerPatternPrefix: Lowercase<`FOO-${string}`>;
->lowerPatternPrefix : Symbol(lowerPatternPrefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 44, 13))
+function narrowLowercasePattern(prefix: Lowercase<`FOO-${string}`>) {
+>narrowLowercasePattern : Symbol(narrowLowercasePattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 50, 1))
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 52, 32))
 >Lowercase : Symbol(Lowercase, Decl(lib.es5.d.ts, --, --))
 
-if (lowerPatternPrefix === "foo-bar" || lowerPatternPrefix === "foo-baz") {
->lowerPatternPrefix : Symbol(lowerPatternPrefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 44, 13))
->lowerPatternPrefix : Symbol(lowerPatternPrefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 44, 13))
+    let pattern: "foo-bar" | "foo-baz";
+>pattern : Symbol(pattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 53, 7))
 
-    lowerPattern = lowerPatternPrefix;
->lowerPattern : Symbol(lowerPattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 42, 3))
->lowerPatternPrefix : Symbol(lowerPatternPrefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 44, 13))
+    if (prefix === "foo-bar" || prefix === "foo-baz") {
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 52, 32))
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 52, 32))
+
+        pattern = prefix;
+>pattern : Symbol(pattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 53, 7))
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 52, 32))
+    }
 }
 
-let capitalizedPattern: "Foo-bar" | "Foo-baz";
->capitalizedPattern : Symbol(capitalizedPattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 50, 3))
-
-declare const capitalizedPatternPrefix: Capitalize<`foo-${string}`>;
->capitalizedPatternPrefix : Symbol(capitalizedPatternPrefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 52, 13))
+function narrowCapitalizePattern(prefix: Capitalize<`foo-${string}`>) {
+>narrowCapitalizePattern : Symbol(narrowCapitalizePattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 58, 1))
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 60, 33))
 >Capitalize : Symbol(Capitalize, Decl(lib.es5.d.ts, --, --))
 
-if (capitalizedPatternPrefix === "Foo-bar" || capitalizedPatternPrefix === "Foo-baz") {
->capitalizedPatternPrefix : Symbol(capitalizedPatternPrefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 52, 13))
->capitalizedPatternPrefix : Symbol(capitalizedPatternPrefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 52, 13))
+    let pattern: "Foo-bar" | "Foo-baz";
+>pattern : Symbol(pattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 61, 7))
 
-    capitalizedPattern = capitalizedPatternPrefix;
->capitalizedPattern : Symbol(capitalizedPattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 50, 3))
->capitalizedPatternPrefix : Symbol(capitalizedPatternPrefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 52, 13))
-}
+    if (prefix === "Foo-bar" || prefix === "Foo-baz") {
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 60, 33))
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 60, 33))
 
-// These literals aren't members of the corresponding string mapping types.
-if (lowerPrefix === "BE" || lowerPrefix === "LU" || lowerPrefix === "NL") {
->lowerPrefix : Symbol(lowerPrefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 12, 13))
->lowerPrefix : Symbol(lowerPrefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 12, 13))
->lowerPrefix : Symbol(lowerPrefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 12, 13))
+        pattern = prefix;
+>pattern : Symbol(pattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 61, 7))
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 60, 33))
+    }
 
-    countryCode = lowerPrefix;
->countryCode : Symbol(countryCode, Decl(narrowIntrinsicStringMappingByEquality.ts, 2, 3))
->lowerPrefix : Symbol(lowerPrefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 12, 13))
-}
+    if (prefix === "foo-bar") {
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 60, 33))
 
-if (upperPatternPrefix === "foo-bar") {
->upperPatternPrefix : Symbol(upperPatternPrefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 36, 13))
-
-    upperPattern = upperPatternPrefix;
->upperPattern : Symbol(upperPattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 34, 3))
->upperPatternPrefix : Symbol(upperPatternPrefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 36, 13))
-}
-
-if (capitalizedPatternPrefix === "foo-bar") {
->capitalizedPatternPrefix : Symbol(capitalizedPatternPrefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 52, 13))
-
-    capitalizedPattern = capitalizedPatternPrefix;
->capitalizedPattern : Symbol(capitalizedPattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 50, 3))
->capitalizedPatternPrefix : Symbol(capitalizedPatternPrefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 52, 13))
+        pattern = prefix;
+>pattern : Symbol(pattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 61, 7))
+>prefix : Symbol(prefix, Decl(narrowIntrinsicStringMappingByEquality.ts, 60, 33))
+    }
 }
 

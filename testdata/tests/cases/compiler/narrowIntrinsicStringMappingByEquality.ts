@@ -2,71 +2,72 @@
 
 // https://github.com/microsoft/TypeScript/issues/63724
 
-let countryCode: "BE" | "LU" | "NL";
+function narrowUppercase(prefix: Uppercase<string>) {
+    let countryCode: "BE" | "LU" | "NL";
 
-declare const prefix: Uppercase<string>;
-
-if (prefix === "BE" || prefix === "LU" || prefix === "NL") {
-    countryCode = prefix;
+    if (prefix === "BE" || prefix === "LU" || prefix === "NL") {
+        countryCode = prefix;
+    }
 }
 
-let lowerCountryCode: "be" | "lu" | "nl";
+function narrowLowercase(prefix: Lowercase<string>) {
+    let countryCode: "be" | "lu" | "nl";
 
-declare const lowerPrefix: Lowercase<string>;
+    if (prefix === "be" || prefix === "lu" || prefix === "nl") {
+        countryCode = prefix;
+    }
 
-if (lowerPrefix === "be" || lowerPrefix === "lu" || lowerPrefix === "nl") {
-    lowerCountryCode = lowerPrefix;
+    let uppercaseCountryCode: "BE" | "LU" | "NL";
+
+    if (prefix === "BE" || prefix === "LU" || prefix === "NL") {
+        uppercaseCountryCode = prefix;
+    }
 }
 
-let capitalizedCountryCode: "Belgium" | "Luxembourg" | "Netherlands";
+function narrowCapitalize(country: Capitalize<string>) {
+    let countryName: "Belgium" | "Luxembourg" | "Netherlands";
 
-declare const capitalizedCountry: Capitalize<string>;
-
-if (capitalizedCountry === "Belgium" || capitalizedCountry === "Luxembourg" || capitalizedCountry === "Netherlands") {
-    capitalizedCountryCode = capitalizedCountry;
+    if (country === "Belgium" || country === "Luxembourg" || country === "Netherlands") {
+        countryName = country;
+    }
 }
 
-let uncapitalizedCountryCode: "belgium" | "luxembourg" | "netherlands";
+function narrowUncapitalize(country: Uncapitalize<string>) {
+    let countryName: "belgium" | "luxembourg" | "netherlands";
 
-declare const uncapitalizedCountry: Uncapitalize<string>;
-
-if (uncapitalizedCountry === "belgium" || uncapitalizedCountry === "luxembourg" || uncapitalizedCountry === "netherlands") {
-    uncapitalizedCountryCode = uncapitalizedCountry;
+    if (country === "belgium" || country === "luxembourg" || country === "netherlands") {
+        countryName = country;
+    }
 }
 
-let upperPattern: "FOO-BAR" | "FOO-BAZ";
+function narrowUppercasePattern(prefix: Uppercase<`foo-${string}`>) {
+    let pattern: "FOO-BAR" | "FOO-BAZ";
 
-declare const upperPatternPrefix: Uppercase<`foo-${string}`>;
+    if (prefix === "FOO-BAR" || prefix === "FOO-BAZ") {
+        pattern = prefix;
+    }
 
-if (upperPatternPrefix === "FOO-BAR" || upperPatternPrefix === "FOO-BAZ") {
-    upperPattern = upperPatternPrefix;
+    if (prefix === "foo-bar") {
+        pattern = prefix;
+    }
 }
 
-let lowerPattern: "foo-bar" | "foo-baz";
+function narrowLowercasePattern(prefix: Lowercase<`FOO-${string}`>) {
+    let pattern: "foo-bar" | "foo-baz";
 
-declare const lowerPatternPrefix: Lowercase<`FOO-${string}`>;
-
-if (lowerPatternPrefix === "foo-bar" || lowerPatternPrefix === "foo-baz") {
-    lowerPattern = lowerPatternPrefix;
+    if (prefix === "foo-bar" || prefix === "foo-baz") {
+        pattern = prefix;
+    }
 }
 
-let capitalizedPattern: "Foo-bar" | "Foo-baz";
+function narrowCapitalizePattern(prefix: Capitalize<`foo-${string}`>) {
+    let pattern: "Foo-bar" | "Foo-baz";
 
-declare const capitalizedPatternPrefix: Capitalize<`foo-${string}`>;
+    if (prefix === "Foo-bar" || prefix === "Foo-baz") {
+        pattern = prefix;
+    }
 
-if (capitalizedPatternPrefix === "Foo-bar" || capitalizedPatternPrefix === "Foo-baz") {
-    capitalizedPattern = capitalizedPatternPrefix;
-}
-
-// These literals aren't members of the corresponding string mapping types.
-if (lowerPrefix === "BE" || lowerPrefix === "LU" || lowerPrefix === "NL") {
-    countryCode = lowerPrefix;
-}
-
-if (upperPatternPrefix === "foo-bar") {
-    upperPattern = upperPatternPrefix;
-}
-
-if (capitalizedPatternPrefix === "foo-bar") {
-    capitalizedPattern = capitalizedPatternPrefix;
+    if (prefix === "foo-bar") {
+        pattern = prefix;
+    }
 }

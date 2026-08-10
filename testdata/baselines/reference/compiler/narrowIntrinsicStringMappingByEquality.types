@@ -3,13 +3,14 @@
 === narrowIntrinsicStringMappingByEquality.ts ===
 // https://github.com/microsoft/TypeScript/issues/63724
 
-let countryCode: "BE" | "LU" | "NL";
->countryCode : "BE" | "LU" | "NL"
-
-declare const prefix: Uppercase<string>;
+function narrowUppercase(prefix: Uppercase<string>) {
+>narrowUppercase : (prefix: Uppercase<string>) => void
 >prefix : Uppercase<string>
 
-if (prefix === "BE" || prefix === "LU" || prefix === "NL") {
+    let countryCode: "BE" | "LU" | "NL";
+>countryCode : "BE" | "LU" | "NL"
+
+    if (prefix === "BE" || prefix === "LU" || prefix === "NL") {
 >prefix === "BE" || prefix === "LU" || prefix === "NL" : boolean
 >prefix === "BE" || prefix === "LU" : boolean
 >prefix === "BE" : boolean
@@ -22,189 +23,204 @@ if (prefix === "BE" || prefix === "LU" || prefix === "NL") {
 >prefix : Uppercase<string>
 >"NL" : "NL"
 
-    countryCode = prefix;
+        countryCode = prefix;
 >countryCode = prefix : "BE" | "LU" | "NL"
 >countryCode : "BE" | "LU" | "NL"
 >prefix : "BE" | "LU" | "NL"
+    }
 }
 
-let lowerCountryCode: "be" | "lu" | "nl";
->lowerCountryCode : "be" | "lu" | "nl"
+function narrowLowercase(prefix: Lowercase<string>) {
+>narrowLowercase : (prefix: Lowercase<string>) => void
+>prefix : Lowercase<string>
 
-declare const lowerPrefix: Lowercase<string>;
->lowerPrefix : Lowercase<string>
+    let countryCode: "be" | "lu" | "nl";
+>countryCode : "be" | "lu" | "nl"
 
-if (lowerPrefix === "be" || lowerPrefix === "lu" || lowerPrefix === "nl") {
->lowerPrefix === "be" || lowerPrefix === "lu" || lowerPrefix === "nl" : boolean
->lowerPrefix === "be" || lowerPrefix === "lu" : boolean
->lowerPrefix === "be" : boolean
->lowerPrefix : Lowercase<string>
+    if (prefix === "be" || prefix === "lu" || prefix === "nl") {
+>prefix === "be" || prefix === "lu" || prefix === "nl" : boolean
+>prefix === "be" || prefix === "lu" : boolean
+>prefix === "be" : boolean
+>prefix : Lowercase<string>
 >"be" : "be"
->lowerPrefix === "lu" : boolean
->lowerPrefix : Lowercase<string>
+>prefix === "lu" : boolean
+>prefix : Lowercase<string>
 >"lu" : "lu"
->lowerPrefix === "nl" : boolean
->lowerPrefix : Lowercase<string>
+>prefix === "nl" : boolean
+>prefix : Lowercase<string>
 >"nl" : "nl"
 
-    lowerCountryCode = lowerPrefix;
->lowerCountryCode = lowerPrefix : "be" | "lu" | "nl"
->lowerCountryCode : "be" | "lu" | "nl"
->lowerPrefix : "be" | "lu" | "nl"
-}
+        countryCode = prefix;
+>countryCode = prefix : "be" | "lu" | "nl"
+>countryCode : "be" | "lu" | "nl"
+>prefix : "be" | "lu" | "nl"
+    }
 
-let capitalizedCountryCode: "Belgium" | "Luxembourg" | "Netherlands";
->capitalizedCountryCode : "Belgium" | "Luxembourg" | "Netherlands"
+    let uppercaseCountryCode: "BE" | "LU" | "NL";
+>uppercaseCountryCode : "BE" | "LU" | "NL"
 
-declare const capitalizedCountry: Capitalize<string>;
->capitalizedCountry : Capitalize<string>
-
-if (capitalizedCountry === "Belgium" || capitalizedCountry === "Luxembourg" || capitalizedCountry === "Netherlands") {
->capitalizedCountry === "Belgium" || capitalizedCountry === "Luxembourg" || capitalizedCountry === "Netherlands" : boolean
->capitalizedCountry === "Belgium" || capitalizedCountry === "Luxembourg" : boolean
->capitalizedCountry === "Belgium" : boolean
->capitalizedCountry : Capitalize<string>
->"Belgium" : "Belgium"
->capitalizedCountry === "Luxembourg" : boolean
->capitalizedCountry : Capitalize<string>
->"Luxembourg" : "Luxembourg"
->capitalizedCountry === "Netherlands" : boolean
->capitalizedCountry : Capitalize<string>
->"Netherlands" : "Netherlands"
-
-    capitalizedCountryCode = capitalizedCountry;
->capitalizedCountryCode = capitalizedCountry : "Belgium" | "Luxembourg" | "Netherlands"
->capitalizedCountryCode : "Belgium" | "Luxembourg" | "Netherlands"
->capitalizedCountry : "Belgium" | "Luxembourg" | "Netherlands"
-}
-
-let uncapitalizedCountryCode: "belgium" | "luxembourg" | "netherlands";
->uncapitalizedCountryCode : "belgium" | "luxembourg" | "netherlands"
-
-declare const uncapitalizedCountry: Uncapitalize<string>;
->uncapitalizedCountry : Uncapitalize<string>
-
-if (uncapitalizedCountry === "belgium" || uncapitalizedCountry === "luxembourg" || uncapitalizedCountry === "netherlands") {
->uncapitalizedCountry === "belgium" || uncapitalizedCountry === "luxembourg" || uncapitalizedCountry === "netherlands" : boolean
->uncapitalizedCountry === "belgium" || uncapitalizedCountry === "luxembourg" : boolean
->uncapitalizedCountry === "belgium" : boolean
->uncapitalizedCountry : Uncapitalize<string>
->"belgium" : "belgium"
->uncapitalizedCountry === "luxembourg" : boolean
->uncapitalizedCountry : Uncapitalize<string>
->"luxembourg" : "luxembourg"
->uncapitalizedCountry === "netherlands" : boolean
->uncapitalizedCountry : Uncapitalize<string>
->"netherlands" : "netherlands"
-
-    uncapitalizedCountryCode = uncapitalizedCountry;
->uncapitalizedCountryCode = uncapitalizedCountry : "belgium" | "luxembourg" | "netherlands"
->uncapitalizedCountryCode : "belgium" | "luxembourg" | "netherlands"
->uncapitalizedCountry : "belgium" | "luxembourg" | "netherlands"
-}
-
-let upperPattern: "FOO-BAR" | "FOO-BAZ";
->upperPattern : "FOO-BAR" | "FOO-BAZ"
-
-declare const upperPatternPrefix: Uppercase<`foo-${string}`>;
->upperPatternPrefix : `FOO-${Uppercase<string>}`
-
-if (upperPatternPrefix === "FOO-BAR" || upperPatternPrefix === "FOO-BAZ") {
->upperPatternPrefix === "FOO-BAR" || upperPatternPrefix === "FOO-BAZ" : boolean
->upperPatternPrefix === "FOO-BAR" : boolean
->upperPatternPrefix : `FOO-${Uppercase<string>}`
->"FOO-BAR" : "FOO-BAR"
->upperPatternPrefix === "FOO-BAZ" : boolean
->upperPatternPrefix : `FOO-${Uppercase<string>}`
->"FOO-BAZ" : "FOO-BAZ"
-
-    upperPattern = upperPatternPrefix;
->upperPattern = upperPatternPrefix : "FOO-BAR" | "FOO-BAZ"
->upperPattern : "FOO-BAR" | "FOO-BAZ"
->upperPatternPrefix : "FOO-BAR" | "FOO-BAZ"
-}
-
-let lowerPattern: "foo-bar" | "foo-baz";
->lowerPattern : "foo-bar" | "foo-baz"
-
-declare const lowerPatternPrefix: Lowercase<`FOO-${string}`>;
->lowerPatternPrefix : `foo-${Lowercase<string>}`
-
-if (lowerPatternPrefix === "foo-bar" || lowerPatternPrefix === "foo-baz") {
->lowerPatternPrefix === "foo-bar" || lowerPatternPrefix === "foo-baz" : boolean
->lowerPatternPrefix === "foo-bar" : boolean
->lowerPatternPrefix : `foo-${Lowercase<string>}`
->"foo-bar" : "foo-bar"
->lowerPatternPrefix === "foo-baz" : boolean
->lowerPatternPrefix : `foo-${Lowercase<string>}`
->"foo-baz" : "foo-baz"
-
-    lowerPattern = lowerPatternPrefix;
->lowerPattern = lowerPatternPrefix : "foo-bar" | "foo-baz"
->lowerPattern : "foo-bar" | "foo-baz"
->lowerPatternPrefix : "foo-bar" | "foo-baz"
-}
-
-let capitalizedPattern: "Foo-bar" | "Foo-baz";
->capitalizedPattern : "Foo-bar" | "Foo-baz"
-
-declare const capitalizedPatternPrefix: Capitalize<`foo-${string}`>;
->capitalizedPatternPrefix : `Foo-${string}`
-
-if (capitalizedPatternPrefix === "Foo-bar" || capitalizedPatternPrefix === "Foo-baz") {
->capitalizedPatternPrefix === "Foo-bar" || capitalizedPatternPrefix === "Foo-baz" : boolean
->capitalizedPatternPrefix === "Foo-bar" : boolean
->capitalizedPatternPrefix : `Foo-${string}`
->"Foo-bar" : "Foo-bar"
->capitalizedPatternPrefix === "Foo-baz" : boolean
->capitalizedPatternPrefix : `Foo-${string}`
->"Foo-baz" : "Foo-baz"
-
-    capitalizedPattern = capitalizedPatternPrefix;
->capitalizedPattern = capitalizedPatternPrefix : "Foo-bar" | "Foo-baz"
->capitalizedPattern : "Foo-bar" | "Foo-baz"
->capitalizedPatternPrefix : "Foo-bar" | "Foo-baz"
-}
-
-// These literals aren't members of the corresponding string mapping types.
-if (lowerPrefix === "BE" || lowerPrefix === "LU" || lowerPrefix === "NL") {
->lowerPrefix === "BE" || lowerPrefix === "LU" || lowerPrefix === "NL" : boolean
->lowerPrefix === "BE" || lowerPrefix === "LU" : boolean
->lowerPrefix === "BE" : boolean
->lowerPrefix : Lowercase<string>
+    if (prefix === "BE" || prefix === "LU" || prefix === "NL") {
+>prefix === "BE" || prefix === "LU" || prefix === "NL" : boolean
+>prefix === "BE" || prefix === "LU" : boolean
+>prefix === "BE" : boolean
+>prefix : Lowercase<string>
 >"BE" : "BE"
->lowerPrefix === "LU" : boolean
->lowerPrefix : Lowercase<string>
+>prefix === "LU" : boolean
+>prefix : Lowercase<string>
 >"LU" : "LU"
->lowerPrefix === "NL" : boolean
->lowerPrefix : Lowercase<string>
+>prefix === "NL" : boolean
+>prefix : Lowercase<string>
 >"NL" : "NL"
 
-    countryCode = lowerPrefix;
->countryCode = lowerPrefix : never
->countryCode : "BE" | "LU" | "NL"
->lowerPrefix : never
+        uppercaseCountryCode = prefix;
+>uppercaseCountryCode = prefix : never
+>uppercaseCountryCode : "BE" | "LU" | "NL"
+>prefix : never
+    }
 }
 
-if (upperPatternPrefix === "foo-bar") {
->upperPatternPrefix === "foo-bar" : boolean
->upperPatternPrefix : `FOO-${Uppercase<string>}`
->"foo-bar" : "foo-bar"
+function narrowCapitalize(country: Capitalize<string>) {
+>narrowCapitalize : (country: Capitalize<string>) => void
+>country : Capitalize<string>
 
-    upperPattern = upperPatternPrefix;
->upperPattern = upperPatternPrefix : never
->upperPattern : "FOO-BAR" | "FOO-BAZ"
->upperPatternPrefix : never
+    let countryName: "Belgium" | "Luxembourg" | "Netherlands";
+>countryName : "Belgium" | "Luxembourg" | "Netherlands"
+
+    if (country === "Belgium" || country === "Luxembourg" || country === "Netherlands") {
+>country === "Belgium" || country === "Luxembourg" || country === "Netherlands" : boolean
+>country === "Belgium" || country === "Luxembourg" : boolean
+>country === "Belgium" : boolean
+>country : Capitalize<string>
+>"Belgium" : "Belgium"
+>country === "Luxembourg" : boolean
+>country : Capitalize<string>
+>"Luxembourg" : "Luxembourg"
+>country === "Netherlands" : boolean
+>country : Capitalize<string>
+>"Netherlands" : "Netherlands"
+
+        countryName = country;
+>countryName = country : "Belgium" | "Luxembourg" | "Netherlands"
+>countryName : "Belgium" | "Luxembourg" | "Netherlands"
+>country : "Belgium" | "Luxembourg" | "Netherlands"
+    }
 }
 
-if (capitalizedPatternPrefix === "foo-bar") {
->capitalizedPatternPrefix === "foo-bar" : boolean
->capitalizedPatternPrefix : `Foo-${string}`
+function narrowUncapitalize(country: Uncapitalize<string>) {
+>narrowUncapitalize : (country: Uncapitalize<string>) => void
+>country : Uncapitalize<string>
+
+    let countryName: "belgium" | "luxembourg" | "netherlands";
+>countryName : "belgium" | "luxembourg" | "netherlands"
+
+    if (country === "belgium" || country === "luxembourg" || country === "netherlands") {
+>country === "belgium" || country === "luxembourg" || country === "netherlands" : boolean
+>country === "belgium" || country === "luxembourg" : boolean
+>country === "belgium" : boolean
+>country : Uncapitalize<string>
+>"belgium" : "belgium"
+>country === "luxembourg" : boolean
+>country : Uncapitalize<string>
+>"luxembourg" : "luxembourg"
+>country === "netherlands" : boolean
+>country : Uncapitalize<string>
+>"netherlands" : "netherlands"
+
+        countryName = country;
+>countryName = country : "belgium" | "luxembourg" | "netherlands"
+>countryName : "belgium" | "luxembourg" | "netherlands"
+>country : "belgium" | "luxembourg" | "netherlands"
+    }
+}
+
+function narrowUppercasePattern(prefix: Uppercase<`foo-${string}`>) {
+>narrowUppercasePattern : (prefix: Uppercase<`foo-${string}`>) => void
+>prefix : `FOO-${Uppercase<string>}`
+
+    let pattern: "FOO-BAR" | "FOO-BAZ";
+>pattern : "FOO-BAR" | "FOO-BAZ"
+
+    if (prefix === "FOO-BAR" || prefix === "FOO-BAZ") {
+>prefix === "FOO-BAR" || prefix === "FOO-BAZ" : boolean
+>prefix === "FOO-BAR" : boolean
+>prefix : `FOO-${Uppercase<string>}`
+>"FOO-BAR" : "FOO-BAR"
+>prefix === "FOO-BAZ" : boolean
+>prefix : `FOO-${Uppercase<string>}`
+>"FOO-BAZ" : "FOO-BAZ"
+
+        pattern = prefix;
+>pattern = prefix : "FOO-BAR" | "FOO-BAZ"
+>pattern : "FOO-BAR" | "FOO-BAZ"
+>prefix : "FOO-BAR" | "FOO-BAZ"
+    }
+
+    if (prefix === "foo-bar") {
+>prefix === "foo-bar" : boolean
+>prefix : `FOO-${Uppercase<string>}`
 >"foo-bar" : "foo-bar"
 
-    capitalizedPattern = capitalizedPatternPrefix;
->capitalizedPattern = capitalizedPatternPrefix : never
->capitalizedPattern : "Foo-bar" | "Foo-baz"
->capitalizedPatternPrefix : never
+        pattern = prefix;
+>pattern = prefix : never
+>pattern : "FOO-BAR" | "FOO-BAZ"
+>prefix : never
+    }
+}
+
+function narrowLowercasePattern(prefix: Lowercase<`FOO-${string}`>) {
+>narrowLowercasePattern : (prefix: Lowercase<`FOO-${string}`>) => void
+>prefix : `foo-${Lowercase<string>}`
+
+    let pattern: "foo-bar" | "foo-baz";
+>pattern : "foo-bar" | "foo-baz"
+
+    if (prefix === "foo-bar" || prefix === "foo-baz") {
+>prefix === "foo-bar" || prefix === "foo-baz" : boolean
+>prefix === "foo-bar" : boolean
+>prefix : `foo-${Lowercase<string>}`
+>"foo-bar" : "foo-bar"
+>prefix === "foo-baz" : boolean
+>prefix : `foo-${Lowercase<string>}`
+>"foo-baz" : "foo-baz"
+
+        pattern = prefix;
+>pattern = prefix : "foo-bar" | "foo-baz"
+>pattern : "foo-bar" | "foo-baz"
+>prefix : "foo-bar" | "foo-baz"
+    }
+}
+
+function narrowCapitalizePattern(prefix: Capitalize<`foo-${string}`>) {
+>narrowCapitalizePattern : (prefix: Capitalize<`foo-${string}`>) => void
+>prefix : `Foo-${string}`
+
+    let pattern: "Foo-bar" | "Foo-baz";
+>pattern : "Foo-bar" | "Foo-baz"
+
+    if (prefix === "Foo-bar" || prefix === "Foo-baz") {
+>prefix === "Foo-bar" || prefix === "Foo-baz" : boolean
+>prefix === "Foo-bar" : boolean
+>prefix : `Foo-${string}`
+>"Foo-bar" : "Foo-bar"
+>prefix === "Foo-baz" : boolean
+>prefix : `Foo-${string}`
+>"Foo-baz" : "Foo-baz"
+
+        pattern = prefix;
+>pattern = prefix : "Foo-bar" | "Foo-baz"
+>pattern : "Foo-bar" | "Foo-baz"
+>prefix : "Foo-bar" | "Foo-baz"
+    }
+
+    if (prefix === "foo-bar") {
+>prefix === "foo-bar" : boolean
+>prefix : `Foo-${string}`
+>"foo-bar" : "foo-bar"
+
+        pattern = prefix;
+>pattern = prefix : never
+>pattern : "Foo-bar" | "Foo-baz"
+>prefix : never
+    }
 }
 
