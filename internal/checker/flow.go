@@ -1911,14 +1911,6 @@ func (c *Checker) replacePrimitivesWithLiterals(typeWithPrimitives *Type, typeWi
 			switch {
 			case t.flags&TypeFlagsString != 0:
 				return c.extractTypesOfKind(typeWithLiterals, TypeFlagsString|TypeFlagsStringLiteral|TypeFlagsTemplateLiteral|TypeFlagsStringMapping)
-			case t.flags&TypeFlagsStringMapping != 0 && !c.maybeTypeOfKind(typeWithLiterals, TypeFlagsString|TypeFlagsTemplateLiteral|TypeFlagsStringMapping):
-				matching := c.filterType(c.extractTypesOfKind(typeWithLiterals, TypeFlagsStringLiteral), func(source *Type) bool {
-					return c.isMemberOfStringMapping(c.getRegularTypeOfLiteralType(source), t)
-				})
-				if matching.flags&TypeFlagsNever == 0 {
-					return matching
-				}
-				return t
 			case c.isPatternLiteralType(t) && !c.maybeTypeOfKind(typeWithLiterals, TypeFlagsString|TypeFlagsTemplateLiteral|TypeFlagsStringMapping):
 				return c.extractTypesOfKind(typeWithLiterals, TypeFlagsStringLiteral)
 			case t.flags&TypeFlagsNumber != 0:
