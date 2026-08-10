@@ -2926,7 +2926,7 @@ func (r *Relater) unionOrIntersectionRelatedTo(source *Type, target *Type, repor
 	if r.relation == r.c.comparableRelation && target.flags&TypeFlagsPrimitive != 0 {
 		constraints := core.SameMap(source.Types(), func(t *Type) *Type {
 			// Preserve string mapping types so their domain is checked when relating the intersection's constituents.
-			if t.flags&TypeFlagsInstantiable != 0 && t.flags&TypeFlagsStringMapping == 0 {
+			if t.flags&(TypeFlagsInstantiable&^TypeFlagsStringMapping) != 0 {
 				constraint := r.c.getBaseConstraintOfType(t)
 				if constraint != nil {
 					return constraint
@@ -3830,10 +3830,7 @@ func (r *Relater) structuredTypeRelatedToWorker(source *Type, target *Type, repo
 				return result
 			}
 		} else if r.relation == r.c.comparableRelation && target.flags&TypeFlagsStringLiteral != 0 {
-			if r.c.isMemberOfStringMapping(target, source) {
-				return TernaryTrue
-			}
-			return TernaryFalse
+			return core.IfElse(r.c.isMemberOfStringMapping(target, source), TernaryTrue, TernaryFalse)
 		} else {
 			constraint := r.c.getBaseConstraintOfType(source)
 			if constraint != nil {
