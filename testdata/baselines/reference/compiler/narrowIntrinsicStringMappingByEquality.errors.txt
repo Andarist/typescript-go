@@ -1,10 +1,13 @@
+narrowIntrinsicStringMappingByEquality.ts(60,5): error TS2367: This comparison appears to be unintentional because the types 'Lowercase<string>' and '"BE"' have no overlap.
+narrowIntrinsicStringMappingByEquality.ts(60,29): error TS2367: This comparison appears to be unintentional because the types 'Lowercase<string>' and '"LU"' have no overlap.
+narrowIntrinsicStringMappingByEquality.ts(60,53): error TS2367: This comparison appears to be unintentional because the types 'Lowercase<string>' and '"NL"' have no overlap.
 narrowIntrinsicStringMappingByEquality.ts(61,5): error TS2322: Type 'Lowercase<string>' is not assignable to type '"BE" | "LU" | "NL"'.
   Type 'string' is not assignable to type '"BE" | "LU" | "NL"'.
 narrowIntrinsicStringMappingByEquality.ts(64,5): error TS2367: This comparison appears to be unintentional because the types '`FOO-${Uppercase<string>}`' and '"foo-bar"' have no overlap.
 narrowIntrinsicStringMappingByEquality.ts(68,5): error TS2367: This comparison appears to be unintentional because the types '`Foo-${string}`' and '"foo-bar"' have no overlap.
 
 
-==== narrowIntrinsicStringMappingByEquality.ts (3 errors) ====
+==== narrowIntrinsicStringMappingByEquality.ts (6 errors) ====
     // https://github.com/microsoft/TypeScript/issues/63724
     
     let countryCode: "BE" | "LU" | "NL";
@@ -65,6 +68,12 @@ narrowIntrinsicStringMappingByEquality.ts(68,5): error TS2367: This comparison a
     
     // These literals aren't members of the corresponding string mapping types.
     if (lowerPrefix === "BE" || lowerPrefix === "LU" || lowerPrefix === "NL") {
+        ~~~~~~~~~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types 'Lowercase<string>' and '"BE"' have no overlap.
+                                ~~~~~~~~~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types 'Lowercase<string>' and '"LU"' have no overlap.
+                                                        ~~~~~~~~~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types 'Lowercase<string>' and '"NL"' have no overlap.
         countryCode = lowerPrefix;
         ~~~~~~~~~~~
 !!! error TS2322: Type 'Lowercase<string>' is not assignable to type '"BE" | "LU" | "NL"'.

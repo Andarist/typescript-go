@@ -1,0 +1,110 @@
+//// [tests/cases/conformance/expressions/binaryOperators/comparisonOperator/comparisonOperatorWithNoRelationshipStringMapping.ts] ////
+
+=== comparisonOperatorWithNoRelationshipStringMapping.ts ===
+function compareUppercase(foo: Uppercase<string>) {
+>compareUppercase : Symbol(compareUppercase, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 0, 0))
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 0, 26))
+>Uppercase : Symbol(Uppercase, Decl(lib.es5.d.ts, --, --))
+
+    if (foo === "BA") {} // No error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 0, 26))
+
+    if (foo === "ba") {} // Error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 0, 26))
+}
+
+function compareLowercase(foo: Lowercase<string>) {
+>compareLowercase : Symbol(compareLowercase, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 3, 1))
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 5, 26))
+>Lowercase : Symbol(Lowercase, Decl(lib.es5.d.ts, --, --))
+
+    if (foo === "ba") {} // No error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 5, 26))
+
+    if (foo === "BA") {} // Error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 5, 26))
+}
+
+function compareCapitalize(foo: Capitalize<string>) {
+>compareCapitalize : Symbol(compareCapitalize, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 8, 1))
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 10, 27))
+>Capitalize : Symbol(Capitalize, Decl(lib.es5.d.ts, --, --))
+
+    if (foo === "Ba") {} // No error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 10, 27))
+
+    if (foo === "ba") {} // Error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 10, 27))
+}
+
+function compareUncapitalize(foo: Uncapitalize<string>) {
+>compareUncapitalize : Symbol(compareUncapitalize, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 13, 1))
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 15, 29))
+>Uncapitalize : Symbol(Uncapitalize, Decl(lib.es5.d.ts, --, --))
+
+    if (foo === "ba") {} // No error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 15, 29))
+
+    if (foo === "Ba") {} // Error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 15, 29))
+}
+
+function compareUppercasePattern(foo: Uppercase<`foo-${string}`>) {
+>compareUppercasePattern : Symbol(compareUppercasePattern, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 18, 1))
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 20, 33))
+>Uppercase : Symbol(Uppercase, Decl(lib.es5.d.ts, --, --))
+
+    if (foo === "FOO-BA") {} // No error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 20, 33))
+
+    if (foo === "FOO-ba") {} // Error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 20, 33))
+}
+
+function compareLowercasePattern(foo: Lowercase<`FOO-${string}`>) {
+>compareLowercasePattern : Symbol(compareLowercasePattern, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 23, 1))
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 25, 33))
+>Lowercase : Symbol(Lowercase, Decl(lib.es5.d.ts, --, --))
+
+    if (foo === "foo-ba") {} // No error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 25, 33))
+
+    if (foo === "foo-BA") {} // Error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 25, 33))
+}
+
+function compareCapitalizePattern(foo: Capitalize<`foo-${string}`>) {
+>compareCapitalizePattern : Symbol(compareCapitalizePattern, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 28, 1))
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 30, 34))
+>Capitalize : Symbol(Capitalize, Decl(lib.es5.d.ts, --, --))
+
+    if (foo === "Foo-ba") {} // No error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 30, 34))
+
+    if (foo === "foo-ba") {} // Error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 30, 34))
+}
+
+function compareUncapitalizePattern(foo: Uncapitalize<`Foo-${string}`>) {
+>compareUncapitalizePattern : Symbol(compareUncapitalizePattern, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 33, 1))
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 35, 36))
+>Uncapitalize : Symbol(Uncapitalize, Decl(lib.es5.d.ts, --, --))
+
+    if (foo === "foo-ba") {} // No error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 35, 36))
+
+    if (foo === "Foo-ba") {} // Error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 35, 36))
+}
+
+function compareTemplate(foo: `foo-${string}`) {
+>compareTemplate : Symbol(compareTemplate, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 38, 1))
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 40, 25))
+
+    if (foo === "foo-c") {} // No error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 40, 25))
+
+    if (foo === "bar-c") {} // Error
+>foo : Symbol(foo, Decl(comparisonOperatorWithNoRelationshipStringMapping.ts, 40, 25))
+}
+

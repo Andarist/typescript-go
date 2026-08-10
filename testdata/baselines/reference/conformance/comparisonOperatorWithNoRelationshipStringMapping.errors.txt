@@ -1,0 +1,75 @@
+comparisonOperatorWithNoRelationshipStringMapping.ts(3,9): error TS2367: This comparison appears to be unintentional because the types 'Uppercase<string>' and '"ba"' have no overlap.
+comparisonOperatorWithNoRelationshipStringMapping.ts(8,9): error TS2367: This comparison appears to be unintentional because the types 'Lowercase<string>' and '"BA"' have no overlap.
+comparisonOperatorWithNoRelationshipStringMapping.ts(13,9): error TS2367: This comparison appears to be unintentional because the types 'Capitalize<string>' and '"ba"' have no overlap.
+comparisonOperatorWithNoRelationshipStringMapping.ts(18,9): error TS2367: This comparison appears to be unintentional because the types 'Uncapitalize<string>' and '"Ba"' have no overlap.
+comparisonOperatorWithNoRelationshipStringMapping.ts(23,9): error TS2367: This comparison appears to be unintentional because the types '`FOO-${Uppercase<string>}`' and '"FOO-ba"' have no overlap.
+comparisonOperatorWithNoRelationshipStringMapping.ts(28,9): error TS2367: This comparison appears to be unintentional because the types '`foo-${Lowercase<string>}`' and '"foo-BA"' have no overlap.
+comparisonOperatorWithNoRelationshipStringMapping.ts(33,9): error TS2367: This comparison appears to be unintentional because the types '`Foo-${string}`' and '"foo-ba"' have no overlap.
+comparisonOperatorWithNoRelationshipStringMapping.ts(38,9): error TS2367: This comparison appears to be unintentional because the types '`foo-${string}`' and '"Foo-ba"' have no overlap.
+comparisonOperatorWithNoRelationshipStringMapping.ts(43,9): error TS2367: This comparison appears to be unintentional because the types '`foo-${string}`' and '"bar-c"' have no overlap.
+
+
+==== comparisonOperatorWithNoRelationshipStringMapping.ts (9 errors) ====
+    function compareUppercase(foo: Uppercase<string>) {
+        if (foo === "BA") {} // No error
+        if (foo === "ba") {} // Error
+            ~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types 'Uppercase<string>' and '"ba"' have no overlap.
+    }
+    
+    function compareLowercase(foo: Lowercase<string>) {
+        if (foo === "ba") {} // No error
+        if (foo === "BA") {} // Error
+            ~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types 'Lowercase<string>' and '"BA"' have no overlap.
+    }
+    
+    function compareCapitalize(foo: Capitalize<string>) {
+        if (foo === "Ba") {} // No error
+        if (foo === "ba") {} // Error
+            ~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types 'Capitalize<string>' and '"ba"' have no overlap.
+    }
+    
+    function compareUncapitalize(foo: Uncapitalize<string>) {
+        if (foo === "ba") {} // No error
+        if (foo === "Ba") {} // Error
+            ~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types 'Uncapitalize<string>' and '"Ba"' have no overlap.
+    }
+    
+    function compareUppercasePattern(foo: Uppercase<`foo-${string}`>) {
+        if (foo === "FOO-BA") {} // No error
+        if (foo === "FOO-ba") {} // Error
+            ~~~~~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types '`FOO-${Uppercase<string>}`' and '"FOO-ba"' have no overlap.
+    }
+    
+    function compareLowercasePattern(foo: Lowercase<`FOO-${string}`>) {
+        if (foo === "foo-ba") {} // No error
+        if (foo === "foo-BA") {} // Error
+            ~~~~~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types '`foo-${Lowercase<string>}`' and '"foo-BA"' have no overlap.
+    }
+    
+    function compareCapitalizePattern(foo: Capitalize<`foo-${string}`>) {
+        if (foo === "Foo-ba") {} // No error
+        if (foo === "foo-ba") {} // Error
+            ~~~~~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types '`Foo-${string}`' and '"foo-ba"' have no overlap.
+    }
+    
+    function compareUncapitalizePattern(foo: Uncapitalize<`Foo-${string}`>) {
+        if (foo === "foo-ba") {} // No error
+        if (foo === "Foo-ba") {} // Error
+            ~~~~~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types '`foo-${string}`' and '"Foo-ba"' have no overlap.
+    }
+    
+    function compareTemplate(foo: `foo-${string}`) {
+        if (foo === "foo-c") {} // No error
+        if (foo === "bar-c") {} // Error
+            ~~~~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types '`foo-${string}`' and '"bar-c"' have no overlap.
+    }
+    

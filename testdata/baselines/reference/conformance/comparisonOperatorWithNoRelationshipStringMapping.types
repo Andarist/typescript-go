@@ -1,0 +1,138 @@
+//// [tests/cases/conformance/expressions/binaryOperators/comparisonOperator/comparisonOperatorWithNoRelationshipStringMapping.ts] ////
+
+=== comparisonOperatorWithNoRelationshipStringMapping.ts ===
+function compareUppercase(foo: Uppercase<string>) {
+>compareUppercase : (foo: Uppercase<string>) => void
+>foo : Uppercase<string>
+
+    if (foo === "BA") {} // No error
+>foo === "BA" : boolean
+>foo : Uppercase<string>
+>"BA" : "BA"
+
+    if (foo === "ba") {} // Error
+>foo === "ba" : boolean
+>foo : Uppercase<string>
+>"ba" : "ba"
+}
+
+function compareLowercase(foo: Lowercase<string>) {
+>compareLowercase : (foo: Lowercase<string>) => void
+>foo : Lowercase<string>
+
+    if (foo === "ba") {} // No error
+>foo === "ba" : boolean
+>foo : Lowercase<string>
+>"ba" : "ba"
+
+    if (foo === "BA") {} // Error
+>foo === "BA" : boolean
+>foo : Lowercase<string>
+>"BA" : "BA"
+}
+
+function compareCapitalize(foo: Capitalize<string>) {
+>compareCapitalize : (foo: Capitalize<string>) => void
+>foo : Capitalize<string>
+
+    if (foo === "Ba") {} // No error
+>foo === "Ba" : boolean
+>foo : Capitalize<string>
+>"Ba" : "Ba"
+
+    if (foo === "ba") {} // Error
+>foo === "ba" : boolean
+>foo : Capitalize<string>
+>"ba" : "ba"
+}
+
+function compareUncapitalize(foo: Uncapitalize<string>) {
+>compareUncapitalize : (foo: Uncapitalize<string>) => void
+>foo : Uncapitalize<string>
+
+    if (foo === "ba") {} // No error
+>foo === "ba" : boolean
+>foo : Uncapitalize<string>
+>"ba" : "ba"
+
+    if (foo === "Ba") {} // Error
+>foo === "Ba" : boolean
+>foo : Uncapitalize<string>
+>"Ba" : "Ba"
+}
+
+function compareUppercasePattern(foo: Uppercase<`foo-${string}`>) {
+>compareUppercasePattern : (foo: Uppercase<`foo-${string}`>) => void
+>foo : `FOO-${Uppercase<string>}`
+
+    if (foo === "FOO-BA") {} // No error
+>foo === "FOO-BA" : boolean
+>foo : `FOO-${Uppercase<string>}`
+>"FOO-BA" : "FOO-BA"
+
+    if (foo === "FOO-ba") {} // Error
+>foo === "FOO-ba" : boolean
+>foo : `FOO-${Uppercase<string>}`
+>"FOO-ba" : "FOO-ba"
+}
+
+function compareLowercasePattern(foo: Lowercase<`FOO-${string}`>) {
+>compareLowercasePattern : (foo: Lowercase<`FOO-${string}`>) => void
+>foo : `foo-${Lowercase<string>}`
+
+    if (foo === "foo-ba") {} // No error
+>foo === "foo-ba" : boolean
+>foo : `foo-${Lowercase<string>}`
+>"foo-ba" : "foo-ba"
+
+    if (foo === "foo-BA") {} // Error
+>foo === "foo-BA" : boolean
+>foo : `foo-${Lowercase<string>}`
+>"foo-BA" : "foo-BA"
+}
+
+function compareCapitalizePattern(foo: Capitalize<`foo-${string}`>) {
+>compareCapitalizePattern : (foo: Capitalize<`foo-${string}`>) => void
+>foo : `Foo-${string}`
+
+    if (foo === "Foo-ba") {} // No error
+>foo === "Foo-ba" : boolean
+>foo : `Foo-${string}`
+>"Foo-ba" : "Foo-ba"
+
+    if (foo === "foo-ba") {} // Error
+>foo === "foo-ba" : boolean
+>foo : `Foo-${string}`
+>"foo-ba" : "foo-ba"
+}
+
+function compareUncapitalizePattern(foo: Uncapitalize<`Foo-${string}`>) {
+>compareUncapitalizePattern : (foo: Uncapitalize<`Foo-${string}`>) => void
+>foo : `foo-${string}`
+
+    if (foo === "foo-ba") {} // No error
+>foo === "foo-ba" : boolean
+>foo : `foo-${string}`
+>"foo-ba" : "foo-ba"
+
+    if (foo === "Foo-ba") {} // Error
+>foo === "Foo-ba" : boolean
+>foo : `foo-${string}`
+>"Foo-ba" : "Foo-ba"
+}
+
+function compareTemplate(foo: `foo-${string}`) {
+>compareTemplate : (foo: `foo-${string}`) => void
+>foo : `foo-${string}`
+
+    if (foo === "foo-c") {} // No error
+>foo === "foo-c" : boolean
+>foo : `foo-${string}`
+>"foo-c" : "foo-c"
+
+    if (foo === "bar-c") {} // Error
+>foo === "bar-c" : boolean
+>foo : `foo-${string}`
+>"bar-c" : "bar-c"
+}
+
