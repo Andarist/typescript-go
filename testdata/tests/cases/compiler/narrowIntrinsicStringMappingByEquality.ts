@@ -97,3 +97,51 @@ function narrowUncapitalizePattern(prefix: Uncapitalize<`Foo-${string}`>) {
         pattern = prefix;
     }
 }
+
+function narrowUppercaseSuffixPattern(suffix: Uppercase<`${string}-foo`>) {
+    let pattern: "BAR-FOO" | "BAZ-FOO";
+
+    if (suffix === "BAR-FOO" || suffix === "BAZ-FOO") {
+        pattern = suffix;
+    }
+
+    if (suffix === "bar-FOO") {
+        pattern = suffix;
+    }
+}
+
+function narrowLowercaseSuffixPattern(suffix: Lowercase<`${string}-FOO`>) {
+    let pattern: "bar-foo" | "baz-foo";
+
+    if (suffix === "bar-foo" || suffix === "baz-foo") {
+        pattern = suffix;
+    }
+
+    if (suffix === "BAR-foo") {
+        pattern = suffix;
+    }
+}
+
+function narrowCapitalizeSuffixPattern(suffix: Capitalize<`${string}-foo`>) {
+    let pattern: "Bar-foo" | "Baz-foo";
+
+    if (suffix === "Bar-foo" || suffix === "Baz-foo") {
+        pattern = suffix;
+    }
+
+    if (suffix === "bar-foo") {
+        pattern = suffix;
+    }
+}
+
+function narrowUncapitalizeSuffixPattern(suffix: Uncapitalize<`${string}-foo`>) {
+    let pattern: "bar-foo" | "baz-foo";
+
+    if (suffix === "bar-foo" || suffix === "baz-foo") {
+        pattern = suffix;
+    }
+
+    if (suffix === "Bar-foo") {
+        pattern = suffix;
+    }
+}

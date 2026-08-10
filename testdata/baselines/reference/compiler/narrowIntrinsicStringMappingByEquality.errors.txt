@@ -6,9 +6,13 @@ narrowIntrinsicStringMappingByEquality.ts(58,9): error TS2367: This comparison a
 narrowIntrinsicStringMappingByEquality.ts(70,9): error TS2367: This comparison appears to be unintentional because the types '`foo-${Lowercase<string>}`' and '"foo-BAR"' have no overlap.
 narrowIntrinsicStringMappingByEquality.ts(82,9): error TS2367: This comparison appears to be unintentional because the types '`Foo-${string}`' and '"foo-bar"' have no overlap.
 narrowIntrinsicStringMappingByEquality.ts(94,9): error TS2367: This comparison appears to be unintentional because the types '`foo-${string}`' and '"Foo-bar"' have no overlap.
+narrowIntrinsicStringMappingByEquality.ts(106,9): error TS2367: This comparison appears to be unintentional because the types '`${Uppercase<string>}-FOO`' and '"bar-FOO"' have no overlap.
+narrowIntrinsicStringMappingByEquality.ts(118,9): error TS2367: This comparison appears to be unintentional because the types '`${Lowercase<string>}-foo`' and '"BAR-foo"' have no overlap.
+narrowIntrinsicStringMappingByEquality.ts(130,9): error TS2367: This comparison appears to be unintentional because the types '`${Capitalize<string>}-foo`' and '"bar-foo"' have no overlap.
+narrowIntrinsicStringMappingByEquality.ts(142,9): error TS2367: This comparison appears to be unintentional because the types '`${Uncapitalize<string>}-foo`' and '"Bar-foo"' have no overlap.
 
 
-==== narrowIntrinsicStringMappingByEquality.ts (8 errors) ====
+==== narrowIntrinsicStringMappingByEquality.ts (12 errors) ====
     // https://github.com/microsoft/TypeScript/issues/63724
     
     function narrowUppercase(prefix: Uppercase<string>) {
@@ -120,6 +124,62 @@ narrowIntrinsicStringMappingByEquality.ts(94,9): error TS2367: This comparison a
             ~~~~~~~~~~~~~~~~~~~~
 !!! error TS2367: This comparison appears to be unintentional because the types '`foo-${string}`' and '"Foo-bar"' have no overlap.
             pattern = prefix;
+        }
+    }
+    
+    function narrowUppercaseSuffixPattern(suffix: Uppercase<`${string}-foo`>) {
+        let pattern: "BAR-FOO" | "BAZ-FOO";
+    
+        if (suffix === "BAR-FOO" || suffix === "BAZ-FOO") {
+            pattern = suffix;
+        }
+    
+        if (suffix === "bar-FOO") {
+            ~~~~~~~~~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types '`${Uppercase<string>}-FOO`' and '"bar-FOO"' have no overlap.
+            pattern = suffix;
+        }
+    }
+    
+    function narrowLowercaseSuffixPattern(suffix: Lowercase<`${string}-FOO`>) {
+        let pattern: "bar-foo" | "baz-foo";
+    
+        if (suffix === "bar-foo" || suffix === "baz-foo") {
+            pattern = suffix;
+        }
+    
+        if (suffix === "BAR-foo") {
+            ~~~~~~~~~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types '`${Lowercase<string>}-foo`' and '"BAR-foo"' have no overlap.
+            pattern = suffix;
+        }
+    }
+    
+    function narrowCapitalizeSuffixPattern(suffix: Capitalize<`${string}-foo`>) {
+        let pattern: "Bar-foo" | "Baz-foo";
+    
+        if (suffix === "Bar-foo" || suffix === "Baz-foo") {
+            pattern = suffix;
+        }
+    
+        if (suffix === "bar-foo") {
+            ~~~~~~~~~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types '`${Capitalize<string>}-foo`' and '"bar-foo"' have no overlap.
+            pattern = suffix;
+        }
+    }
+    
+    function narrowUncapitalizeSuffixPattern(suffix: Uncapitalize<`${string}-foo`>) {
+        let pattern: "bar-foo" | "baz-foo";
+    
+        if (suffix === "bar-foo" || suffix === "baz-foo") {
+            pattern = suffix;
+        }
+    
+        if (suffix === "Bar-foo") {
+            ~~~~~~~~~~~~~~~~~~~~
+!!! error TS2367: This comparison appears to be unintentional because the types '`${Uncapitalize<string>}-foo`' and '"Bar-foo"' have no overlap.
+            pattern = suffix;
         }
     }
     

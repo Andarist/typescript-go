@@ -215,3 +215,107 @@ function narrowUncapitalizePattern(prefix: Uncapitalize<`Foo-${string}`>) {
     }
 }
 
+function narrowUppercaseSuffixPattern(suffix: Uppercase<`${string}-foo`>) {
+>narrowUppercaseSuffixPattern : Symbol(narrowUppercaseSuffixPattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 96, 1))
+>suffix : Symbol(suffix, Decl(narrowIntrinsicStringMappingByEquality.ts, 98, 38))
+>Uppercase : Symbol(Uppercase, Decl(lib.es5.d.ts, --, --))
+
+    let pattern: "BAR-FOO" | "BAZ-FOO";
+>pattern : Symbol(pattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 99, 7))
+
+    if (suffix === "BAR-FOO" || suffix === "BAZ-FOO") {
+>suffix : Symbol(suffix, Decl(narrowIntrinsicStringMappingByEquality.ts, 98, 38))
+>suffix : Symbol(suffix, Decl(narrowIntrinsicStringMappingByEquality.ts, 98, 38))
+
+        pattern = suffix;
+>pattern : Symbol(pattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 99, 7))
+>suffix : Symbol(suffix, Decl(narrowIntrinsicStringMappingByEquality.ts, 98, 38))
+    }
+
+    if (suffix === "bar-FOO") {
+>suffix : Symbol(suffix, Decl(narrowIntrinsicStringMappingByEquality.ts, 98, 38))
+
+        pattern = suffix;
+>pattern : Symbol(pattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 99, 7))
+>suffix : Symbol(suffix, Decl(narrowIntrinsicStringMappingByEquality.ts, 98, 38))
+    }
+}
+
+function narrowLowercaseSuffixPattern(suffix: Lowercase<`${string}-FOO`>) {
+>narrowLowercaseSuffixPattern : Symbol(narrowLowercaseSuffixPattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 108, 1))
+>suffix : Symbol(suffix, Decl(narrowIntrinsicStringMappingByEquality.ts, 110, 38))
+>Lowercase : Symbol(Lowercase, Decl(lib.es5.d.ts, --, --))
+
+    let pattern: "bar-foo" | "baz-foo";
+>pattern : Symbol(pattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 111, 7))
+
+    if (suffix === "bar-foo" || suffix === "baz-foo") {
+>suffix : Symbol(suffix, Decl(narrowIntrinsicStringMappingByEquality.ts, 110, 38))
+>suffix : Symbol(suffix, Decl(narrowIntrinsicStringMappingByEquality.ts, 110, 38))
+
+        pattern = suffix;
+>pattern : Symbol(pattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 111, 7))
+>suffix : Symbol(suffix, Decl(narrowIntrinsicStringMappingByEquality.ts, 110, 38))
+    }
+
+    if (suffix === "BAR-foo") {
+>suffix : Symbol(suffix, Decl(narrowIntrinsicStringMappingByEquality.ts, 110, 38))
+
+        pattern = suffix;
+>pattern : Symbol(pattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 111, 7))
+>suffix : Symbol(suffix, Decl(narrowIntrinsicStringMappingByEquality.ts, 110, 38))
+    }
+}
+
+function narrowCapitalizeSuffixPattern(suffix: Capitalize<`${string}-foo`>) {
+>narrowCapitalizeSuffixPattern : Symbol(narrowCapitalizeSuffixPattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 120, 1))
+>suffix : Symbol(suffix, Decl(narrowIntrinsicStringMappingByEquality.ts, 122, 39))
+>Capitalize : Symbol(Capitalize, Decl(lib.es5.d.ts, --, --))
+
+    let pattern: "Bar-foo" | "Baz-foo";
+>pattern : Symbol(pattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 123, 7))
+
+    if (suffix === "Bar-foo" || suffix === "Baz-foo") {
+>suffix : Symbol(suffix, Decl(narrowIntrinsicStringMappingByEquality.ts, 122, 39))
+>suffix : Symbol(suffix, Decl(narrowIntrinsicStringMappingByEquality.ts, 122, 39))
+
+        pattern = suffix;
+>pattern : Symbol(pattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 123, 7))
+>suffix : Symbol(suffix, Decl(narrowIntrinsicStringMappingByEquality.ts, 122, 39))
+    }
+
+    if (suffix === "bar-foo") {
+>suffix : Symbol(suffix, Decl(narrowIntrinsicStringMappingByEquality.ts, 122, 39))
+
+        pattern = suffix;
+>pattern : Symbol(pattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 123, 7))
+>suffix : Symbol(suffix, Decl(narrowIntrinsicStringMappingByEquality.ts, 122, 39))
+    }
+}
+
+function narrowUncapitalizeSuffixPattern(suffix: Uncapitalize<`${string}-foo`>) {
+>narrowUncapitalizeSuffixPattern : Symbol(narrowUncapitalizeSuffixPattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 132, 1))
+>suffix : Symbol(suffix, Decl(narrowIntrinsicStringMappingByEquality.ts, 134, 41))
+>Uncapitalize : Symbol(Uncapitalize, Decl(lib.es5.d.ts, --, --))
+
+    let pattern: "bar-foo" | "baz-foo";
+>pattern : Symbol(pattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 135, 7))
+
+    if (suffix === "bar-foo" || suffix === "baz-foo") {
+>suffix : Symbol(suffix, Decl(narrowIntrinsicStringMappingByEquality.ts, 134, 41))
+>suffix : Symbol(suffix, Decl(narrowIntrinsicStringMappingByEquality.ts, 134, 41))
+
+        pattern = suffix;
+>pattern : Symbol(pattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 135, 7))
+>suffix : Symbol(suffix, Decl(narrowIntrinsicStringMappingByEquality.ts, 134, 41))
+    }
+
+    if (suffix === "Bar-foo") {
+>suffix : Symbol(suffix, Decl(narrowIntrinsicStringMappingByEquality.ts, 134, 41))
+
+        pattern = suffix;
+>pattern : Symbol(pattern, Decl(narrowIntrinsicStringMappingByEquality.ts, 135, 7))
+>suffix : Symbol(suffix, Decl(narrowIntrinsicStringMappingByEquality.ts, 134, 41))
+    }
+}
+

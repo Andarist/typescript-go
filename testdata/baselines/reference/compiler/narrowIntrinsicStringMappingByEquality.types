@@ -291,3 +291,139 @@ function narrowUncapitalizePattern(prefix: Uncapitalize<`Foo-${string}`>) {
     }
 }
 
+function narrowUppercaseSuffixPattern(suffix: Uppercase<`${string}-foo`>) {
+>narrowUppercaseSuffixPattern : (suffix: Uppercase<`${string}-foo`>) => void
+>suffix : `${Uppercase<string>}-FOO`
+
+    let pattern: "BAR-FOO" | "BAZ-FOO";
+>pattern : "BAR-FOO" | "BAZ-FOO"
+
+    if (suffix === "BAR-FOO" || suffix === "BAZ-FOO") {
+>suffix === "BAR-FOO" || suffix === "BAZ-FOO" : boolean
+>suffix === "BAR-FOO" : boolean
+>suffix : `${Uppercase<string>}-FOO`
+>"BAR-FOO" : "BAR-FOO"
+>suffix === "BAZ-FOO" : boolean
+>suffix : `${Uppercase<string>}-FOO`
+>"BAZ-FOO" : "BAZ-FOO"
+
+        pattern = suffix;
+>pattern = suffix : "BAR-FOO" | "BAZ-FOO"
+>pattern : "BAR-FOO" | "BAZ-FOO"
+>suffix : "BAR-FOO" | "BAZ-FOO"
+    }
+
+    if (suffix === "bar-FOO") {
+>suffix === "bar-FOO" : boolean
+>suffix : `${Uppercase<string>}-FOO`
+>"bar-FOO" : "bar-FOO"
+
+        pattern = suffix;
+>pattern = suffix : never
+>pattern : "BAR-FOO" | "BAZ-FOO"
+>suffix : never
+    }
+}
+
+function narrowLowercaseSuffixPattern(suffix: Lowercase<`${string}-FOO`>) {
+>narrowLowercaseSuffixPattern : (suffix: Lowercase<`${string}-FOO`>) => void
+>suffix : `${Lowercase<string>}-foo`
+
+    let pattern: "bar-foo" | "baz-foo";
+>pattern : "bar-foo" | "baz-foo"
+
+    if (suffix === "bar-foo" || suffix === "baz-foo") {
+>suffix === "bar-foo" || suffix === "baz-foo" : boolean
+>suffix === "bar-foo" : boolean
+>suffix : `${Lowercase<string>}-foo`
+>"bar-foo" : "bar-foo"
+>suffix === "baz-foo" : boolean
+>suffix : `${Lowercase<string>}-foo`
+>"baz-foo" : "baz-foo"
+
+        pattern = suffix;
+>pattern = suffix : "bar-foo" | "baz-foo"
+>pattern : "bar-foo" | "baz-foo"
+>suffix : "bar-foo" | "baz-foo"
+    }
+
+    if (suffix === "BAR-foo") {
+>suffix === "BAR-foo" : boolean
+>suffix : `${Lowercase<string>}-foo`
+>"BAR-foo" : "BAR-foo"
+
+        pattern = suffix;
+>pattern = suffix : never
+>pattern : "bar-foo" | "baz-foo"
+>suffix : never
+    }
+}
+
+function narrowCapitalizeSuffixPattern(suffix: Capitalize<`${string}-foo`>) {
+>narrowCapitalizeSuffixPattern : (suffix: Capitalize<`${string}-foo`>) => void
+>suffix : `${Capitalize<string>}-foo`
+
+    let pattern: "Bar-foo" | "Baz-foo";
+>pattern : "Bar-foo" | "Baz-foo"
+
+    if (suffix === "Bar-foo" || suffix === "Baz-foo") {
+>suffix === "Bar-foo" || suffix === "Baz-foo" : boolean
+>suffix === "Bar-foo" : boolean
+>suffix : `${Capitalize<string>}-foo`
+>"Bar-foo" : "Bar-foo"
+>suffix === "Baz-foo" : boolean
+>suffix : `${Capitalize<string>}-foo`
+>"Baz-foo" : "Baz-foo"
+
+        pattern = suffix;
+>pattern = suffix : "Bar-foo" | "Baz-foo"
+>pattern : "Bar-foo" | "Baz-foo"
+>suffix : "Bar-foo" | "Baz-foo"
+    }
+
+    if (suffix === "bar-foo") {
+>suffix === "bar-foo" : boolean
+>suffix : `${Capitalize<string>}-foo`
+>"bar-foo" : "bar-foo"
+
+        pattern = suffix;
+>pattern = suffix : never
+>pattern : "Bar-foo" | "Baz-foo"
+>suffix : never
+    }
+}
+
+function narrowUncapitalizeSuffixPattern(suffix: Uncapitalize<`${string}-foo`>) {
+>narrowUncapitalizeSuffixPattern : (suffix: Uncapitalize<`${string}-foo`>) => void
+>suffix : `${Uncapitalize<string>}-foo`
+
+    let pattern: "bar-foo" | "baz-foo";
+>pattern : "bar-foo" | "baz-foo"
+
+    if (suffix === "bar-foo" || suffix === "baz-foo") {
+>suffix === "bar-foo" || suffix === "baz-foo" : boolean
+>suffix === "bar-foo" : boolean
+>suffix : `${Uncapitalize<string>}-foo`
+>"bar-foo" : "bar-foo"
+>suffix === "baz-foo" : boolean
+>suffix : `${Uncapitalize<string>}-foo`
+>"baz-foo" : "baz-foo"
+
+        pattern = suffix;
+>pattern = suffix : "bar-foo" | "baz-foo"
+>pattern : "bar-foo" | "baz-foo"
+>suffix : "bar-foo" | "baz-foo"
+    }
+
+    if (suffix === "Bar-foo") {
+>suffix === "Bar-foo" : boolean
+>suffix : `${Uncapitalize<string>}-foo`
+>"Bar-foo" : "Bar-foo"
+
+        pattern = suffix;
+>pattern = suffix : never
+>pattern : "bar-foo" | "baz-foo"
+>suffix : never
+    }
+}
+
