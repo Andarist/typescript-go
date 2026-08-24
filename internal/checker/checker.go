@@ -10188,7 +10188,7 @@ func (c *Checker) checkFunctionExpressionOrObjectLiteralMethod(node *ast.Node, c
 				if cached, ok := c.contextFreeTypes[node]; ok {
 					return cached
 				}
-				returnType := c.getReturnTypeFromBody(node, checkMode)
+				returnType := c.getReturnTypeFromBody(node, checkMode, nil)
 				returnOnlySignature := c.newSignature(SignatureFlagsIsNonInferrable, nil, nil /*typeParameters*/, nil /*thisParameter*/, nil, returnType, nil /*resolvedTypePredicate*/, 0)
 				returnOnlyType := c.newAnonymousType(node.Symbol(), nil, []*Signature{returnOnlySignature}, nil, nil)
 				returnOnlyType.objectFlags |= ObjectFlagsNonInferrableType
@@ -10226,10 +10226,18 @@ func (c *Checker) contextuallyCheckFunctionExpressionOrObjectLiteralMethod(node 
 			if signature == nil {
 				return
 			}
+			var instantiatedContextualSignature *Signature
+			var contextualReturnSignature *Signature
 			if c.isContextSensitive(node) {
 				if contextualSignature != nil {
 					inferenceContext := c.getInferenceContext(node)
-					var instantiatedContextualSignature *Signature
+					if inferenceContext != nil {
+						// Preserve inferences from preceding arguments for an implicit undefined return without
+						// defaulting or fixing type parameters that still need inferences from this function body.
+						if inferredContext := c.cloneInferredPartOfContext(inferenceContext); inferredContext != nil {
+							contextualReturnSignature = c.instantiateSignature(contextualSignature, inferredContext.nonFixingMapper)
+						}
+					}
 					if checkMode&CheckModeInferential != 0 {
 						c.inferFromAnnotatedParametersAndReturn(signature, contextualSignature, inferenceContext)
 						restType := c.getEffectiveRestType(contextualSignature)
@@ -10256,7 +10264,7 @@ func (c *Checker) contextuallyCheckFunctionExpressionOrObjectLiteralMethod(node 
 				}
 			}
 			if contextualSignature != nil && c.getReturnTypeFromAnnotation(node) == nil && signature.resolvedReturnType == nil {
-				returnType := c.getReturnTypeFromBody(node, checkMode)
+				returnType := c.getReturnTypeFromBody(node, checkMode, contextualReturnSignature)
 				if signature.resolvedReturnType == nil {
 					signature.resolvedReturnType = returnType
 				}
@@ -18615,7 +18623,7 @@ func (c *Checker) getTypeOfAccessors(symbol *ast.Symbol) *Type {
 		}
 		if t == nil && getter != nil {
 			if body := getter.Body(); body != nil {
-				t = c.getReturnTypeFromBody(getter, CheckModeNormal)
+				t = c.getReturnTypeFromBody(getter, CheckModeNormal, nil)
 			}
 		}
 		if t == nil && accessor != nil {
@@ -20102,7 +20110,7 @@ func (c *Checker) getReturnTypeOfSignature(sig *Signature) *Type {
 		t = c.getReturnTypeFromAnnotation(sig.declaration)
 		if t == nil {
 			if !ast.NodeIsMissing(sig.declaration.Body()) {
-				t = c.getReturnTypeFromBody(sig.declaration, CheckModeNormal)
+				t = c.getReturnTypeFromBody(sig.declaration, CheckModeNormal, nil)
 			} else {
 				t = c.anyType
 			}
@@ -20210,7 +20218,7 @@ func getEffectiveSetAccessorTypeAnnotationNode(node *ast.Node) *ast.Node {
 	return nil
 }
 
-func (c *Checker) getReturnTypeFromBody(fn *ast.Node, checkMode CheckMode) *Type {
+func (c *Checker) getReturnTypeFromBody(fn *ast.Node, checkMode CheckMode, contextualSignature *Signature) *Type {
 	body := fn.Body()
 	if body == nil {
 		return c.errorType
@@ -20261,7 +20269,12 @@ func (c *Checker) getReturnTypeFromBody(fn *ast.Node, checkMode CheckMode) *Type
 		}
 		if len(types) == 0 {
 			// For an async function, the return type will not be void/undefined, but rather a Promise for void/undefined.
-			contextualReturnType := c.getContextualReturnType(fn, ContextFlagsNone)
+			var contextualReturnType *Type
+			if contextualSignature != nil {
+				contextualReturnType = c.getReturnTypeOfSignature(contextualSignature)
+			} else {
+				contextualReturnType = c.getContextualReturnType(fn, ContextFlagsNone)
+			}
 			var returnType *Type
 			if contextualReturnType != nil && someType(core.OrElse(c.unwrapReturnType(contextualReturnType, functionFlags), c.voidType), func(t *Type) bool { return t.flags&TypeFlagsUndefined != 0 }) {
 				returnType = c.undefinedType
